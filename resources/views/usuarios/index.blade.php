@@ -45,7 +45,7 @@
                         </td>
                         <td>
                             @if($user->avatar)
-                                <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" width="50" height="50">
+                                <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" width="auto" height="100">
                             @else
                                 <span>Sin foto</span>
                             @endif

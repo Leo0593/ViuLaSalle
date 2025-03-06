@@ -2,6 +2,13 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <!-- Error message for account being inactive with form styling -->
+    @if ($errors->has('account_inactive'))
+        <div class="alert alert-danger mt-3 text-center" style="font-size: 1.2rem; padding: 20px;">
+            <strong>{{ $errors->first('account_inactive') }}</strong>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 

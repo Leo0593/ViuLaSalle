@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'role',
+        'status',
+        'avatar',
     ];
 
     /**
@@ -46,4 +50,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //crud user
+
+    
 }

@@ -11,7 +11,7 @@
     <div class="container mt-5">
 
         <h1 class="mb-4">Lista de Usuarios</h1>
-        <a href="{{ route('users.create') }}" class="btn btn-primary mb-4">Crear Usuario</a>
+        <a href="{{ route('eventos.create') }}" class="btn btn-success mb-3">Crear Eventor</a>
         
         <table class="table table-bordered">
             <thead>
@@ -23,6 +23,7 @@
                     <th>Descripcion</th>
                     <th>Fecha Publicacion</th>
                     <th>Foto</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,10 +45,14 @@
 
                         <td>
                             @if($evento->foto)
-                                <img src="{{ asset($evento->foto) }}" alt="Foto" width="50" height="50">
+                                <img src="{{ Storage::url($evento->foto) }}" alt="Foto" width="auto" height="100">
                             @else
                                 <span>Sin foto</span>
                             @endif
+                        </td>
+
+                        <td>
+                            editar
                         </td>
                     </tr>
                 @endforeach

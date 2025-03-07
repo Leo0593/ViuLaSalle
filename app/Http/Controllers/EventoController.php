@@ -24,18 +24,21 @@ class EventoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'foto' => 'required|string', // O puedes usar una validación para archivos si es una imagen
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validación para archivos de imagen
         ]);
 
         // Obtener el usuario autenticado
         $user_id = auth()->id(); // Obtiene el ID del usuario autenticado
+
+        // Subir la foto y obtener la ruta
+        $fotoPath = $request->file('foto')->store('eventos', 'public'); // Guarda la foto en la carpeta public/eventos
 
         // Crear un nuevo evento
         $evento = new Evento();
         $evento->nombre = $validated['nombre'];
         $evento->descripcion = $validated['descripcion'];
         $evento->fecha_publicacion = now(); // Asigna la fecha y hora actuales
-        $evento->foto = $validated['foto']; // Asegúrate de que esto sea el nombre de la foto o la ruta
+        $evento->foto = $fotoPath; // Guarda la ruta de la foto
         $evento->user_id = $user_id; // Asigna el ID del usuario autenticado
         $evento->visible = true; // Se podría configurar según sea necesario, o tomar del formulario
         $evento->save(); // Guardar el evento

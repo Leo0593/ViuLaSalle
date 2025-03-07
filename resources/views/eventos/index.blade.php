@@ -31,9 +31,9 @@
                     <tr>
                         <td>{{ $evento->id }}</td>
                         <td>{{ $evento->user_id }}</td>
-                        <td>{{ $evento->visible }}</td>
+                        <td>{{ $evento->status }}</td>
                         <td>
-                            @if($evento->visible)
+                            @if($evento->status)
                                 <span class="badge bg-success">Visible</span>
                             @else
                                 <span class="badge bg-danger">No visible</span>

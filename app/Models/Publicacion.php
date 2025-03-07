@@ -16,7 +16,7 @@ class Publicacion extends Model
     protected $fillable = [
         'id_user',
         'id_evento',
-        'visible',
+        'status',
         'descripcion',
         'fecha_publicacion',
     ];

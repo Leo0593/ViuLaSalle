@@ -16,7 +16,9 @@ return new class extends Migration
             
             // Claves foráneas
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade'); 
-            $table->foreignId('id_evento')->constrained('eventos')->onDelete('cascade'); 
+            
+            // Modificación: Permitir que 'id_evento' sea nulo
+            $table->foreignId('id_evento')->nullable()->constrained('eventos')->onDelete('set null'); 
 
             // Otros campos
             $table->boolean('status')->default(1); // 1 = Activo, 0 = Inactivo

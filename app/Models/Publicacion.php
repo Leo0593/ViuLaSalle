@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;  // Asegúrate de importar Carbon
 
 class Publicacion extends Model
 {
@@ -35,6 +36,11 @@ class Publicacion extends Model
     public function evento(): BelongsTo
     {
         return $this->belongsTo(Evento::class, 'id_evento');
+    }
+
+    public function getFechaPublicacionAttribute($value)
+    {
+        return Carbon::parse($value); // Convierte la fecha a una instancia de Carbon
     }
 
     /**

@@ -24,9 +24,12 @@
                     {{ __('Eventos') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('publicaciones.index')" :active="request()->routeIs('publicaciones.index')">
+                <!-- Nuevo botón para las publicaciones -->
+                <x-responsive-nav-link :href="route('publicaciones.index')"
+                    :active="request()->routeIs('publicaciones.index')">
                     {{ __('Publicaciones') }}
                 </x-responsive-nav-link>
+
             </div>
         </div>
 

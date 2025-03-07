@@ -1,52 +1,42 @@
+<!-- resources/views/publicaciones/index.blade.php -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Publicaciones</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        img { width: 100px; height: auto; margin-right: 5px; }
-        .foto-container { display: flex; flex-wrap: wrap; gap: 10px; }
-    </style>
+    <title>Listado de Publicaciones</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container mt-5">
+        <h1>Listado de Publicaciones</h1>
+        <a href="{{ route('publicaciones.create') }}" class="btn btn-primary mb-3">Crear Publicación</a>
 
-<h2>Lista de Publicaciones</h2>
-
-<a href="{{ route('publicaciones.create') }}" class="btn btn-success mb-3">Crear publicacion</a>
-
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Usuario</th>
-            <th>Evento</th>
-            <th>Descripción</th>
-            <th>Fecha Publicación</th>
-            <th>Fotos</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($publicaciones as $publicacion)
-        <tr>
-            <td>{{ $publicacion->id }}</td>
-            <td>{{ $publicacion->usuario->name }}</td>
-            <td>{{ $publicacion->evento->nombre }}</td>
-            <td>{{ $publicacion->descripcion }}</td>
-            <td>{{ $publicacion->fecha_publicacion }}</td>
-            <td>
-                <div class="foto-container">
-                    @foreach ($publicacion->fotos as $foto)
-                        <img src="{{ asset('storage/' . $foto->ruta_foto) }}" alt="Foto">
-                    @endforeach
-                </div>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Publicación</th>
+                    <th>Usuario</th>
+                    <th>Evento</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($publicaciones as $publicacion)
+                    <tr>
+                        <td>{{ $publicacion->id }}</td>
+                        <td>{{ $publicacion->descripcion }}</td>
+                        <td>{{ $publicacion->fecha_publicacion->format('d/m/Y') }}</td>
+                        <td>{{ $publicacion->usuario->name }}</td> <!-- Suponiendo que el usuario tiene un campo 'name' -->
+                        <td>{{ $publicacion->evento->nombre }}</td> <!-- Suponiendo que el evento tiene un campo 'nombre' -->
+                        <td>{{ $publicacion->status }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

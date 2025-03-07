@@ -20,13 +20,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('/users', [UserController::class, 'store'])->name('users.store'); 
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
- 
+Route::prefix('users')->name('users.')->group(function() {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('{id}/edit', [UserController::class, 'edit'])->name('edit');
+    Route::patch('{id}', [UserController::class, 'update'])->name('update');
+    Route::patch('{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('toggleStatus');
+});
+
 Route::prefix('eventos')->name('eventos.')->group(function () {
     Route::get('/', [EventoController::class, 'index'])->name('index');
     Route::get('/create', [EventoController::class, 'create'])->name('create');
@@ -36,8 +38,10 @@ Route::prefix('eventos')->name('eventos.')->group(function () {
     Route::delete('/{id}', [EventoController::class, 'destroy'])->name('destroy');
 });
 
-Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
-Route::get('/publicaciones/create', [PublicacionController::class, 'create'])->name('publicaciones.create');
-Route::post('/publicaciones', [PublicacionController::class, 'store'])->name('publicaciones.store');
+Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
+    Route::get('/', [PublicacionController::class, 'index'])->name('index');
+    Route::get('/create', [PublicacionController::class, 'create'])->name('create');
+    Route::post('/', [PublicacionController::class, 'store'])->name('store');
+});
 
 require __DIR__.'/auth.php';

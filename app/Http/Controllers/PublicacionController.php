@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Publicacion;
-use App\Models\FotoPublicacion;
 use App\Models\User;
 use App\Models\Evento;
+use Carbon\Carbon; // Para obtener la fecha actual
 
 
 class PublicacionController extends Controller
@@ -16,7 +16,7 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        $publicaciones = Publicacion::with('fotos')->get();
+        $publicaciones = Publicacion::all();
         return view('publicaciones.index', compact('publicaciones'));
     }
 
@@ -25,10 +25,11 @@ class PublicacionController extends Controller
      */
     public function create()
     {
-        // Obtener usuarios y eventos para llenar los selectores
+        // Obtener todos los usuarios y eventos disponibles
         $usuarios = User::all();
         $eventos = Evento::all();
 
+        // Retornar la vista con los datos
         return view('publicaciones.create', compact('usuarios', 'eventos'));
     }
 
@@ -37,39 +38,26 @@ class PublicacionController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $validated = $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_evento' => 'required|exists:eventos,id',
-            'descripcion' => 'required|string|max:255',
-            'fecha_publicacion' => 'required|date',
-            'fotos' => 'nullable|array',
-            'fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // Validar los datos del formulario (eliminamos 'status' de la validación)
+        $request->validate([
+            'id_user' => 'required|exists:users,id',       // Verifica que el usuario exista
+            'id_evento' => 'required|exists:eventos,id',   // Verifica que el evento exista
+            'descripcion' => 'required|string|max:255',    // Descripción es obligatoria y tiene un límite de caracteres
         ]);
 
         // Crear la publicación
-        $publicacion = Publicacion::create([
-            'id_user' => $validated['id_user'],
-            'id_evento' => $validated['id_evento'],
-            'descripcion' => $validated['descripcion'],
-            'fecha_publicacion' => $validated['fecha_publicacion'],
-            'visible' => true, // Puedes agregar la lógica para la visibilidad
+        Publicacion::create([
+            'id_user' => $request->id_user,
+            'id_evento' => $request->id_evento,
+            'descripcion' => $request->descripcion,
+            'fecha_publicacion' => Carbon::now(), // Fecha actual
+            'status' => 1, // Estado por defecto es 1
         ]);
 
-        // Subir las fotos si existen
-        if ($request->hasFile('fotos')) {
-            foreach ($request->file('fotos') as $foto) {
-                $path = $foto->store('public/fotos'); // Guarda en storage/app/public/fotos
-                FotoPublicacion::create([
-                    'publicacion_id' => $publicacion->id,
-                    'ruta_foto' => basename($path), // Solo guardamos el nombre del archivo
-                ]);
-            }
-        }
-
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('publicaciones.index')->with('success', 'Publicación creada exitosamente!');
+        // Redirigir a la lista de publicaciones con un mensaje de éxito
+        return redirect()->route('publicaciones.index')->with('success', 'Publicación creada correctamente.');
     }
+
 
     /**
      * Display the specified resource.

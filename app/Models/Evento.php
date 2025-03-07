@@ -12,7 +12,7 @@ class Evento extends Model
     // Definir los campos que pueden ser asignados masivamente
     protected $fillable = [
         'id_user',
-        'visible',
+        'status',
         'nombre',
         'descripcion',
         'fecha_publicacion',

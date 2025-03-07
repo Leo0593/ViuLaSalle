@@ -23,6 +23,10 @@
                 <x-responsive-nav-link :href="route('eventos.index')" :active="request()->routeIs('eventos.index')">
                     {{ __('Eventos') }}
                 </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('publicaciones.index')" :active="request()->routeIs('publicaciones.index')">
+                    {{ __('Publicaciones') }}
+                </x-responsive-nav-link>
             </div>
         </div>
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\PublicacionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,5 +31,9 @@ Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'
 Route::get('/eventos', [EventoController::class, 'index'])->name('eventos.index');
 Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create');
 Route::post('/eventos', [EventoController::class, 'store'])->name('eventos.store');
+
+Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
+Route::get('/publicaciones/create', [PublicacionController::class, 'create'])->name('publicaciones.create');
+Route::post('/publicaciones', [PublicacionController::class, 'store'])->name('publicaciones.store');
 
 require __DIR__.'/auth.php';

@@ -25,10 +25,14 @@ Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
-
-
-Route::get('/eventos', [EventoController::class, 'index'])->name('eventos.index');
-Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create');
-Route::post('/eventos', [EventoController::class, 'store'])->name('eventos.store');
+ 
+Route::prefix('eventos')->name('eventos.')->group(function () {
+    Route::get('/', [EventoController::class, 'index'])->name('index');
+    Route::get('/create', [EventoController::class, 'create'])->name('create');
+    Route::post('/', [EventoController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [EventoController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [EventoController::class, 'update'])->name('update');
+    Route::delete('/{id}', [EventoController::class, 'destroy'])->name('destroy');
+});
 
 require __DIR__.'/auth.php';

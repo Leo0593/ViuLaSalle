@@ -10,7 +10,7 @@
 <body>
     <div class="container mt-5">
 
-        <h1 class="mb-4">Lista de Usuarios</h1>
+        <h1 class="mb-4">Lista de Eventos</h1>
         <a href="{{ route('eventos.create') }}" class="btn btn-success mb-3">Crear Eventor</a>
         
         <table class="table table-bordered">
@@ -30,7 +30,7 @@
                 @foreach ($eventos as $evento)
                     <tr>
                         <td>{{ $evento->id }}</td>
-                        <td>{{ $evento->id_user }}</td>
+                        <td>{{ $evento->user_id }}</td>
                         <td>{{ $evento->visible }}</td>
                         <td>
                             @if($evento->visible)
@@ -52,7 +52,12 @@
                         </td>
 
                         <td>
-                            editar
+                            <a href="{{ route('eventos.edit', $evento->id) }}" class="btn btn-primary">Editar</a>
+                            <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas ocultar este evento?')">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

@@ -29,5 +29,6 @@ Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'
 
 Route::get('/eventos', [EventoController::class, 'index'])->name('eventos.index');
 Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create');
+Route::post('/eventos', [EventoController::class, 'store'])->name('eventos.store');
 
 require __DIR__.'/auth.php';

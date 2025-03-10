@@ -11,8 +11,9 @@
 <body>
     <div class="container mt-5">
         <h1>Crear Publicación</h1>
+        <a href="{{ route('publicaciones.index') }}" class="btn btn-secondary mb-3">Volver</a>
 
-        <form action="{{ route('publicaciones.store') }}" method="POST">
+        <form action="{{ route('publicaciones.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="id_user">Usuario</label>
@@ -34,13 +35,16 @@
 
             <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                <textarea name="descripcion" id="descripcion" class="form-control" rows="3"></textarea>
+                <input type="text" name="descripcion" id="descripcion" class="form-control" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Crear Publicación</button>
-        </form>
+            <div class="form-group">
+                <label for="fotos">Fotos</label>
+                <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
+            </div>
 
-        <a href="{{ route('publicaciones.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar Publicación</button>
+        </form>
     </div>
 </body>
 </html>

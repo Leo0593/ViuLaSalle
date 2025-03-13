@@ -326,11 +326,10 @@ a.sidebar-link:hover {
     width: 100px;
     height: 100%;
     background-color: var(--gris);
+    padding: 20px;
 }
 .box-crear-publicacion-text-agregarimagen img {
-    width: 30px;
-    height: 30px;
-    margin: 5px;
+    width: 100%;    
     cursor: pointer;
 }
 

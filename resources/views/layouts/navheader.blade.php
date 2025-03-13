@@ -15,9 +15,17 @@
 
         <li class="sidebar-item">
             <a class="sidebar-link">
-                <i class="fa-solid fa-house"></i><span>Inicio</span>
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
             </a>
         </li>
+
         <div class="sidebar-separator">Intefaces</div>
+        <li class="sidebar-item">
+            <a class="sidebar-link">
+                <i class="fa-solid fa-info-circle"></i>
+                <span>Evento</span>
+            </a>
+        </li>
     </ul>
 </aside>

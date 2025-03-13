@@ -11,9 +11,6 @@
                     <div class="box-crear-publicacion-text-texto">
                         Escribe tu publicación
                     </div>
-                    <div class="box-crear-publicacion-text-agregarimagen">
-                        <img src="../../img/agregar.png" alt="">
-                    </div>
                 </div>
                 <div class="box-crear-publicacion-botones">
                     <button class="btn-crear-publicacion">Publicar</button>

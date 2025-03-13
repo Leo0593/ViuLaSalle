@@ -9,6 +9,27 @@
     <title>Listado de Publicaciones</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
 </head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.like-btn').click(function () {
+            let button = $(this);
+            let publicacionId = button.data('id');
+
+            $.ajax({
+                url: '/publicaciones/' + publicacionId + '/like',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    button.find('.like-count').text(response.likes);
+                    button.css('color', response.liked ? 'red' : 'black');
+                }
+            });
+        });
+    });
+</script>
 
 <body>
     <div class="container mt-5">
@@ -25,6 +46,8 @@
                     <th>Evento</th>
                     <th>Status</th>
                     <th>Fotos</th> <!-- Columna nueva para mostrar las fotos -->
+                    <th>Likes</th> <!-- Nueva columna para mostrar los likes -->
+                    <th>Acciones</th> <!-- Para los botones de editar y activar/desactivar -->
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +75,41 @@
                                 </div>
                             @else
                                 <p>No hay fotos</p>
+                            @endif
+                        </td>
+
+                        <!-- Mostrar la cantidad de likes -->
+                        <td>
+                            <button class="like-btn" data-id="{{ $publicacion->id }}"
+                                style="color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};">
+                                ❤️ <span class="like-count">{{ $publicacion->likes }}</span>
+                            </button>
+                        </td>
+                        <!-- Columna de botones -->
+
+                        <td>
+                            <a href="{{ route('publicaciones.edit', $publicacion->id) }}"
+                                class="btn btn-warning btn-sm">Editar</a>
+
+                            <!-- Condicional para mostrar el botón de eliminar o activar -->
+                            @if ($publicacion->status == 1)
+                                <!-- Botón de eliminar con un formulario -->
+                                <form action="{{ route('publicaciones.destroy', $publicacion->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('¿Estás seguro de que deseas desactivar esta publicación?')">Eliminar</button>
+                                </form>
+                            @else
+                                <!-- Botón de activar con un formulario -->
+                                <form action="{{ route('publicaciones.activate', $publicacion->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-success btn-sm"
+                                        onclick="return confirm('¿Estás seguro de que deseas activar esta publicación?')">Activar</button>
+                                </form>
                             @endif
                         </td>
                     </tr>

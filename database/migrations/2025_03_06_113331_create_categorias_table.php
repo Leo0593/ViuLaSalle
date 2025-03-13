@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 100)->unique();
             $table->boolean('status')->default(1); // 1 = Activo, 0 = Inactivo
+            $table->foreignId('id_user')->constrained('users');
             $table->timestamps();
         });
     }

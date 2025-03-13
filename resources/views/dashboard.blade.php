@@ -16,6 +16,7 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+
                 <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                     {{ __('Usuarios') }}
                 </x-responsive-nav-link>
@@ -24,12 +25,14 @@
                     {{ __('Eventos') }}
                 </x-responsive-nav-link>
 
-                <!-- Nuevo botón para las publicaciones -->
                 <x-responsive-nav-link :href="route('publicaciones.index')"
                     :active="request()->routeIs('publicaciones.index')">
                     {{ __('Publicaciones') }}
                 </x-responsive-nav-link>
 
+                <x-responsive-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.index')">
+                    {{ __('Categorias') }}
+                </x-responsive-nav-link>
             </div>
         </div>
 

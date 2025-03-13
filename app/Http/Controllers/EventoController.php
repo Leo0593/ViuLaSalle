@@ -9,7 +9,7 @@ class EventoController extends Controller
 {
     public function index()
     {
-        $eventos = Evento::where('visible', 1)->get(); // Solo muestra eventos visibles
+        $eventos = Evento::where('status', 1)->get(); // Solo muestra eventos visibles
         return view('eventos.index', compact('eventos')); // Devuelve la vista con los eventos
     }
 
@@ -88,7 +88,7 @@ class EventoController extends Controller
     public function destroy($id)
     {
         $evento = Evento::findOrFail($id);
-        $evento->visible = 0; // Ocultar el evento en lugar de eliminarlo
+        $evento->status = 0; // Ocultar el evento en lugar de eliminarlo
         $evento->save();
 
         return redirect()->route('eventos.index')->with('success', 'El evento ha sido ocultado correctamente.');

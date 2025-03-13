@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PublicacionController;
+use App\Http\Controllers\CategoriaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,6 +43,15 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
     Route::get('/', [PublicacionController::class, 'index'])->name('index');
     Route::get('/create', [PublicacionController::class, 'create'])->name('create');
     Route::post('/', [PublicacionController::class, 'store'])->name('store');
+});
+
+Route::prefix('categorias')->name('categorias.')->group(function () {
+    Route::get('/', [CategoriaController::class, 'index'])->name('index');
+    Route::get('/create', [CategoriaController::class, 'create'])->name('create');
+    Route::post('/', [CategoriaController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [CategoriaController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [CategoriaController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CategoriaController::class, 'destroy'])->name('destroy');
 });
 
 require __DIR__.'/auth.php';

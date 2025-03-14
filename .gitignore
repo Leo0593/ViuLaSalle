@@ -6,6 +6,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+storage/credentials/clave.json
 .env
 .env.backup
 .env.production

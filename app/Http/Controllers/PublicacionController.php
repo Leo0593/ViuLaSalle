@@ -62,7 +62,7 @@ class PublicacionController extends Controller
 
         // Crear la publicación (y guardarla en la base de datos)
         $publicacion = Publicacion::create([
-            'id_user' => $request->id_user,
+            'id_user' => auth()->user()->id,  // Usar el ID del usuario logueado
             'id_evento' => $request->id_evento,
             'descripcion' => $request->descripcion,
             'fecha_publicacion' => Carbon::now(), // Fecha actual

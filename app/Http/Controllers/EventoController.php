@@ -40,7 +40,7 @@ class EventoController extends Controller
         $evento->fecha_publicacion = now(); // Asigna la fecha y hora actuales
         $evento->foto = $fotoPath; // Guarda la ruta de la foto
         $evento->user_id = $user_id; // Asigna el ID del usuario autenticado
-        $evento->visible = true; // Se podría configurar según sea necesario, o tomar del formulario
+        $evento->status = 1; // Se podría configurar según sea necesario, o tomar del formulario
         $evento->save(); // Guardar el evento
 
         return redirect()->route('eventos.index')->with('success', 'Evento creado correctamente.');

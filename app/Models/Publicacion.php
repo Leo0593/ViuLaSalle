@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Carbon\Carbon;  // Asegúrate de importar Carbon
 
+
 class Publicacion extends Model
 {
     use HasFactory;
@@ -19,6 +20,7 @@ class Publicacion extends Model
         'id_evento',
         'status',
         'descripcion',
+        'likes',
         'fecha_publicacion',
     ];
 
@@ -49,5 +51,15 @@ class Publicacion extends Model
     public function fotos(): HasMany
     {
         return $this->hasMany(FotoPublicacion::class, 'publicacion_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function isLikedByUser($userId)
+    {
+        return $this->likes()->where('user_id', $userId)->exists();
     }
 }

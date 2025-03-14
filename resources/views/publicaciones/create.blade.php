@@ -2,13 +2,22 @@
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Publicación</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
 </head>
+
 <body>
+    <!-- Mostrar la alerta si hay un mensaje de error en la sesión -->
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
+    
     <div class="container mt-5">
         <h1>Crear Publicación</h1>
         <a href="{{ route('publicaciones.index') }}" class="btn btn-secondary mb-3">Volver</a>
@@ -47,4 +56,5 @@
         </form>
     </div>
 </body>
+
 </html>

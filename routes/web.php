@@ -43,6 +43,12 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
     Route::get('/', [PublicacionController::class, 'index'])->name('index');
     Route::get('/create', [PublicacionController::class, 'create'])->name('create');
     Route::post('/', [PublicacionController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [PublicacionController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PublicacionController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PublicacionController::class, 'destroy'])->name('destroy');
+    Route::put('/{id}/activar', [PublicacionController::class, 'activate'])->name('activate');
+    Route::post('/{id}/like', [PublicacionController::class, 'toggleLike'])->name('toggleLike');
+
 });
 
 Route::prefix('categorias')->name('categorias.')->group(function () {

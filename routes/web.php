@@ -60,4 +60,7 @@ Route::prefix('categorias')->name('categorias.')->group(function () {
     Route::delete('/{id}', [CategoriaController::class, 'destroy'])->name('destroy');
 });
 
+use App\Http\Controllers\InfoController;
+Route::get('/info', [InfoController::class, 'index'])->name('info.index');
+
 require __DIR__.'/auth.php';

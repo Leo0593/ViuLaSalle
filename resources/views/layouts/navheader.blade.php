@@ -22,7 +22,7 @@
 
         <div class="sidebar-separator">Intefaces</div>
         <li class="sidebar-item">
-            <a class="sidebar-link">
+            <a class="sidebar-link" href="{{ route('info.index') }}">
                 <i class="fa-solid fa-info-circle"></i>
                 <span>Evento</span>
             </a>

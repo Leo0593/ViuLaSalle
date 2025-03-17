@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Reporte;
+
 
 class PublicacionController extends Controller
 {
@@ -265,6 +267,33 @@ class PublicacionController extends Controller
         }
 
         return response()->json(['likes' => $publicacion->likes, 'liked' => $liked]);
+    }
+
+    public function reportar($id)
+    {
+        $user = auth()->user();
+
+        // Verificar si el usuario ya reportó esta publicación
+        if (Reporte::where('user_id', $user->id)->where('publicacion_id', $id)->exists()) {
+            return back()->with('error', 'Ya has reportado esta publicación.');
+        }
+
+        // Registrar el reporte
+        Reporte::create([
+            'user_id' => $user->id,
+            'publicacion_id' => $id
+        ]);
+
+        // Obtener la publicación y actualizar el contador de reportes
+        $publicacion = Publicacion::findOrFail($id);
+        $publicacion->increment('reportes');
+
+        // Si la publicación alcanza 3 reportes, cambiar su estado a inactivo (0)
+        if ($publicacion->reportes >= 3) {
+            $publicacion->update(['status' => 0]);
+        }
+
+        return back()->with('success', 'Publicación reportada correctamente.');
     }
 
 

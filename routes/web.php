@@ -48,6 +48,7 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
     Route::delete('/{id}', [PublicacionController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activar', [PublicacionController::class, 'activate'])->name('activate');
     Route::post('/{id}/like', [PublicacionController::class, 'toggleLike'])->name('toggleLike');
+    Route::post('/{id}/reportar', [PublicacionController::class, 'reportar'])->name('reportar');
 
 });
 

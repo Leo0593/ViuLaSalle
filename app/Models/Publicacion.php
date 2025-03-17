@@ -20,6 +20,7 @@ class Publicacion extends Model
         'id_evento',
         'status',
         'descripcion',
+        'reportes',
         'likes',
         'fecha_publicacion',
     ];

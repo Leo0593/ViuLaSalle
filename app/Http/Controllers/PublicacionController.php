@@ -195,7 +195,7 @@ class PublicacionController extends Controller
 
     public function show(string $id)
     {
-        //
+       
     }
 
     // FUNCIONES ADICIONALES

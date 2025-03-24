@@ -107,6 +107,8 @@
                                         @endif
                                     </td>
 
+                                    <!-- activador de boton de comentarios -->
+
                                     <td>{{ $publicacion->activar_comentarios }}</td>
 
 

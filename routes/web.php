@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ComentarioController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,6 +61,8 @@ Route::prefix('categorias')->name('categorias.')->group(function () {
     Route::put('/{id}', [CategoriaController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoriaController::class, 'destroy'])->name('destroy');
 });
+
+
 
 use App\Http\Controllers\InfoController;
 Route::get('/info', [InfoController::class, 'index'])->name('info.index');

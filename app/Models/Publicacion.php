@@ -22,6 +22,7 @@ class Publicacion extends Model
         'descripcion',
         'reportes',
         'likes',
+        'activar_comentarios',
         'fecha_publicacion',
     ];
 

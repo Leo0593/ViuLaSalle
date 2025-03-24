@@ -46,6 +46,14 @@
                 <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
             </div>
 
+            <div class="form-group form-check">
+                <input type="checkbox" name="activar_comentarios" id="activar_comentarios" class="form-check-input"
+                    value="1">
+                <label class="form-check-label" for="activar_comentarios">Permitir comentarios</label>
+            </div>
+
+
+
             <button type="submit" class="btn btn-primary">Guardar Publicación</button>
         </form>
     </div>

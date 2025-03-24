@@ -60,6 +60,7 @@ class PublicacionController extends Controller
             'descripcion' => 'required|string|max:255',    // Descripción es obligatoria y tiene un límite de caracteres
             'fotos' => 'nullable|array',                    // Aceptar un array de fotos
             'fotos.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048', // Validación para las fotos
+            'activar_comentarios' => 'nullable|boolean',
         ]);
 
         // Crear la publicación (y guardarla en la base de datos)
@@ -69,6 +70,7 @@ class PublicacionController extends Controller
             'descripcion' => $request->descripcion,
             'fecha_publicacion' => Carbon::now(), // Fecha actual
             'status' => 1, // Estado por defecto es 1
+            'activar_comentarios' => $request->has('activar_comentarios') ? 1 : 0,
         ]);
 
         // Subir las fotos y procesarlas

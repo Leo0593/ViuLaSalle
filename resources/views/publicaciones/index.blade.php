@@ -48,6 +48,7 @@
                     <th>Fotos</th> <!-- Columna nueva para mostrar las fotos -->
                     <th>Likes</th> <!-- Nueva columna para mostrar los likes -->
                     <th>Reportar</th> <!-- Nueva columna para reportar la publicación -->
+                    <th>Activar Comentarios</th>
                     <th>Acciones</th> <!-- Para los botones de editar y activar/desactivar -->
                 </tr>
             </thead>
@@ -105,6 +106,10 @@
                                             <button class="btn btn-secondary btn-sm" disabled>Reportado</button>
                                         @endif
                                     </td>
+
+                                    <td>{{ $publicacion->activar_comentarios }}</td>
+
+
                                     <!-- Columna de botones -->
 
                                     <td>

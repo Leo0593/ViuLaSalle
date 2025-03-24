@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('status')->default(1); // 1 = Activo, 0 = Inactivo
             $table->text('descripcion');
             $table->integer('likes')->default(0);
+            $table->boolean('activar_comentarios')->default(0);
             $table->integer('reportes')->default(0);
             $table->dateTime('fecha_publicacion')->default(now());
 

@@ -49,6 +49,7 @@
                     <th>Likes</th> <!-- Nueva columna para mostrar los likes -->
                     <th>Reportar</th> <!-- Nueva columna para reportar la publicación -->
                     <th>Activar Comentarios</th>
+                    <th>Comentarios</th>
                     <th>Acciones</th> <!-- Para los botones de editar y activar/desactivar -->
                 </tr>
             </thead>
@@ -66,12 +67,12 @@
                                     <!-- Columna de fotos -->
                                     <td>
                                         @if($publicacion->fotos->count() > 0)
-                                            <div class="row">
+                                            <div class="d-flex flex-wrap">
                                                 @foreach($publicacion->fotos as $foto)
-                                                    <div class="col-md-3">
+                                                    <div class="mr-2">
                                                         <!-- Mostrar las fotos con la ruta correcta usando Storage::url() -->
                                                         <img src="{{ Storage::url('public/publicaciones/' . $foto->ruta_foto) }}" alt="Foto"
-                                                            class="img-fluid">
+                                                            width="auto" height="100">
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -79,6 +80,7 @@
                                             <p>No hay fotos</p>
                                         @endif
                                     </td>
+
 
                                     <!-- Mostrar la cantidad de likes -->
                                     <td>
@@ -111,32 +113,44 @@
 
                                     <td>{{ $publicacion->activar_comentarios }}</td>
 
+                                    <!-- boton de comentarios -->
+
+                                    <td>
+                                        @if($publicacion->activar_comentarios == 1)
+                                            <a href="{{ route('comentarios.ver', $publicacion->id) }}" class="btn btn-primary">
+                                                Ver Comentarios
+                                            </a>
+                                        @endif
+                                    </td>
 
                                     <!-- Columna de botones -->
 
                                     <td>
-                                        <a href="{{ route('publicaciones.edit', $publicacion->id) }}"
-                                            class="btn btn-warning btn-sm">Editar</a>
+                                        @if($user->role == 'ADMIN' || $publicacion->id_user === auth()->id())
 
-                                        <!-- Condicional para mostrar el botón de eliminar o activar -->
-                                        @if ($publicacion->status == 1)
-                                            <!-- Botón de eliminar con un formulario -->
-                                            <form action="{{ route('publicaciones.destroy', $publicacion->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('¿Estás seguro de que deseas desactivar esta publicación?')">Eliminar</button>
-                                            </form>
-                                        @else
-                                            <!-- Botón de activar con un formulario -->
-                                            <form action="{{ route('publicaciones.activate', $publicacion->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn btn-success btn-sm"
-                                                    onclick="return confirm('¿Estás seguro de que deseas activar esta publicación?')">Activar</button>
-                                            </form>
+                                            <a href="{{ route('publicaciones.edit', $publicacion->id) }}"
+                                                class="btn btn-warning btn-sm">Editar</a>
+
+                                            <!-- Condicional para mostrar el botón de eliminar o activar -->
+                                            @if ($publicacion->status == 1)
+                                                <!-- Botón de eliminar con un formulario -->
+                                                <form action="{{ route('publicaciones.destroy', $publicacion->id) }}" method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('¿Estás seguro de que deseas desactivar esta publicación?')">Eliminar</button>
+                                                </form>
+                                            @else
+                                                <!-- Botón de activar con un formulario -->
+                                                <form action="{{ route('publicaciones.activate', $publicacion->id) }}" method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-success btn-sm"
+                                                        onclick="return confirm('¿Estás seguro de que deseas activar esta publicación?')">Activar</button>
+                                                </form>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>

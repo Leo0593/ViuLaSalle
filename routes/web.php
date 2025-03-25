@@ -62,6 +62,11 @@ Route::prefix('categorias')->name('categorias.')->group(function () {
     Route::delete('/{id}', [CategoriaController::class, 'destroy'])->name('destroy');
 });
 
+Route::get('/publicacion/{id}/comentarios', [ComentarioController::class, 'verComentarios'])->name('comentarios.ver');
+Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name('comentarios.store');
+Route::put('comentarios/{id}/cambiar-estado', [ComentarioController::class, 'changeStatus'])->name('comentarios.changeStatus');
+
+
 
 
 use App\Http\Controllers\InfoController;

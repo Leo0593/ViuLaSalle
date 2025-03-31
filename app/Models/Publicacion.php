@@ -55,6 +55,11 @@ class Publicacion extends Model
         return $this->hasMany(FotoPublicacion::class, 'publicacion_id');
     }
 
+    public function videos(): HasMany
+    {
+        return $this->hasMany(VideoPublicacion::class, 'publicacion_id');
+    }
+
     public function likes()
     {
         return $this->hasMany(Like::class);

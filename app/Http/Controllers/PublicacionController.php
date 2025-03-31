@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Evento;
 use Carbon\Carbon; // Para obtener la fecha actual
 use App\Models\FotoPublicacion;
+use App\Models\VideoPublicacion;
 
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature;
@@ -86,7 +87,7 @@ class PublicacionController extends Controller
                 if ($this->esContenidoInapropiado($resultadoVision)) {
                     // Si se detecta contenido inapropiado, eliminamos la publicación y mostramos un mensaje
                     $publicacion->delete(); // Eliminamos la publicación de la base de datos
-                    return redirect()->route('publicaciones.create')->with('error', 'La imagen contiene contenido inapropiado.');
+                    return redirect()->route('publicaciones.create')->with('error', 'La publicación contiene contenido inapropiado.');
                 }
 
                 // Crear una nueva entrada en la tabla de fotos asociada a la publicación
@@ -97,12 +98,24 @@ class PublicacionController extends Controller
             }
         }
 
+        // Subida de videos
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $rutaVideo = $video->store('publicvideos', 'public');
+
+                VideoPublicacion::create([
+                    'publicacion_id' => $publicacion->id,
+                    'ruta_video' => basename($rutaVideo),
+                ]);
+            }
+        }
+
         // Redirigir a la lista de publicaciones con un mensaje de éxito
         return redirect()->route('publicaciones.index')->with('success', 'Publicación creada correctamente.');
     }
     public function edit($id)
     {
-        $publicacion = Publicacion::with('fotos')->findOrFail($id); // Buscar la publicación con sus fotos
+        $publicacion = Publicacion::with(['fotos', 'videos'])->findOrFail($id);
         $usuarios = User::all(); // Obtener lista de usuarios
         $eventos = Evento::all(); // Obtener lista de eventos
 
@@ -154,13 +167,33 @@ class PublicacionController extends Controller
                 // Analizar con Google Vision
                 $resultadoVision = $this->analizarImagenConVision($rutaFoto);
                 if ($this->esContenidoInapropiado($resultadoVision)) {
-                    return redirect()->route('publicaciones.edit', $id)->with('error', 'La imagen contiene contenido inapropiado.');
+                    return redirect()->route('publicaciones.edit', $id)->with('error', 'La publicación contiene contenido inapropiado.');
                 }
 
                 // Guardar la nueva foto en la base de datos
                 FotoPublicacion::create([
                     'publicacion_id' => $publicacion->id,
                     'ruta_foto' => basename($rutaFoto),
+                ]);
+            }
+        }
+
+        if ($request->has('delete_videos')) {
+            foreach ($request->delete_videos as $video_id) {
+                $video = VideoPublicacion::find($video_id);
+                if ($video) {
+                    Storage::delete('public/publicvideos/' . $video->ruta_video);
+                    $video->delete();
+                }
+            }
+        }
+
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $rutaVideo = $video->store('publicvideos', 'public');
+                VideoPublicacion::create([
+                    'publicacion_id' => $publicacion->id,
+                    'ruta_video' => basename($rutaVideo),
                 ]);
             }
         }
@@ -195,7 +228,7 @@ class PublicacionController extends Controller
 
     public function show(string $id)
     {
-       
+
     }
 
     // FUNCIONES ADICIONALES

@@ -51,6 +51,7 @@
                     <th>Activar Comentarios</th>
                     <th>Comentarios</th>
                     <th>Acciones</th> <!-- Para los botones de editar y activar/desactivar -->
+                    <th>Videos</th> <!-- Columna de Videos -->
                 </tr>
             </thead>
             <tbody>
@@ -151,6 +152,25 @@
                                                         onclick="return confirm('¿Estás seguro de que deseas activar esta publicación?')">Activar</button>
                                                 </form>
                                             @endif
+                                        @endif
+                                    </td>
+
+                                    <!-- Columna de Videos -->
+                                    <td>
+                                        @if($publicacion->videos->count() > 0)
+                                            <div class="d-flex flex-wrap">
+                                                @foreach($publicacion->videos as $video)
+                                                    <div class="mr-2">
+                                                        <video width="200" height="150" controls>
+                                                            <source src="{{ Storage::url('publicvideos/' . $video->ruta_video) }}"
+                                                                type="video/mp4">
+                                                            Tu navegador no soporta el video.
+                                                        </video>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <p>No hay videos</p>
                                         @endif
                                     </td>
                                 </tr>

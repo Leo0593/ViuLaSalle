@@ -46,6 +46,11 @@
                 <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
             </div>
 
+            <div class="form-group">
+                <label for="videos">Videos</label>
+                <input type="file" name="videos[]" id="videos" class="form-control" multiple>
+            </div>
+
             <div class="form-group form-check">
                 <input type="checkbox" name="activar_comentarios" id="activar_comentarios" class="form-check-input"
                     value="1">

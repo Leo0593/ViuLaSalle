@@ -29,7 +29,8 @@
 
             <div class="form-group">
                 <label for="id_evento">Evento</label>
-                <select name="id_evento" id="id_evento" class="form-control">
+                <select name="id_evento" id="id_evento" class="form-control" required>
+                    <option value="" selected disabled>Selecciona un evento</option> <!-- Opción inicial -->
                     @foreach($eventos as $evento)
                         <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
                     @endforeach
@@ -43,13 +44,15 @@
 
             <div class="form-group">
                 <label for="fotos">Fotos</label>
-                <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
+                <input type="file" name="fotos[]" id="fotos" class="form-control" multiple required>
             </div>
 
-            <div class="form-group">
-                <label for="videos">Videos</label>
-                <input type="file" name="videos[]" id="videos" class="form-control" multiple>
-            </div>
+            @if ($user && ($user->role == 'PROFESOR' || $user->role == 'ADMIN'))
+                <div class="form-group">
+                    <label for="videos">Videos</label>
+                    <input type="file" name="videos[]" id="videos" class="form-control" multiple>
+                </div>
+            @endif
 
             <div class="form-group form-check">
                 <input type="checkbox" name="activar_comentarios" id="activar_comentarios" class="form-check-input"

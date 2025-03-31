@@ -68,27 +68,29 @@
                 <input type="file" name="fotos[]" class="form-control" multiple>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Videos Actuales</label>
-                <div>
-                    @foreach($publicacion->videos as $video)
-                        <div class="d-inline-block me-2">
-                            <video width="100" controls>
-                                <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}" type="video/mp4">
-                                Tu navegador no soporta la reproducción de videos.
-                            </video>
-                            <div>
-                                <input type="checkbox" name="delete_videos[]" value="{{ $video->id }}"> Eliminar
+            @if ($user && ($user->role == 'PROFESOR' || $user->role == 'ADMIN'))
+                <div class="mb-3">
+                    <label class="form-label">Videos Actuales</label>
+                    <div>
+                        @foreach($publicacion->videos as $video)
+                            <div class="d-inline-block me-2">
+                                <video width="100" controls>
+                                    <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}" type="video/mp4">
+                                    Tu navegador no soporta la reproducción de videos.
+                                </video>
+                                <div>
+                                    <input type="checkbox" name="delete_videos[]" value="{{ $video->id }}"> Eliminar
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-3">
-                <label for="videos" class="form-label">Nuevos Videos (Opcional)</label>
-                <input type="file" name="videos[]" class="form-control" multiple accept="video/*">
-            </div>
+                <div class="mb-3">
+                    <label for="videos" class="form-label">Nuevos Videos (Opcional)</label>
+                    <input type="file" name="videos[]" class="form-control" multiple accept="video/*">
+                </div>
+            @endif
 
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </form>

@@ -41,12 +41,13 @@ class PublicacionController extends Controller
 
     public function create()
     {
+        $user = auth()->user();
         // Obtener todos los usuarios y eventos disponibles
         $usuarios = User::all();
         $eventos = Evento::all();
 
         // Retornar la vista con los datos
-        return view('publicaciones.create', compact('usuarios', 'eventos'));
+        return view('publicaciones.create', compact('usuarios', 'eventos', 'user'));
     }
 
     public function store(Request $request)
@@ -115,11 +116,13 @@ class PublicacionController extends Controller
     }
     public function edit($id)
     {
+        $user = auth()->user();
+
         $publicacion = Publicacion::with(['fotos', 'videos'])->findOrFail($id);
         $usuarios = User::all(); // Obtener lista de usuarios
         $eventos = Evento::all(); // Obtener lista de eventos
 
-        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos'));
+        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos', 'user'));
     }
 
     public function update(Request $request, $id)

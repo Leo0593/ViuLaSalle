@@ -9,9 +9,17 @@ class EventoController extends Controller
 {
     public function index()
     {
-        $eventos = Evento::where('status', 1)->get(); // Solo muestra eventos visibles
-        return view('eventos.index', compact('eventos')); // Devuelve la vista con los eventos
+        $user = auth()->user(); // Obtener el usuario autenticado
+
+        if ($user && $user->role == 'ADMIN') {
+            $eventos = Evento::all(); // Mostrar todos los eventos para ADMIN
+        } else {
+            $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
+        }
+
+        return view('eventos.index', compact('eventos', 'user')); // Retornar vista con datos
     }
+
 
     public function create()
     {
@@ -40,7 +48,7 @@ class EventoController extends Controller
         $evento->fecha_publicacion = now(); // Asigna la fecha y hora actuales
         $evento->foto = $fotoPath; // Guarda la ruta de la foto
         $evento->user_id = $user_id; // Asigna el ID del usuario autenticado
-        $evento->visible = true; // Se podría configurar según sea necesario, o tomar del formulario
+        $evento->status = 1; // Se podría configurar según sea necesario, o tomar del formulario
         $evento->save(); // Guardar el evento
 
         return redirect()->route('eventos.index')->with('success', 'Evento creado correctamente.');
@@ -85,12 +93,24 @@ class EventoController extends Controller
         return redirect()->route('eventos.index')->with('success', 'Evento actualizado correctamente.');
     }
 
+    // Método para ocultar un evento (desactivarlo)
     public function destroy($id)
     {
         $evento = Evento::findOrFail($id);
-        $evento->status = 0; // Ocultar el evento en lugar de eliminarlo
+        $evento->status = 0; // Ocultar el evento
         $evento->save();
 
         return redirect()->route('eventos.index')->with('success', 'El evento ha sido ocultado correctamente.');
     }
+
+    // Método para activar un evento
+    public function activate($id)
+    {
+        $evento = Evento::findOrFail($id);
+        $evento->status = 1; // Activar el evento
+        $evento->save();
+
+        return redirect()->route('eventos.index')->with('success', 'El evento ha sido activado correctamente.');
+    }
+
 }

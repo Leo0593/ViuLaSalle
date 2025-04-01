@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ComentarioController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +38,8 @@ Route::prefix('eventos')->name('eventos.')->group(function () {
     Route::get('/{id}/edit', [EventoController::class, 'edit'])->name('edit');
     Route::put('/{id}', [EventoController::class, 'update'])->name('update');
     Route::delete('/{id}', [EventoController::class, 'destroy'])->name('destroy');
+    Route::put('/{id}/activate', [EventoController::class, 'activate'])->name('activate');
+
 });
 
 Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
@@ -48,6 +51,7 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
     Route::delete('/{id}', [PublicacionController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activar', [PublicacionController::class, 'activate'])->name('activate');
     Route::post('/{id}/like', [PublicacionController::class, 'toggleLike'])->name('toggleLike');
+    Route::post('/{id}/reportar', [PublicacionController::class, 'reportar'])->name('reportar');
 
 });
 
@@ -59,6 +63,13 @@ Route::prefix('categorias')->name('categorias.')->group(function () {
     Route::put('/{id}', [CategoriaController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoriaController::class, 'destroy'])->name('destroy');
 });
+
+Route::get('/publicacion/{id}/comentarios', [ComentarioController::class, 'verComentarios'])->name('comentarios.ver');
+Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name('comentarios.store');
+Route::put('comentarios/{id}/cambiar-estado', [ComentarioController::class, 'changeStatus'])->name('comentarios.changeStatus');
+
+
+
 
 use App\Http\Controllers\InfoController;
 Route::get('/info', [InfoController::class, 'index'])->name('info.index');

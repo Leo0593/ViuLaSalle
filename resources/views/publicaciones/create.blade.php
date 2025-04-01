@@ -17,25 +17,20 @@
             alert("{{ session('error') }}");
         </script>
     @endif
-    
+
     <div class="container mt-5">
         <h1>Crear Publicación</h1>
         <a href="{{ route('publicaciones.index') }}" class="btn btn-secondary mb-3">Volver</a>
 
         <form action="{{ route('publicaciones.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label for="id_user">Usuario</label>
-                <select name="id_user" id="id_user" class="form-control">
-                    @foreach($usuarios as $usuario)
-                        <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
+
 
             <div class="form-group">
                 <label for="id_evento">Evento</label>
-                <select name="id_evento" id="id_evento" class="form-control">
+                <select name="id_evento" id="id_evento" class="form-control" required>
+                    <option value="" selected disabled>Selecciona un evento</option> <!-- Opción inicial -->
                     @foreach($eventos as $evento)
                         <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
                     @endforeach
@@ -49,8 +44,23 @@
 
             <div class="form-group">
                 <label for="fotos">Fotos</label>
-                <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
+                <input type="file" name="fotos[]" id="fotos" class="form-control" multiple required>
             </div>
+
+            @if ($user && ($user->role == 'PROFESOR' || $user->role == 'ADMIN'))
+                <div class="form-group">
+                    <label for="videos">Videos</label>
+                    <input type="file" name="videos[]" id="videos" class="form-control" multiple>
+                </div>
+            @endif
+
+            <div class="form-group form-check">
+                <input type="checkbox" name="activar_comentarios" id="activar_comentarios" class="form-check-input"
+                    value="1">
+                <label class="form-check-label" for="activar_comentarios">Permitir comentarios</label>
+            </div>
+
+
 
             <button type="submit" class="btn btn-primary">Guardar Publicación</button>
         </form>

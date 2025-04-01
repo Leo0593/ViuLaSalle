@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Evento;
 use Carbon\Carbon; // Para obtener la fecha actual
 use App\Models\FotoPublicacion;
+use App\Models\VideoPublicacion;
 
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Reporte;
+
 
 class PublicacionController extends Controller
 {
@@ -33,17 +36,18 @@ class PublicacionController extends Controller
         }
 
         // Retornar la vista con las publicaciones filtradas
-        return view('publicaciones.index', compact('publicaciones'));
+        return view('publicaciones.index', compact('publicaciones', 'user'));
     }
 
     public function create()
     {
+        $user = auth()->user();
         // Obtener todos los usuarios y eventos disponibles
         $usuarios = User::all();
         $eventos = Evento::all();
 
         // Retornar la vista con los datos
-        return view('publicaciones.create', compact('usuarios', 'eventos'));
+        return view('publicaciones.create', compact('usuarios', 'eventos', 'user'));
     }
 
     public function store(Request $request)
@@ -58,15 +62,17 @@ class PublicacionController extends Controller
             'descripcion' => 'required|string|max:255',    // Descripción es obligatoria y tiene un límite de caracteres
             'fotos' => 'nullable|array',                    // Aceptar un array de fotos
             'fotos.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048', // Validación para las fotos
+            'activar_comentarios' => 'nullable|boolean',
         ]);
 
         // Crear la publicación (y guardarla en la base de datos)
         $publicacion = Publicacion::create([
-            'id_user' => $request->id_user,
+            'id_user' => auth()->user()->id,  // Usar el ID del usuario logueado
             'id_evento' => $request->id_evento,
             'descripcion' => $request->descripcion,
             'fecha_publicacion' => Carbon::now(), // Fecha actual
             'status' => 1, // Estado por defecto es 1
+            'activar_comentarios' => $request->has('activar_comentarios') ? 1 : 0,
         ]);
 
         // Subir las fotos y procesarlas
@@ -82,7 +88,7 @@ class PublicacionController extends Controller
                 if ($this->esContenidoInapropiado($resultadoVision)) {
                     // Si se detecta contenido inapropiado, eliminamos la publicación y mostramos un mensaje
                     $publicacion->delete(); // Eliminamos la publicación de la base de datos
-                    return redirect()->route('publicaciones.create')->with('error', 'La imagen contiene contenido inapropiado.');
+                    return redirect()->route('publicaciones.create')->with('error', 'La publicación contiene contenido inapropiado.');
                 }
 
                 // Crear una nueva entrada en la tabla de fotos asociada a la publicación
@@ -93,16 +99,30 @@ class PublicacionController extends Controller
             }
         }
 
+        // Subida de videos
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $rutaVideo = $video->store('publicvideos', 'public');
+
+                VideoPublicacion::create([
+                    'publicacion_id' => $publicacion->id,
+                    'ruta_video' => basename($rutaVideo),
+                ]);
+            }
+        }
+
         // Redirigir a la lista de publicaciones con un mensaje de éxito
         return redirect()->route('publicaciones.index')->with('success', 'Publicación creada correctamente.');
     }
     public function edit($id)
     {
-        $publicacion = Publicacion::with('fotos')->findOrFail($id); // Buscar la publicación con sus fotos
+        $user = auth()->user();
+
+        $publicacion = Publicacion::with(['fotos', 'videos'])->findOrFail($id);
         $usuarios = User::all(); // Obtener lista de usuarios
         $eventos = Evento::all(); // Obtener lista de eventos
 
-        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos'));
+        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos', 'user'));
     }
 
     public function update(Request $request, $id)
@@ -150,13 +170,33 @@ class PublicacionController extends Controller
                 // Analizar con Google Vision
                 $resultadoVision = $this->analizarImagenConVision($rutaFoto);
                 if ($this->esContenidoInapropiado($resultadoVision)) {
-                    return redirect()->route('publicaciones.edit', $id)->with('error', 'La imagen contiene contenido inapropiado.');
+                    return redirect()->route('publicaciones.edit', $id)->with('error', 'La publicación contiene contenido inapropiado.');
                 }
 
                 // Guardar la nueva foto en la base de datos
                 FotoPublicacion::create([
                     'publicacion_id' => $publicacion->id,
                     'ruta_foto' => basename($rutaFoto),
+                ]);
+            }
+        }
+
+        if ($request->has('delete_videos')) {
+            foreach ($request->delete_videos as $video_id) {
+                $video = VideoPublicacion::find($video_id);
+                if ($video) {
+                    Storage::delete('public/publicvideos/' . $video->ruta_video);
+                    $video->delete();
+                }
+            }
+        }
+
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $rutaVideo = $video->store('publicvideos', 'public');
+                VideoPublicacion::create([
+                    'publicacion_id' => $publicacion->id,
+                    'ruta_video' => basename($rutaVideo),
                 ]);
             }
         }
@@ -191,7 +231,7 @@ class PublicacionController extends Controller
 
     public function show(string $id)
     {
-        //
+
     }
 
     // FUNCIONES ADICIONALES
@@ -265,6 +305,33 @@ class PublicacionController extends Controller
         }
 
         return response()->json(['likes' => $publicacion->likes, 'liked' => $liked]);
+    }
+
+    public function reportar($id)
+    {
+        $user = auth()->user();
+
+        // Verificar si el usuario ya reportó esta publicación
+        if (Reporte::where('user_id', $user->id)->where('publicacion_id', $id)->exists()) {
+            return back()->with('error', 'Ya has reportado esta publicación.');
+        }
+
+        // Registrar el reporte
+        Reporte::create([
+            'user_id' => $user->id,
+            'publicacion_id' => $id
+        ]);
+
+        // Obtener la publicación y actualizar el contador de reportes
+        $publicacion = Publicacion::findOrFail($id);
+        $publicacion->increment('reportes');
+
+        // Si la publicación alcanza 3 reportes, cambiar su estado a inactivo (0)
+        if ($publicacion->reportes >= 3) {
+            $publicacion->update(['status' => 0]);
+        }
+
+        return back()->with('success', 'Publicación reportada correctamente.');
     }
 
 

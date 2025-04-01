@@ -20,7 +20,9 @@ class Publicacion extends Model
         'id_evento',
         'status',
         'descripcion',
+        'reportes',
         'likes',
+        'activar_comentarios',
         'fecha_publicacion',
     ];
 
@@ -53,6 +55,11 @@ class Publicacion extends Model
         return $this->hasMany(FotoPublicacion::class, 'publicacion_id');
     }
 
+    public function videos(): HasMany
+    {
+        return $this->hasMany(VideoPublicacion::class, 'publicacion_id');
+    }
+
     public function likes()
     {
         return $this->hasMany(Like::class);
@@ -62,4 +69,11 @@ class Publicacion extends Model
     {
         return $this->likes()->where('user_id', $userId)->exists();
     }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'id_publicacion');
+    }
+
+
 }

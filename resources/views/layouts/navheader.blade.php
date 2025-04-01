@@ -4,7 +4,9 @@
     </button>
 
     <div class="logo-container">
-        <img src="../../img/ViuLaSalle.png" alt="Logo de Elite League">
+        <a href="{{ route('welcome') }}">
+            <img src="../../img/ViuSalle.png" alt="Viu LaSalle">
+        </a>
     </div>
 </header>
 
@@ -14,7 +16,7 @@
         <div class="sidebar-separator">Home</div>
 
         <li class="sidebar-item">
-            <a class="sidebar-link">
+            <a class="sidebar-link" href="{{ route('welcome') }}">
                 <i class="fa-solid fa-house"></i>
                 <span>Inicio</span>
             </a>

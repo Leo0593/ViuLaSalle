@@ -1,7 +1,8 @@
 <header>
+    <!--
     <button class="btn-menu scale-btn toggle-btn" id="bt1">
         <i class="fa-solid fa-bars"></i>
-    </button>
+    </button> -->
 
     <div class="logo-container">
         <a href="{{ route('welcome') }}">

@@ -19,4 +19,9 @@ class Categoria extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+    public function publicaciones()
+    {
+        return $this->belongsToMany(Publicacion::class, 'categoria_publicacion');
+    }
+
 }

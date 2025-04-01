@@ -9,6 +9,7 @@ use App\Models\Evento;
 use Carbon\Carbon; // Para obtener la fecha actual
 use App\Models\FotoPublicacion;
 use App\Models\VideoPublicacion;
+use App\Models\Categoria;
 
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature;
@@ -30,24 +31,25 @@ class PublicacionController extends Controller
         $user = auth()->user();
 
         if ($user->role == 'ADMIN') {
-            $publicaciones = Publicacion::with('fotos')->get();
+            $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->get();
         } else {
-            $publicaciones = Publicacion::with('fotos')->where('status', 1)->get();
+            $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->where('status', 1)->get();
         }
 
         // Retornar la vista con las publicaciones filtradas
         return view('publicaciones.index', compact('publicaciones', 'user'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $user = auth()->user();
         // Obtener todos los usuarios y eventos disponibles
         $usuarios = User::all();
         $eventos = Evento::all();
+        $categorias = Categoria::inRandomOrder()->take(5)->get(); // 5 categorías aleatorias
 
         // Retornar la vista con los datos
-        return view('publicaciones.create', compact('usuarios', 'eventos', 'user'));
+        return view('publicaciones.create', compact('usuarios', 'eventos', 'user', 'categorias'));
     }
 
     public function store(Request $request)
@@ -63,6 +65,8 @@ class PublicacionController extends Controller
             'fotos' => 'nullable|array',                    // Aceptar un array de fotos
             'fotos.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048', // Validación para las fotos
             'activar_comentarios' => 'nullable|boolean',
+            'categorias' => 'nullable|array', // Permitir múltiples categorías
+            'categorias.*' => 'exists:categorias,id', // Verificar que las categorías existen
         ]);
 
         // Crear la publicación (y guardarla en la base de datos)
@@ -74,6 +78,11 @@ class PublicacionController extends Controller
             'status' => 1, // Estado por defecto es 1
             'activar_comentarios' => $request->has('activar_comentarios') ? 1 : 0,
         ]);
+
+        if ($request->has('categorias')) {
+            $publicacion->categorias()->attach($request->categorias);
+        }
+
 
         // Subir las fotos y procesarlas
         if ($request->hasFile('fotos')) {
@@ -118,11 +127,13 @@ class PublicacionController extends Controller
     {
         $user = auth()->user();
 
-        $publicacion = Publicacion::with(['fotos', 'videos'])->findOrFail($id);
+        $publicacion = Publicacion::with(['fotos', 'videos', 'categorias'])->findOrFail($id);
         $usuarios = User::all(); // Obtener lista de usuarios
         $eventos = Evento::all(); // Obtener lista de eventos
+        $categorias = Categoria::inRandomOrder()->take(5)->get();  // Obtener solo 5 categorías aleatorias
 
-        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos', 'user'));
+
+        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos', 'user', 'categorias'));
     }
 
     public function update(Request $request, $id)
@@ -135,19 +146,24 @@ class PublicacionController extends Controller
         // Validación de los datos
         $request->validate([
             'id_user' => 'required|exists:users,id',
-            'id_evento' => 'required|exists:eventos,id',
+            'id_evento' => 'nullable|exists:eventos,id',
             'descripcion' => 'required|string|max:255',
+            'categorias' => 'nullable|array',
+            'categorias.*' => 'exists:categorias,id',
             'fotos' => 'nullable|array',
             'fotos.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'activar_comentarios' => 'nullable|boolean',
         ]);
-
         // Actualizar los datos de la publicación
         $publicacion->update([
             'id_user' => $request->id_user,
             'id_evento' => $request->id_evento,
             'descripcion' => $request->descripcion,
             'fecha_publicacion' => Carbon::now(),
+            'activar_comentarios' => $request->has('activar_comentarios') ? 1 : 0, // Guardar el estado de los comentarios
         ]);
+
+        $publicacion->categorias()->sync($request->categorias ?? []);
 
         // Eliminar fotos seleccionadas
         if ($request->has('delete_photos')) {

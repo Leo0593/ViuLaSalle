@@ -130,7 +130,7 @@ class PublicacionController extends Controller
         $publicacion = Publicacion::with(['fotos', 'videos', 'categorias'])->findOrFail($id);
         $usuarios = User::all(); // Obtener lista de usuarios
         $eventos = Evento::all(); // Obtener lista de eventos
-        $categorias = Categoria::inRandomOrder()->take(5)->get();  // Obtener solo 5 categorías aleatorias
+        $categorias = Categoria::all(); // Obtener todas las categorías
 
 
         return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos', 'user', 'categorias'));

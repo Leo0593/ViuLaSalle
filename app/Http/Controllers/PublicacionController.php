@@ -46,7 +46,7 @@ class PublicacionController extends Controller
         // Obtener todos los usuarios y eventos disponibles
         $usuarios = User::all();
         $eventos = Evento::all();
-        $categorias = Categoria::inRandomOrder()->take(5)->get(); // 5 categorías aleatorias
+        $categorias = Categoria::all(); // Obtener todas las categorías
 
         // Retornar la vista con los datos
         return view('publicaciones.create', compact('usuarios', 'eventos', 'user', 'categorias'));

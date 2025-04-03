@@ -74,6 +74,11 @@ class Publicacion extends Model
     {
         return $this->hasMany(Comentario::class, 'id_publicacion');
     }
+    public function categorias()
+    {
+        return $this->belongsToMany(Categoria::class, 'categoria_publicacion');
+    }
+
 
 
 }

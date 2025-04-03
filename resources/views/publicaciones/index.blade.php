@@ -52,6 +52,8 @@
                     <th>Comentarios</th>
                     <th>Acciones</th> <!-- Para los botones de editar y activar/desactivar -->
                     <th>Videos</th> <!-- Columna de Videos -->
+                    <th>Categorías</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -173,6 +175,19 @@
                                             <p>No hay videos</p>
                                         @endif
                                     </td>
+
+                                    <td>
+                                        @if($publicacion->categorias->count() > 0)
+                                            <ul>
+                                                @foreach($publicacion->categorias as $categoria)
+                                                    <li>{{ $categoria->nombre }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p>No hay categorías</p>
+                                        @endif
+                                    </td>
+
                                 </tr>
                 @endforeach
             </tbody>

@@ -36,7 +36,8 @@ class PublicacionController extends Controller
         }
 
         // Retornar la vista con las publicaciones filtradas
-        return view('publicaciones.index', compact('publicaciones', 'user'));
+        //return view('publicaciones.index', compact('publicaciones', 'user'));
+        return view('welcome', compact('publicaciones', 'user'));
     }
 
     public function create()

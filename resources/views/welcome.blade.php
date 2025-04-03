@@ -21,6 +21,7 @@
                 </li>
             </div>
             <div class="contenido">
+                @if (Auth::check())
                 <a href="#" class="box-crear-publicacion" data-toggle="modal" data-target="#exampleModalCenter">
                     <div class="box-crear-publicacion-header">
                         <div class="box-crear-publicacion-header-foto">
@@ -39,9 +40,13 @@
                             <i class="fa-solid fa-video"></i>
                             <span>Video</span>
                         </div>
-                        
                     </div>
                 </a> 
+                @endif
+
+                @foreach ($publicaciones as $publicacion)
+
+                @endforeach
 
                 <div class="box-publicacion">
                     <div class="box-publicacion-header">
@@ -89,20 +94,32 @@
                     </div>
                 </div>
             </div>
+
             <div class="perfil">
                 <div class="perfil-box">
-                    <div class="perfil-header">
-                        <img src="../../img/Fondo.png" alt="Fondo de perfil">
+                    <div class="perfil-header" style="background-image: url('../../img/Fondo.png');">
+                    <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
                     </div>
                     <div class="perfil-foto">
                         <img src="../../img/user-icon.png" alt="Foto de perfil">
                     </div>
+
+                    <!-- Overlay borroso y botón -->
+                    @if(!Auth::check())
+                    <div class="perfil-overlay">
+                        <button class="btn-login"><strong>Iniciar Sesión</strong></button>
+                    </div>
+                    @endif
+
                     <div class="perfil-info">
                         <div class="center-text" style="margin-bottom: 10px;">
-                            <h3>Nombre de Usuario</h3>
+                            <h3>{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</h3>
                         </div>
-                        <p>Correo: usuario@email.com</p>
-                        <p>Ubicación: Ciudad, País</p>
+                        <p><strong>Correo: </strong> {{ Auth::check() ? Auth::user()->email : 'No disponible' }}</p>
+                        <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
+                        <p><strong>Fecha de nacimiento: </strong> {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
+                        <p><strong>Descripción: </strong> {{ Auth::check() ? Auth::user()->description : 'No disponible' }}</p>
+                        <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location: 'No disponible' }}</p>
                     </div>
                 </div>
             </div>
@@ -120,7 +137,9 @@
                             <img src="../../img/user-icon.png" alt="Foto de perfil">
                         </div>
 
-                        <h5 class="modal-title" id="exampleModalLongTitle">Nombre del Usuario</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{ Auth::check() ? Auth::user()->name : 'Invitado' }}
+                        </h5>
                     </div>
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -149,6 +168,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Script -->
+    <script>
+        // Seleccionar los iconos
+        const iconoImagen = document.getElementById('icono-imagen');
+        const iconoVideo = document.getElementById('icono-video');
+        const fileInput = document.getElementById('file-input');
+
+        // Asignar eventos de clic para abrir el selector de archivos
+        iconoImagen.addEventListener('click', function() {
+            fileInput.accept = 'image/*'; // Solo permitir imágenes
+            fileInput.click();  // Abre el selector de archivos
+        });
+
+        iconoVideo.addEventListener('click', function() {
+            fileInput.accept = 'video/*'; // Solo permitir videos
+            fileInput.click();  // Abre el selector de archivos
+        });
+
+        // Opcional: Puedes agregar un evento para mostrar el archivo seleccionado
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                alert('Archivo seleccionado: ' + fileInput.files[0].name);
+            }
+        });
+
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

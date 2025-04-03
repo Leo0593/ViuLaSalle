@@ -1,8 +1,7 @@
 <header>
-    <!--
     <button class="btn-menu scale-btn toggle-btn" id="bt1">
         <i class="fa-solid fa-bars"></i>
-    </button> -->
+    </button> 
 
     <div class="logo-container">
         <a href="{{ route('welcome') }}">
@@ -24,11 +23,20 @@
         </li>
 
         <div class="sidebar-separator">Intefaces</div>
+        
         <li class="sidebar-item">
             <a class="sidebar-link" href="{{ route('info.index') }}">
                 <i class="fa-solid fa-info-circle"></i>
                 <span>Evento</span>
             </a>
         </li>
+
+
+        <div class="sidebar-footer">
+            <a class="sidebar-link">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Salir</span>
+            </a>
+        </div>
     </ul>
 </aside>

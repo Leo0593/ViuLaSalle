@@ -55,13 +55,12 @@
                 </div>
             @endif
 
+            <!-- Buscar Etiquetas -->
             <div class="form-group">
                 <label for="tags">Buscar Etiquetas</label>
-                <!-- Input de búsqueda para las etiquetas -->
                 <input type="text" id="tags-search" class="form-control" placeholder="Buscar etiquetas...">
 
                 <div class="form-group mt-2">
-                    
                     <!-- Input oculto para enviar las categorías seleccionadas -->
                     <select name="categorias[]" id="categorias" class="form-control" multiple style="display: none;">
                         @foreach($categorias as $categoria)
@@ -71,14 +70,13 @@
 
                     <!-- Mostrar las 5 categorías aleatorias sugeridas como botones -->
                     <div id="categorias-list" class="mt-2">
-                        @foreach($categorias as $categoria)
+                        @foreach($categoriasSugeridas as $categoria)
                             <button type="button" class="btn btn-outline-primary category-btn"
                                 data-id="{{ $categoria->id }}">
                                 {{ $categoria->nombre }}
                             </button>
                         @endforeach
                     </div>
-
                 </div>
 
                 <!-- Mostrar las etiquetas seleccionadas -->
@@ -89,6 +87,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div class="form-group form-check">
                 <input type="checkbox" name="activar_comentarios" id="activar_comentarios" class="form-check-input"
@@ -104,68 +103,82 @@
 
     <script>
         $(document).ready(function () {
-            // Filtrar las opciones de categorías a medida que el usuario escribe
-            $('#tags-search').on('input', function () {
-                var searchText = $(this).val().toLowerCase();
-                $('.category-btn').each(function () {
-                    var tagText = $(this).text().toLowerCase();
-                    if (tagText.includes(searchText)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
+            const allCategories = @json($categorias);
+            const defaultCategories = @json($categoriasSugeridas);
+
+            function renderCategoryButtons(categories) {
+                $('#categorias-list').empty();
+                categories.forEach(cat => {
+                    $('#categorias-list').append(`
+                    <button type="button" class="btn btn-outline-primary category-btn" data-id="${cat.id}">
+                        ${cat.nombre}
+                    </button>
+                `);
                 });
-            });
-
-            // Función para actualizar las etiquetas seleccionadas en el UI
-            function updateSelectedTags() {
-                var selectedTags = $('#categorias').val(); // Obtener los valores seleccionados
-                $('#selected-tags-list').empty(); // Limpiar lista de etiquetas
-
-                if (selectedTags) {
-                    selectedTags.forEach(function (tagId) {
-                        var tagText = $('button[data-id="' + tagId + '"]').text(); // Obtener el nombre de la etiqueta
-                        var tagItem = '<span class="badge badge-info m-1" data-id="' + tagId + '">' + tagText +
-                            ' <button type="button" class="btn btn-sm btn-danger remove-tag">x</button></span>';
-                        $('#selected-tags-list').append(tagItem);
-                    });
-                }
             }
 
-            // Agregar categoría seleccionada cuando el usuario hace clic en un botón de categoría
-            $(document).on('click', '.category-btn', function () {
-                var tagId = $(this).data('id');
-                var tagText = $(this).text();
+            $('#tags-search').on('input', function () {
+                const searchText = $(this).val().toLowerCase();
 
-                // Añadir la categoría seleccionada al campo oculto
-                var currentVal = $('#categorias').val() || [];
-                if (!currentVal.includes(tagId.toString())) {
-                    currentVal.push(tagId.toString());
+                if (searchText === '') {
+                    renderCategoryButtons(defaultCategories); // Volver a mostrar sugeridas
+                } else {
+                    const filtered = allCategories.filter(cat => cat.nombre.toLowerCase().includes(searchText));
+                    renderCategoryButtons(filtered);
+                }
+            });
+
+            function updateSelectedTags() {
+                const selectedTags = $('#categorias').val() || [];
+                $('#selected-tags-list').empty();
+
+                selectedTags.forEach(tagId => {
+                    const tag = allCategories.find(c => c.id == tagId);
+                    if (tag) {
+                        $('#selected-tags-list').append(`
+                        <span class="badge badge-info m-1" data-id="${tag.id}">
+                            ${tag.nombre}
+                            <button type="button" class="btn btn-sm btn-danger remove-tag">x</button>
+                        </span>
+                    `);
+                    }
+                });
+            }
+
+            $(document).on('click', '.category-btn', function () {
+                const tagId = $(this).data('id').toString();
+                const currentVal = $('#categorias').val() || [];
+
+                if (!currentVal.includes(tagId)) {
+                    currentVal.push(tagId);
                     $('#categorias').val(currentVal).trigger('change');
                 }
 
-                // Limpiar el campo de búsqueda
                 $('#tags-search').val('');
-
-                // Actualizar la lista de etiquetas seleccionadas
                 updateSelectedTags();
+
+                // Verificar si la categoría seleccionada NO está en las sugeridas
+                const isInSugeridas = defaultCategories.some(cat => cat.id.toString() === tagId);
+                if (!isInSugeridas) {
+                    // Volver a mostrar las sugeridas originales
+                    renderCategoryButtons(defaultCategories);
+                }
             });
 
-            // Eliminar etiqueta cuando se hace clic en el botón de eliminar
             $(document).on('click', '.remove-tag', function () {
-                var tagId = $(this).parent().data('id');
-                var currentVal = $('#categorias').val() || [];
-                currentVal = currentVal.filter(function (id) { return id != tagId; });
-                $('#categorias').val(currentVal).trigger('change');
+                const tagId = $(this).parent().data('id').toString();
+                let currentVal = $('#categorias').val() || [];
 
-                // Actualizar la lista de etiquetas seleccionadas
+                currentVal = currentVal.filter(id => id !== tagId);
+                $('#categorias').val(currentVal).trigger('change');
                 updateSelectedTags();
             });
 
-            // Inicializar las etiquetas seleccionadas al cargar la página
+            // Cargar etiquetas seleccionadas al inicio
             updateSelectedTags();
         });
     </script>
+
 
 </body>
 

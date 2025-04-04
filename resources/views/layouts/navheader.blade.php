@@ -32,6 +32,20 @@
         </li>
 
 
+        <div class="sidebar-separator">Ciclos</div>
+        <li class="sidebar-item">
+            <a class="sidebar-link">
+                <i class="fa-solid fa-info-circle"></i>
+                <span>CFGM</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link">
+                <i class="fa-solid fa-info-circle"></i>
+                <span>CFGS</span>
+            </a>
+        </li>
+
         <div class="sidebar-footer">
             <a class="sidebar-link">
                 <i class="fa-solid fa-right-from-bracket"></i>

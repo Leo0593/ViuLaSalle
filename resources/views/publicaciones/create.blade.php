@@ -45,7 +45,7 @@
 
             <div class="form-group">
                 <label for="fotos">Fotos</label>
-                <input type="file" name="fotos[]" id="fotos" class="form-control" multiple required>
+                <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
             </div>
 
             @if ($user && ($user->role == 'PROFESOR' || $user->role == 'ADMIN'))

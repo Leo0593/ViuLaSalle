@@ -4,7 +4,7 @@
     </button> 
 
     <div class="logo-container">
-        <a href="{{ route('welcome') }}">
+        <a >
             <img src="../../img/ViuSalle.png" alt="Viu LaSalle">
         </a>
     </div>
@@ -16,14 +16,14 @@
         <div class="sidebar-separator">Home</div>
 
         <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ route('welcome') }}">
+            <a class="sidebar-link" >
                 <i class="fa-solid fa-house"></i>
                 <span>Inicio</span>
             </a>
         </li>
 
         <div class="sidebar-separator">Intefaces</div>
-        
+
         <li class="sidebar-item">
             <a class="sidebar-link" href="{{ route('info.index') }}">
                 <i class="fa-solid fa-info-circle"></i>

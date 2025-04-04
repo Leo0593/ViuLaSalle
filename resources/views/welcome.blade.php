@@ -8,7 +8,7 @@
             <div class="opciones">
                 <div class="opciones-bar-separator">Home</div>
                 <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('welcome') }}">
+                    <a class="opciones-bar-link" >
                         <i class="fa-solid fa-house"></i>
                         <span>Inicio</span>
                     </a>
@@ -44,9 +44,18 @@
                 </a> 
                 @endif
 
-                @foreach ($publicaciones as $publicacion)
+                @if(isset($publicaciones) && $publicaciones->isNotEmpty())
+                    @foreach ($publicaciones as $publicacion)
+                        <div>
+                            <h3>{{ $publicacion->titulo }}</h3>
+                            <p>{{ $publicacion->contenido }}</p>
+                        </div>
+                    @endforeach
+                @else
+                    <p>No hay publicaciones disponibles.</p>
+                @endif
 
-                @endforeach
+                
 
                 <div class="box-publicacion">
                     <div class="box-publicacion-header">
@@ -86,7 +95,7 @@
                         User
                     </div>
 
-                    <div class="box-publicacion-img" style="background-image: url('../../img/bp1.jpg');"></div>
+                    <div class="box-publicacion-img" style="background-image: url('../../img/Fondo.png');"></div>
 
                     <div class="box-publicacion-footer">
                         <i class="fa-solid fa-heart" style="font-size: 25px;"></i>

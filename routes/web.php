@@ -7,10 +7,13 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ComentarioController;
-
+use App\Http\Controllers\Welcome;
+/*
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
+})->name('welcome');*/
+
+Route::get('/', [welcome::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

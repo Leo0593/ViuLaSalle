@@ -21,8 +21,12 @@ class Welcome extends Controller
      */
     public function index()
     {
-        //
         $user = auth()->user();
+
+        $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->where('status', 1)->get();
+        $nopublicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->where('status', 0)->get();
+
+        return view('welcome', compact('user', 'publicaciones', 'nopublicaciones'));
     }
 
     /**

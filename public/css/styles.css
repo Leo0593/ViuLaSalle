@@ -31,6 +31,9 @@ header {
     
     /*background-color: var(--azul);*/
     background-image: linear-gradient(to right, rgba(2, 77, 223, 0.8), rgba(2, 77, 223, 0.8)), url('../../img/Fondo.png');
+
+    background-size: cover;
+
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;

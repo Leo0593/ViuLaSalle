@@ -116,51 +116,6 @@
 
                 
 
-                <div class="box-publicacion">
-                    <div class="box-publicacion-header">
-                        <div class="box-publicacion-header-user"></div>
-                        User
-                    </div>
-
-                    <div class="box-publicacion-img" style="background-image: url('../../img/salle.jpeg');"></div>
-
-                    <div class="box-publicacion-footer">
-                        <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                        <i class="fa-solid fa-heart" style="font-size: 25px;"></i>
-                        <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                        <div class="descripcion">
-                            User: descripcion de la publicacion donde puede haber
-                        </div>
-                    </div>
-                </div>
-
-                <div class="box-publicacion">
-                    <div class="box-publicacion-header">
-                        <div class="box-publicacion-header-user"></div>
-                        User
-                    </div>
-
-                    <div class="box-publicacion-img" style="background-image: url('../../img/navidad.webp');"></div>
-
-                    <div class="box-publicacion-footer">
-                        <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                        <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                    </div>
-                </div>
-
-                <div class="box-publicacion">
-                    <div class="box-publicacion-header">
-                        <div class="box-publicacion-header-user"></div>
-                        User
-                    </div>
-
-                    <div class="box-publicacion-img" style="background-image: url('../../img/Fondo.png');"></div>
-
-                    <div class="box-publicacion-footer">
-                        <i class="fa-solid fa-heart" style="font-size: 25px;"></i>
-                        <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                    </div>
-                </div>
             </div>
 
             <div class="perfil">

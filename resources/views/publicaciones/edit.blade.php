@@ -99,7 +99,6 @@
                 <input type="text" id="tags-search" class="form-control" placeholder="Buscar etiquetas...">
 
                 <div class="form-group mt-2">
-                    <!-- Input oculto para enviar las categorías seleccionadas -->
                     <select name="categorias[]" id="categorias" class="form-control" multiple style="display: none;">
                         @foreach($categorias as $categoria)
                             <option value="{{ $categoria->id }}" class="tag-option" @if(in_array($categoria->id, $publicacion->categorias->pluck('id')->toArray())) selected @endif>
@@ -108,9 +107,8 @@
                         @endforeach
                     </select>
 
-                    <!-- Mostrar las categorías sugeridas como botones -->
                     <div id="categorias-list" class="mt-2">
-                        @foreach($categorias as $categoria)
+                        @foreach($categoriasSugeridas as $categoria)
                             <button type="button" class="btn btn-outline-primary category-btn"
                                 data-id="{{ $categoria->id }}">
                                 {{ $categoria->nombre }}
@@ -119,7 +117,6 @@
                     </div>
                 </div>
 
-                <!-- Mostrar las etiquetas seleccionadas -->
                 <div id="selected-tags" class="mt-3">
                     <strong>Etiquetas seleccionadas:</strong>
                     <div id="selected-tags-list">
@@ -134,6 +131,7 @@
             </div>
 
 
+
             <div class="form-group form-check">
                 <input type="checkbox" name="activar_comentarios" id="activar_comentarios" class="form-check-input"
                     value="1" {{ $publicacion->activar_comentarios ? 'checked' : '' }}>
@@ -144,70 +142,67 @@
         </form>
     </div>
 
-   <script>
+    <script>
         $(document).ready(function () {
-            // Filtrar las opciones de categorías a medida que el usuario escribe
+            let defaultButtons = $('#categorias-list').html();
+
             $('#tags-search').on('input', function () {
-                var searchText = $(this).val().toLowerCase();
-                $('.category-btn').each(function () {
-                    var tagText = $(this).text().toLowerCase();
-                    if (tagText.includes(searchText)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+                let searchText = $(this).val().toLowerCase();
+
+                if (searchText === '') {
+                    $('#categorias-list').html(defaultButtons);
+                    return;
+                }
+
+                let results = '';
+                $('.tag-option').each(function () {
+                    let text = $(this).text().toLowerCase();
+                    let id = $(this).val();
+                    if (text.includes(searchText)) {
+                        results += '<button type="button" class="btn btn-outline-primary category-btn" data-id="' + id + '">' + $(this).text() + '</button> ';
                     }
                 });
+
+                $('#categorias-list').html(results || '<span class="text-muted">No se encontraron coincidencias</span>');
             });
 
-            // Función para actualizar las etiquetas seleccionadas en el UI
             function updateSelectedTags() {
-                var selectedTags = $('#categorias').val(); // Obtener los valores seleccionados
-                $('#selected-tags-list').empty(); // Limpiar lista de etiquetas
-
+                let selectedTags = $('#categorias').val();
+                $('#selected-tags-list').empty();
                 if (selectedTags) {
                     selectedTags.forEach(function (tagId) {
-                        var tagText = $('button[data-id="' + tagId + '"]').text(); // Obtener el nombre de la etiqueta
-                        var tagItem = '<span class="badge badge-info m-1" data-id="' + tagId + '">' + tagText +
+                        let tagText = $('.tag-option[value="' + tagId + '"]').text();
+                        let tagItem = '<span class="badge badge-info m-1" data-id="' + tagId + '">' + tagText +
                             ' <button type="button" class="btn btn-sm btn-danger remove-tag">x</button></span>';
                         $('#selected-tags-list').append(tagItem);
                     });
                 }
             }
 
-            // Agregar categoría seleccionada cuando el usuario hace clic en un botón de categoría
             $(document).on('click', '.category-btn', function () {
-                var tagId = $(this).data('id');
-                var tagText = $(this).text();
-
-                // Añadir la categoría seleccionada al campo oculto
-                var currentVal = $('#categorias').val() || [];
-                if (!currentVal.includes(tagId.toString())) {
-                    currentVal.push(tagId.toString());
+                let tagId = $(this).data('id').toString();
+                let currentVal = $('#categorias').val() || [];
+                if (!currentVal.includes(tagId)) {
+                    currentVal.push(tagId);
                     $('#categorias').val(currentVal).trigger('change');
                 }
-
-                // Limpiar el campo de búsqueda
                 $('#tags-search').val('');
-
-                // Actualizar la lista de etiquetas seleccionadas
+                $('#categorias-list').html(defaultButtons);
                 updateSelectedTags();
             });
 
-            // Eliminar etiqueta cuando se hace clic en el botón de eliminar
             $(document).on('click', '.remove-tag', function () {
-                var tagId = $(this).parent().data('id');
-                var currentVal = $('#categorias').val() || [];
-                currentVal = currentVal.filter(function (id) { return id != tagId; });
+                let tagId = $(this).parent().data('id');
+                let currentVal = $('#categorias').val() || [];
+                currentVal = currentVal.filter(id => id != tagId);
                 $('#categorias').val(currentVal).trigger('change');
-
-                // Actualizar la lista de etiquetas seleccionadas
                 updateSelectedTags();
             });
 
-            // Inicializar las etiquetas seleccionadas al cargar la página
             updateSelectedTags();
         });
     </script>
+
 
 
 </body>

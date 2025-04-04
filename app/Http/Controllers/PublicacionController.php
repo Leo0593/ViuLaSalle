@@ -24,7 +24,7 @@ use App\Models\Reporte;
 
 
 class PublicacionController extends Controller
-{ 
+{
 
     public function index()
     {
@@ -47,9 +47,9 @@ class PublicacionController extends Controller
         $usuarios = User::all();
         $eventos = Evento::all();
         $categorias = Categoria::all(); // Obtener todas las categorías
+        $categoriasSugeridas = Categoria::inRandomOrder()->limit(5)->get(); // 5 aleatorias
 
-        // Retornar la vista con los datos
-        return view('publicaciones.create', compact('usuarios', 'eventos', 'user', 'categorias'));
+        return view('publicaciones.create', compact('usuarios', 'eventos', 'user', 'categorias', 'categoriasSugeridas'));
     }
 
     public function store(Request $request)
@@ -128,12 +128,14 @@ class PublicacionController extends Controller
         $user = auth()->user();
 
         $publicacion = Publicacion::with(['fotos', 'videos', 'categorias'])->findOrFail($id);
-        $usuarios = User::all(); // Obtener lista de usuarios
-        $eventos = Evento::all(); // Obtener lista de eventos
-        $categorias = Categoria::all(); // Obtener todas las categorías
+        $usuarios = User::all();
+        $eventos = Evento::all();
 
+        // Obtener todas las categorías y 5 aleatorias para sugerencias
+        $categorias = Categoria::all();
+        $categoriasSugeridas = Categoria::inRandomOrder()->limit(5)->get();
 
-        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos', 'user', 'categorias'));
+        return view('publicaciones.edit', compact('publicacion', 'usuarios', 'eventos', 'user', 'categorias', 'categoriasSugeridas'));
     }
 
     public function update(Request $request, $id)

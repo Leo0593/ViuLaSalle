@@ -43,12 +43,12 @@
                     </div>
                 </a> 
                 @endif
-
+<!-- Cmabie aqui algo -->
                 @if(isset($publicaciones) && $publicaciones->isNotEmpty())
                     @foreach ($publicaciones as $publicacion)
                         <div>
                             <h3>{{ $publicacion->titulo }}</h3>
-                            <p>{{ $publicacion->contenido }}</p>
+                            <p>{{ $publicacion->descripcion }}</p>
                         </div>
                     @endforeach
                 @else

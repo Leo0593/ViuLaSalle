@@ -72,12 +72,42 @@
                     </div>
                 </a> 
                 @endif
-<!-- Cmabie aqui algo -->
+
                 @if(isset($publicaciones) && $publicaciones->isNotEmpty())
                     @foreach ($publicaciones as $publicacion)
-                        <div>
-                            <h3>{{ $publicacion->titulo }}</h3>
-                            <p>{{ $publicacion->descripcion }}</p>
+                        <div class="box-publicacion">
+                            <div class="box-publicacion-header">
+                                <div class="box-publicacion-header-user"></div>
+                                {{ $publicacion->usuario->name }}
+                            </div>
+
+                            @if($publicacion->fotos->count() > 0)
+                                <div class="box-publicacion-img-container">
+                                    @foreach($publicacion->fotos as $foto)
+                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @if($publicacion->fotos->count() > 1)
+                                    <div class="dots-container">
+                                        @foreach($publicacion->fotos as $foto)
+                                            <span class="dot"></span>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            @else
+                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
+                            @endif
+
+                            <div class="box-publicacion-footer">
+                                <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i>
+                                <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                <div class="descripcion">
+                                    <strong>{{ $publicacion->usuario->name }}: </strong>
+                                    {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 @else
@@ -232,6 +262,35 @@
             }
         });
 
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.querySelector('.box-publicacion-img-container');
+            const dots = document.querySelectorAll('.dot');
+            
+            // Función para actualizar los puntos
+            function updateDots() {
+                const scrollPosition = container.scrollLeft;
+                const containerWidth = container.offsetWidth;
+                const totalImages = dots.length;
+                const activeIndex = Math.floor(scrollPosition / containerWidth);
+
+                dots.forEach((dot, index) => {
+                    if (index === activeIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            // Actualizamos los puntos cuando se hace scroll
+            container.addEventListener('scroll', updateDots);
+            
+            // Inicializamos el estado de los puntos
+            updateDots();
+        });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

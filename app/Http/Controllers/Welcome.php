@@ -23,8 +23,15 @@ class Welcome extends Controller
     {
         $user = auth()->user();
 
-        $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->where('status', 1)->get();
-        $nopublicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->where('status', 0)->get();
+        $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])
+        ->where('status', 1)
+        ->orderBy('fecha_publicacion', 'desc') // Ordenar por fecha de publicación (más recientes primero)
+        ->get();
+        
+        $nopublicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])
+        ->where('status', 0)
+        ->orderBy('fecha_publicacion', 'desc') // Aplicar el mismo orden
+        ->get();
 
         return view('welcome', compact('user', 'publicaciones', 'nopublicaciones'));
     }

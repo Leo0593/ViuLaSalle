@@ -391,14 +391,21 @@ a.sidebar-link:hover {
 }
 .box-crear-publicacion-header-foto {
     width: 50px;
-    height: auto;
+    height: 50px;
     border-radius: 50%;
+
+    overflow: hidden;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);    
 }
 
 .box-crear-publicacion-header-foto img {
     width: 100%;
     height: auto;
-    border-radius: 50%;
     object-fit: cover;
 }
 
@@ -472,6 +479,8 @@ a.sidebar-link:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .box-publicacion-header-user img {
@@ -794,10 +803,12 @@ a.sidebar-link:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 .perfil-foto img {
     width: 100%;
-    height: auto%;
+    height: auto;
     object-fit: cover;
     transition: transform 0.3s ease-in-out; /* Aplica transición a la imagen */
 }
@@ -981,16 +992,26 @@ textarea#publicacion-texto {
     display: flex;
     align-items: center;
     gap: 10px;
+
+    padding: 5px;
 }
 
 .modal-usuario-foto {
     width: 50px;
     height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .modal-usuario-foto img {
     width: 100%;
-    height: 100%;
+    height: auto;
     border-radius: 50%;
     object-fit: cover;
 }

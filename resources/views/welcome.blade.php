@@ -243,7 +243,10 @@
                 <div class="modal-header">
                     <div class="modal-usuario">
                         <div class="modal-usuario-foto">
-                            <img src="../../img/user-icon.png" alt="Foto de perfil">
+                            <img 
+                                src="{{ Storage::url(Auth::user()->avatar) }}" 
+                                alt="Avatar usuario" 
+                                onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
                         </div>
 
                         <h5 class="modal-title" id="exampleModalLongTitle">

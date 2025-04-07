@@ -5,6 +5,7 @@
 
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
+
             <div class="opciones">
                 <div class="opciones-bar-separator">Home</div>
                 <li class="opciones-bar-item">
@@ -49,38 +50,114 @@
                     </a>
                 </li>
             </div>
+
             <div class="contenido">
                 @if (Auth::check())
-                <a href="#" class="box-crear-publicacion" data-toggle="modal" data-target="#exampleModalCenter">
-                    <div class="box-crear-publicacion-header">
-                        <div class="box-crear-publicacion-header-foto">
-                            <img src="../../img/user-icon.png" alt="Foto de perfil">
+                    <a href="#" class="box-crear-publicacion" data-toggle="modal" data-target="#exampleModalCenter">
+                        <div class="box-crear-publicacion-header">
+                            <div class="box-crear-publicacion-header-foto">
+                                @if(Auth::check() && Auth::user()->avatar)
+                                    <img 
+                                        src="{{ Storage::url(Auth::user()->avatar) }}" 
+                                        alt="Avatar usuario" 
+                                        onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                                @else
+                                    <img 
+                                        src="{{ asset('img/user-icon.png') }}" 
+                                        alt="Avatar por defecto">
+                                @endif
+                            </div>
+                            <div class="box-crear-publicacion-header-texto">
+                                ¿Qué estás pensando?
+                            </div>
                         </div>
-                        <div class="box-crear-publicacion-header-texto">
-                            ¿Qué estás pensando?
+                        <div class="box-crear-publicacion-footer">
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Foto</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <i class="fa-solid fa-video"></i>
+                                <span>Video</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="box-crear-publicacion-footer">
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <i class="fa-solid fa-camera"></i>
-                            <span>Foto</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <i class="fa-solid fa-video"></i>
-                            <span>Video</span>
-                        </div>
-                    </div>
-                </a> 
+                    </a> 
                 @endif
 
                 @if(isset($publicaciones) && $publicaciones->isNotEmpty())
                     @foreach ($publicaciones as $publicacion)
                         <div class="box-publicacion">
                             <div class="box-publicacion-header">
-                                <div class="box-publicacion-header-user"></div>
+                                <div class="box-publicacion-header-user">
+                                    <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}" alt="Avatar usuario">
+                                </div>
                                 {{ $publicacion->usuario->name }}
                             </div>
 
+                            @if($publicacion->fotos->count() > 0 && $publicacion->videos->count() > 0)
+                                <div class="box-publicacion-media-container">
+                                    <div class="box-publicacion-media-container-media">
+                                        <!-- Mostrar fotos -->
+                                        @foreach($publicacion->fotos as $foto)
+                                            <div class="box-publicacion-media-item box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');"></div>
+                                        @endforeach
+
+                                        <!-- Mostrar videos -->
+                                        @foreach($publicacion->videos as $video)
+                                            <div class="box-publicacion-media-item box-publicacion-video">
+                                                <video autoplay controls loop>
+                                                    <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}" type="video/mp4">
+                                                </video>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    @if($publicacion->fotos->count() + $publicacion->videos->count() > 1)
+                                        <div class="dots-container">
+                                            <!-- Crear un punto por cada foto -->
+                                            @foreach($publicacion->fotos as $foto)
+                                                <span class="dot"></span>
+                                            @endforeach
+
+                                            <!-- Crear un punto por cada video -->
+                                            @foreach($publicacion->videos as $video)
+                                                <span class="dot"></span>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            <!-- Si hay fotos -->
+                            @elseif($publicacion->fotos->count() > 0)
+                                <div class="box-publicacion-img-container">
+                                    @foreach($publicacion->fotos as $foto)
+                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');"></div>
+                                    @endforeach
+                                </div>
+
+                                @if($publicacion->fotos->count() > 1)
+                                    <div class="dots-container">
+                                        @foreach($publicacion->fotos as $foto)
+                                            <span class="dot"></span>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            <!-- Si hay videos -->
+                            @elseif($publicacion->videos->count() > 0)
+                                <div class="box-publicacion-video-container">
+                                    @foreach($publicacion->videos as $video)
+                                        <div class="box-publicacion-video">
+                                            <video autoplay controls loop>
+                                                <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                            @else
+                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
+                            @endif
+
+                            <!--
                             @if($publicacion->fotos->count() > 0)
                                 <div class="box-publicacion-img-container">
                                     @foreach($publicacion->fotos as $foto)
@@ -97,11 +174,12 @@
                                 @endif
                             @else
                                 <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
-                            @endif
+                            @endif -->
 
                             <div class="box-publicacion-footer">
                                 <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i>
+                                <!--
+                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
                                 <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
                                 <div class="descripcion">
                                     <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -113,9 +191,6 @@
                 @else
                     <p>No hay publicaciones disponibles.</p>
                 @endif
-
-                
-
             </div>
 
             <div class="perfil">
@@ -123,9 +198,20 @@
                     <div class="perfil-header" style="background-image: url('../../img/Fondo.png');">
                     <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
                     </div>
+
                     <div class="perfil-foto">
-                        <img src="../../img/user-icon.png" alt="Foto de perfil">
+                        @if(Auth::check() && Auth::user()->avatar)
+                            <img 
+                                src="{{ Storage::url(Auth::user()->avatar) }}" 
+                                alt="Avatar usuario" 
+                                onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                        @else
+                            <img 
+                                src="{{ asset('img/user-icon.png') }}" 
+                                alt="Avatar por defecto">
+                        @endif
                     </div>
+
 
                     <!-- Overlay borroso y botón -->
                     @if(!Auth::check())
@@ -221,30 +307,67 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const container = document.querySelector('.box-publicacion-img-container');
-            const dots = document.querySelectorAll('.dot');
+            const publicacionesContainers = document.querySelectorAll('.box-publicacion-img-container');
             
-            // Función para actualizar los puntos
-            function updateDots() {
-                const scrollPosition = container.scrollLeft;
-                const containerWidth = container.offsetWidth;
-                const totalImages = dots.length;
-                const activeIndex = Math.floor(scrollPosition / containerWidth);
+            // Recorremos todas las publicaciones
+            publicacionesContainers.forEach((container) => {
+                const dots = container.closest('.box-publicacion').querySelectorAll('.dot');
+                
+                // Función para actualizar los puntos
+                function updateDots() {
+                    const scrollPosition = container.scrollLeft;
+                    const containerWidth = container.offsetWidth;
+                    const totalImages = dots.length;
+                    const activeIndex = Math.floor(scrollPosition / containerWidth);
 
-                dots.forEach((dot, index) => {
-                    if (index === activeIndex) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
+                    dots.forEach((dot, index) => {
+                        if (index === activeIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
 
-            // Actualizamos los puntos cuando se hace scroll
-            container.addEventListener('scroll', updateDots);
+                // Actualizamos los puntos cuando se hace scroll
+                container.addEventListener('scroll', updateDots);
+                
+                // Inicializamos el estado de los puntos
+                updateDots();
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const publicacionesContainers = document.querySelectorAll('.box-publicacion-media-container-media');
             
-            // Inicializamos el estado de los puntos
-            updateDots();
+            // Recorremos todas las publicaciones
+            publicacionesContainers.forEach((container) => {
+                const dots = container.closest('.box-publicacion').querySelectorAll('.dot');
+                
+                // Función para actualizar los puntos
+                function updateDots() {
+                    const scrollPosition = container.scrollLeft;
+                    const containerWidth = container.offsetWidth;
+                    const totalImages = dots.length;
+                    const activeIndex = Math.floor(scrollPosition / containerWidth);
+
+                    dots.forEach((dot, index) => {
+                        if (index === activeIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+
+                // Actualizamos los puntos cuando se hace scroll
+                container.addEventListener('scroll', updateDots);
+                
+                // Inicializamos el estado de los puntos
+                updateDots();
+            });
         });
     </script>
 

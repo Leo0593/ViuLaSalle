@@ -1,15 +1,17 @@
 @include('layouts.head')
 
+
+
 <body>
+
     @include('layouts.navheader')
 
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
-
             <div class="opciones">
                 <div class="opciones-bar-separator">Home</div>
                 <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" >
+                    <a class="opciones-bar-link">
                         <i class="fa-solid fa-house"></i>
                         <span>Inicio</span>
                     </a>
@@ -50,22 +52,12 @@
                     </a>
                 </li>
             </div>
-
             <div class="contenido">
                 @if (Auth::check())
                     <a href="#" class="box-crear-publicacion" data-toggle="modal" data-target="#exampleModalCenter">
                         <div class="box-crear-publicacion-header">
                             <div class="box-crear-publicacion-header-foto">
-                                @if(Auth::check() && Auth::user()->avatar)
-                                    <img 
-                                        src="{{ Storage::url(Auth::user()->avatar) }}" 
-                                        alt="Avatar usuario" 
-                                        onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
-                                @else
-                                    <img 
-                                        src="{{ asset('img/user-icon.png') }}" 
-                                        alt="Avatar por defecto">
-                                @endif
+                                <img src="../../img/user-icon.png" alt="Foto de perfil">
                             </div>
                             <div class="box-crear-publicacion-header-texto">
                                 ¿Qué estás pensando?
@@ -81,87 +73,22 @@
                                 <span>Video</span>
                             </div>
                         </div>
-                    </a> 
+                    </a>
                 @endif
 
                 @if(isset($publicaciones) && $publicaciones->isNotEmpty())
                     @foreach ($publicaciones as $publicacion)
                         <div class="box-publicacion">
                             <div class="box-publicacion-header">
-                                <div class="box-publicacion-header-user">
-                                    <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}" alt="Avatar usuario">
-                                </div>
+                                <div class="box-publicacion-header-user"></div>
                                 {{ $publicacion->usuario->name }}
                             </div>
 
-                            @if($publicacion->fotos->count() > 0 && $publicacion->videos->count() > 0)
-                                <div class="box-publicacion-media-container">
-                                    <div class="box-publicacion-media-container-media">
-                                        <!-- Mostrar fotos -->
-                                        @foreach($publicacion->fotos as $foto)
-                                            <div class="box-publicacion-media-item box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');"></div>
-                                        @endforeach
-
-                                        <!-- Mostrar videos -->
-                                        @foreach($publicacion->videos as $video)
-                                            <div class="box-publicacion-media-item box-publicacion-video">
-                                                <video autoplay controls loop>
-                                                    <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}" type="video/mp4">
-                                                </video>
-                                            </div>
-                                        @endforeach
-                                    </div>
-
-                                    @if($publicacion->fotos->count() + $publicacion->videos->count() > 1)
-                                        <div class="dots-container">
-                                            <!-- Crear un punto por cada foto -->
-                                            @foreach($publicacion->fotos as $foto)
-                                                <span class="dot"></span>
-                                            @endforeach
-
-                                            <!-- Crear un punto por cada video -->
-                                            @foreach($publicacion->videos as $video)
-                                                <span class="dot"></span>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                            <!-- Si hay fotos -->
-                            @elseif($publicacion->fotos->count() > 0)
-                                <div class="box-publicacion-img-container">
-                                    @foreach($publicacion->fotos as $foto)
-                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');"></div>
-                                    @endforeach
-                                </div>
-
-                                @if($publicacion->fotos->count() > 1)
-                                    <div class="dots-container">
-                                        @foreach($publicacion->fotos as $foto)
-                                            <span class="dot"></span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            <!-- Si hay videos -->
-                            @elseif($publicacion->videos->count() > 0)
-                                <div class="box-publicacion-video-container">
-                                    @foreach($publicacion->videos as $video)
-                                        <div class="box-publicacion-video">
-                                            <video autoplay controls loop>
-                                                <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}" type="video/mp4">
-                                            </video>
-                                        </div>
-                                    @endforeach
-                                </div>
-
-                            @else
-                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
-                            @endif
-
-                            <!--
                             @if($publicacion->fotos->count() > 0)
                                 <div class="box-publicacion-img-container">
                                     @foreach($publicacion->fotos as $foto)
-                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
+                                        <div class="box-publicacion-img"
+                                            style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
                                         </div>
                                     @endforeach
                                 </div>
@@ -173,13 +100,13 @@
                                     </div>
                                 @endif
                             @else
-                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
-                            @endif -->
+                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');">
+                                </div>
+                            @endif
 
                             <div class="box-publicacion-footer">
                                 <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                <!--
-                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i>
                                 <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
                                 <div class="descripcion">
                                     <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -191,33 +118,25 @@
                 @else
                     <p>No hay publicaciones disponibles.</p>
                 @endif
+
+
+
             </div>
 
             <div class="perfil">
                 <div class="perfil-box">
                     <div class="perfil-header" style="background-image: url('../../img/Fondo.png');">
-                    <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
+                        <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
                     </div>
-
                     <div class="perfil-foto">
-                        @if(Auth::check() && Auth::user()->avatar)
-                            <img 
-                                src="{{ Storage::url(Auth::user()->avatar) }}" 
-                                alt="Avatar usuario" 
-                                onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
-                        @else
-                            <img 
-                                src="{{ asset('img/user-icon.png') }}" 
-                                alt="Avatar por defecto">
-                        @endif
+                        <img src="../../img/user-icon.png" alt="Foto de perfil">
                     </div>
-
 
                     <!-- Overlay borroso y botón -->
                     @if(!Auth::check())
-                    <div class="perfil-overlay">
-                        <button class="btn-login"><strong>Iniciar Sesión</strong></button>
-                    </div>
+                        <div class="perfil-overlay">
+                            <button class="btn-login"><strong>Iniciar Sesión</strong></button>
+                        </div>
                     @endif
 
                     <div class="perfil-info">
@@ -226,18 +145,22 @@
                         </div>
                         <p><strong>Correo: </strong> {{ Auth::check() ? Auth::user()->email : 'No disponible' }}</p>
                         <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
-                        <p><strong>Fecha de nacimiento: </strong> {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
-                        <p><strong>Descripción: </strong> {{ Auth::check() ? Auth::user()->description : 'No disponible' }}</p>
-                        <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location: 'No disponible' }}</p>
+                        <p><strong>Fecha de nacimiento: </strong>
+                            {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
+                        <p><strong>Descripción: </strong>
+                            {{ Auth::check() ? Auth::user()->description : 'No disponible' }}</p>
+                        <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location : 'No disponible' }}
+                        </p>
                     </div>
                 </div>
             </div>
-            
-        </div> 
+
+        </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -257,6 +180,91 @@
                 </div>
 
                 <div class="modal-body">
+                    <form action="{{ route('publicaciones.store') }}" method="POST" enctype="multipart/form-data">
+
+                        @csrf
+                        <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
+
+
+                        <div class="form-group">
+                            <label for="id_evento">Evento</label>
+                            <select name="id_evento" id="id_evento" class="form-control" required>
+                                <option value="" selected disabled>Selecciona un evento</option> <!-- Opción inicial -->
+                                @foreach($eventos as $evento)
+                                    <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <input type="text" name="descripcion" id="descripcion" class="form-control" required>
+                        </div>
+
+                        <!-- Buscar Etiquetas -->
+                        <div class="form-group">
+                            <label for="tags">Buscar Etiquetas</label>
+                            <input type="text" id="tags-search" class="form-control" placeholder="Buscar etiquetas...">
+
+                            <div class="form-group mt-2">
+                                <!-- Input oculto para enviar las categorías seleccionadas -->
+                                <select name="categorias[]" id="categorias" class="form-control" multiple
+                                    style="display: none;">
+                                    @foreach($categorias as $categoria)
+                                        <option value="{{ $categoria->id }}" class="tag-option">{{ $categoria->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <!-- Mostrar las 5 categorías aleatorias sugeridas como botones -->
+                                <div id="categorias-list" class="mt-2">
+                                    @foreach($categoriasSugeridas as $categoria)
+                                        <button type="button" class="btn btn-outline-primary category-btn"
+                                            data-id="{{ $categoria->id }}">
+                                            {{ $categoria->nombre }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <!-- Mostrar las etiquetas seleccionadas -->
+                            <div id="selected-tags" class="mt-3">
+                                <strong>Etiquetas seleccionadas:</strong>
+                                <div id="selected-tags-list">
+                                    <!-- Aquí se mostrarán las etiquetas seleccionadas -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" name="activar_comentarios" id="activar_comentarios"
+                                class="form-check-input" value="1">
+                            <label class="form-check-label" for="activar_comentarios">Permitir comentarios</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fotos">Fotos</label>
+                            <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
+                        </div>
+
+                        @if ($user && ($user->role == 'PROFESOR' || $user->role == 'ADMIN'))
+                            <div class="form-group">
+                                <label for="videos">Videos</label>
+                                <input type="file" name="videos[]" id="videos" class="form-control" multiple>
+                            </div>
+                        @endif
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn-publicar">Publicar</button>
+                        </div>
+
+                    </form>
+
+
+
+                </div>
+
+                <!--<div class="modal-body">
                     <textarea class="form-control" id="publicacion-texto" rows="5" placeholder="Escribe tu publicación aquí..."></textarea>
                     
                     <div class="modal-archivos">
@@ -269,16 +277,93 @@
                     </div>
 
                     <input type="file" id="file-input" style="display: none;" accept="image/*, video/*">
-                </div>
+                </div>-->
 
-                <div class="modal-footer">
-                    <button type="button" class="btn-publicar">Publicar</button>
-                </div>
+
             </div>
         </div>
     </div>
 
     <!-- Script -->
+
+    <script>
+        $(document).ready(function () {
+            const allCategories = @json($categorias);
+            const defaultCategories = @json($categoriasSugeridas);
+
+            function renderCategoryButtons(categories) {
+                $('#categorias-list').empty();
+                categories.forEach(cat => {
+                    $('#categorias-list').append(`
+                    <button type="button" class="btn btn-outline-primary category-btn" data-id="${cat.id}">
+                        ${cat.nombre}
+                    </button>
+                `);
+                });
+            }
+
+            $('#tags-search').on('input', function () {
+                const searchText = $(this).val().toLowerCase();
+
+                if (searchText === '') {
+                    renderCategoryButtons(defaultCategories); // Volver a mostrar sugeridas
+                } else {
+                    const filtered = allCategories.filter(cat => cat.nombre.toLowerCase().includes(searchText));
+                    renderCategoryButtons(filtered);
+                }
+            });
+
+            function updateSelectedTags() {
+                const selectedTags = $('#categorias').val() || [];
+                $('#selected-tags-list').empty();
+
+                selectedTags.forEach(tagId => {
+                    const tag = allCategories.find(c => c.id == tagId);
+                    if (tag) {
+                        $('#selected-tags-list').append(`
+                        <span class="badge badge-info m-1" data-id="${tag.id}">
+                            ${tag.nombre}
+                            <button type="button" class="btn btn-sm btn-danger remove-tag">x</button>
+                        </span>
+                    `);
+                    }
+                });
+            }
+
+            $(document).on('click', '.category-btn', function () {
+                const tagId = $(this).data('id').toString();
+                const currentVal = $('#categorias').val() || [];
+
+                if (!currentVal.includes(tagId)) {
+                    currentVal.push(tagId);
+                    $('#categorias').val(currentVal).trigger('change');
+                }
+
+                $('#tags-search').val('');
+                updateSelectedTags();
+
+                // Verificar si la categoría seleccionada NO está en las sugeridas
+                const isInSugeridas = defaultCategories.some(cat => cat.id.toString() === tagId);
+                if (!isInSugeridas) {
+                    // Volver a mostrar las sugeridas originales
+                    renderCategoryButtons(defaultCategories);
+                }
+            });
+
+            $(document).on('click', '.remove-tag', function () {
+                const tagId = $(this).parent().data('id').toString();
+                let currentVal = $('#categorias').val() || [];
+
+                currentVal = currentVal.filter(id => id !== tagId);
+                $('#categorias').val(currentVal).trigger('change');
+                updateSelectedTags();
+            });
+
+            // Cargar etiquetas seleccionadas al inicio
+            updateSelectedTags();
+        });
+    </script>
+
     <script>
         // Seleccionar los iconos
         const iconoImagen = document.getElementById('icono-imagen');
@@ -286,18 +371,18 @@
         const fileInput = document.getElementById('file-input');
 
         // Asignar eventos de clic para abrir el selector de archivos
-        iconoImagen.addEventListener('click', function() {
+        iconoImagen.addEventListener('click', function () {
             fileInput.accept = 'image/*'; // Solo permitir imágenes
             fileInput.click();  // Abre el selector de archivos
         });
 
-        iconoVideo.addEventListener('click', function() {
+        iconoVideo.addEventListener('click', function () {
             fileInput.accept = 'video/*'; // Solo permitir videos
             fileInput.click();  // Abre el selector de archivos
         });
 
         // Opcional: Puedes agregar un evento para mostrar el archivo seleccionado
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             if (fileInput.files.length > 0) {
                 alert('Archivo seleccionado: ' + fileInput.files[0].name);
             }
@@ -306,68 +391,31 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const publicacionesContainers = document.querySelectorAll('.box-publicacion-img-container');
-            
-            // Recorremos todas las publicaciones
-            publicacionesContainers.forEach((container) => {
-                const dots = container.closest('.box-publicacion').querySelectorAll('.dot');
-                
-                // Función para actualizar los puntos
-                function updateDots() {
-                    const scrollPosition = container.scrollLeft;
-                    const containerWidth = container.offsetWidth;
-                    const totalImages = dots.length;
-                    const activeIndex = Math.floor(scrollPosition / containerWidth);
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.querySelector('.box-publicacion-img-container');
+            const dots = document.querySelectorAll('.dot');
 
-                    dots.forEach((dot, index) => {
-                        if (index === activeIndex) {
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                }
+            // Función para actualizar los puntos
+            function updateDots() {
+                const scrollPosition = container.scrollLeft;
+                const containerWidth = container.offsetWidth;
+                const totalImages = dots.length;
+                const activeIndex = Math.floor(scrollPosition / containerWidth);
 
-                // Actualizamos los puntos cuando se hace scroll
-                container.addEventListener('scroll', updateDots);
-                
-                // Inicializamos el estado de los puntos
-                updateDots();
-            });
-        });
-    </script>
+                dots.forEach((dot, index) => {
+                    if (index === activeIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const publicacionesContainers = document.querySelectorAll('.box-publicacion-media-container-media');
-            
-            // Recorremos todas las publicaciones
-            publicacionesContainers.forEach((container) => {
-                const dots = container.closest('.box-publicacion').querySelectorAll('.dot');
-                
-                // Función para actualizar los puntos
-                function updateDots() {
-                    const scrollPosition = container.scrollLeft;
-                    const containerWidth = container.offsetWidth;
-                    const totalImages = dots.length;
-                    const activeIndex = Math.floor(scrollPosition / containerWidth);
+            // Actualizamos los puntos cuando se hace scroll
+            container.addEventListener('scroll', updateDots);
 
-                    dots.forEach((dot, index) => {
-                        if (index === activeIndex) {
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                }
-
-                // Actualizamos los puntos cuando se hace scroll
-                container.addEventListener('scroll', updateDots);
-                
-                // Inicializamos el estado de los puntos
-                updateDots();
-            });
+            // Inicializamos el estado de los puntos
+            updateDots();
         });
     </script>
 

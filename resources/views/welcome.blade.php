@@ -92,6 +92,12 @@
                                     <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}" alt="Avatar usuario">
                                 </div>
                                 {{ $publicacion->usuario->name }}
+
+                                <div class="box-publicacion-header-options">
+                                    <button type="button" class="">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                </div>
                             </div>
 
                             @if($publicacion->fotos->count() > 0 && $publicacion->videos->count() > 0)
@@ -157,33 +163,39 @@
                                 <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
                             @endif
 
-                            <!--
-                            @if($publicacion->fotos->count() > 0)
-                                <div class="box-publicacion-img-container">
-                                    @foreach($publicacion->fotos as $foto)
-                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @if($publicacion->fotos->count() > 1)
-                                    <div class="dots-container">
-                                        @foreach($publicacion->fotos as $foto)
-                                            <span class="dot"></span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            @else
-                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
-                            @endif -->
-
                             <div class="box-publicacion-footer">
-                                <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                <!--
-                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
-                                <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                <div class="descripcion">
-                                    <strong>{{ $publicacion->usuario->name }}: </strong>
-                                    {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                <div class="box-publicacion-buttons">
+                                    <!-- Botón de like con ícono dinámico -->
+                                    <button class="like-btn" data-id="{{ $publicacion->id }}"
+                                        style="color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};">
+                                        <i class="fa-heart {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'fa-solid' : 'fa-regular' }}"></i>
+                                    </button>
+                                    <!-- 
+                                    <button>
+                                        <i class="fa-regular fa-comments"></i>
+                                    </button>
+                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+
+                                    <div class="descripcion">
+                                        <strong>{{ $publicacion->usuario->name }}: </strong>
+                                        {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                    </div>
+                                </div>
+                                
+                                <div class="box-publicacion-comentarios">
+                                    <p><strong>User 1: </strong> Hola</p>
+                                    <p><strong>User 2: </strong> Hola</p>
+                                    <p><strong>User 3: </strong> Hola</p>
+                                    <p><strong>User 4: </strong> Hola</p>
+                                    <p><strong>User 5: </strong> Hola</p>
+                                    <p><strong>User 6: </strong> Hola</p>
+                                    <p><strong>User 7: </strong> Hola</p>
+                                    <p><strong>User 8: </strong> Hola</p>
+                                    <p><strong>User 9: </strong> Hola</p>
+                                    <p><strong>User 10: </strong> Hola</p>
+                                    <p><strong>User 11: </strong> Hola</p>
+                                    <p><strong>User 12: </strong> Hola</p>
+                                    <p><strong>User 13: </strong> Hola</p>
                                 </div>
                             </div>
                         </div>
@@ -195,8 +207,8 @@
 
             <div class="perfil">
                 <div class="perfil-box">
-                    <div class="perfil-header" style="background-image: url('../../img/Fondo.png');">
-                    <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
+                    <div class="perfil-header">
+                        <img src="../../img/Fondo.png" alt="Fondo de perfil">
                     </div>
 
                     <div class="perfil-foto">
@@ -243,10 +255,16 @@
                 <div class="modal-header">
                     <div class="modal-usuario">
                         <div class="modal-usuario-foto">
-                            <img 
-                                src="{{ Storage::url(Auth::user()->avatar) }}" 
-                                alt="Avatar usuario" 
-                                onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                            @if(Auth::check() && Auth::user()->avatar)
+                                <img 
+                                    src="{{ Storage::url(Auth::user()->avatar) }}" 
+                                    alt="Avatar usuario" 
+                                    onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                            @else
+                                <img 
+                                    src="{{ asset('img/user-icon.png') }}" 
+                                    alt="Avatar por defecto">
+                            @endif
                         </div>
 
                         <h5 class="modal-title" id="exampleModalLongTitle">
@@ -374,7 +392,36 @@
         });
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('.like-btn').click(function () {
+                let button = $(this);
+                let publicacionId = button.data('id');
+
+                jQuery.ajax({
+                    url: '/publicaciones/' + publicacionId + '/like',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        // Actualizar el contador de likes
+                        button.find('.like-count').text(response.likes);
+
+                        // Cambiar el color y el ícono según si el usuario dio like o no
+                        if (response.liked) {
+                            button.css('color', 'red');
+                            button.find('i').removeClass('fa-regular').addClass('fa-solid'); // Corazón lleno
+                        } else {
+                            button.css('color', 'black');
+                            button.find('i').removeClass('fa-solid').addClass('fa-regular'); // Corazón vacío
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

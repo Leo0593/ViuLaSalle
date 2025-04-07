@@ -196,9 +196,6 @@
                 @else
                     <p>No hay publicaciones disponibles.</p>
                 @endif
-
-
-
             </div>
 
             <div class="perfil">

@@ -1,7 +1,5 @@
 @include('layouts.head')
 
-
-
 <body>
 
     @include('layouts.navheader')
@@ -57,7 +55,16 @@
                     <a href="#" class="box-crear-publicacion" data-toggle="modal" data-target="#exampleModalCenter">
                         <div class="box-crear-publicacion-header">
                             <div class="box-crear-publicacion-header-foto">
-                                <img src="../../img/user-icon.png" alt="Foto de perfil">
+                                @if(Auth::check() && Auth::user()->avatar)
+                                    <img 
+                                        src="{{ Storage::url(Auth::user()->avatar) }}" 
+                                        alt="Avatar usuario" 
+                                        onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                                @else
+                                    <img 
+                                        src="{{ asset('img/user-icon.png') }}" 
+                                        alt="Avatar por defecto">
+                                @endif
                             </div>
                             <div class="box-crear-publicacion-header-texto">
                                 ¿Qué estás pensando?
@@ -80,7 +87,9 @@
                     @foreach ($publicaciones as $publicacion)
                         <div class="box-publicacion">
                             <div class="box-publicacion-header">
-                                <div class="box-publicacion-header-user"></div>
+                                <div class="box-publicacion-header-user">
+                                    <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}" alt="Avatar usuario">
+                                </div>
                                 {{ $publicacion->usuario->name }}
 
                                 <div class="box-publicacion-header-options">
@@ -198,7 +207,16 @@
                     <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
                     </div>
                     <div class="perfil-foto">
-                        <img src="../../img/user-icon.png" alt="Foto de perfil">
+                        @if(Auth::check() && Auth::user()->avatar)
+                            <img 
+                                src="{{ Storage::url(Auth::user()->avatar) }}" 
+                                alt="Avatar usuario" 
+                                onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                        @else
+                            <img 
+                                src="{{ asset('img/user-icon.png') }}" 
+                                alt="Avatar por defecto">
+                        @endif
                     </div>
 
                     <!-- Overlay borroso y botón -->
@@ -497,35 +515,6 @@
         });
     </script>
 
-    <script>
-        jQuery(document).ready(function () {
-            jQuery('.like-btn').click(function () {
-                let button = $(this);
-                let publicacionId = button.data('id');
-
-                jQuery.ajax({
-                    url: '/publicaciones/' + publicacionId + '/like',
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        // Actualizar el contador de likes
-                        button.find('.like-count').text(response.likes);
-
-                        // Cambiar el color y el ícono según si el usuario dio like o no
-                        if (response.liked) {
-                            button.css('color', 'red');
-                            button.find('i').removeClass('fa-regular').addClass('fa-solid'); // Corazón lleno
-                        } else {
-                            button.css('color', 'black');
-                            button.find('i').removeClass('fa-solid').addClass('fa-regular'); // Corazón vacío
-                        }
-                    }
-                });
-            });
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

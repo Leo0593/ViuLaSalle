@@ -166,25 +166,6 @@
                                 </div>
                             @endif
 
-                            <!--
-                                                            @if($publicacion->fotos->count() > 0)
-                                                                <div class="box-publicacion-img-container">
-                                                                    @foreach($publicacion->fotos as $foto)
-                                                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
-                                                                        </div>
-                                                                    @endforeach
-                                                                </div>
-                                                                @if($publicacion->fotos->count() > 1)
-                                                                    <div class="dots-container">
-                                                                        @foreach($publicacion->fotos as $foto)
-                                                                            <span class="dot"></span>
-                                                                        @endforeach
-                                                                    </div>
-                                                                @endif
-                                                            @else
-                                                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
-                                                            @endif -->
-
                             <div class="box-publicacion-footer">
                                 <div class="box-publicacion-buttons">
                                     <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
@@ -210,8 +191,8 @@
 
             <div class="perfil">
                 <div class="perfil-box">
-                    <div class="perfil-header" style="background-image: url('../../img/Fondo.png');">
-                        <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
+                    <div class="perfil-header">
+                        <img src="../../img/Fondo.png" alt="Fondo de perfil">
                     </div>
                     <div class="perfil-foto">
                         @if(Auth::check() && Auth::user()->avatar)
@@ -360,9 +341,6 @@
                         </div>
 
                     </form>
-
-
-
                 </div>
 
                 <!--<div class="modal-body">

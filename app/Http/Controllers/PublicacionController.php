@@ -121,7 +121,7 @@ class PublicacionController extends Controller
         }
 
         // Redirigir a la lista de publicaciones con un mensaje de éxito
-        return redirect()->route('publicaciones.index')->with('success', 'Publicación creada correctamente.');
+        return redirect()->route('welcome')->with('success', 'Publicación creada correctamente.');
     }
     public function edit($id)
     {

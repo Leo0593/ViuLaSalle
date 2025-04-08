@@ -22,6 +22,13 @@
                     </a>
                 </li>
 
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('dashboard') }}">
+                        <i class="fa-solid fa-tachometer-alt"></i> <!-- Icono de dashboard -->
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
                 <div class="opciones-bar-separator">Interfaces</div>
                 <li class="opciones-bar-item">
                     <a class="opciones-bar-link">
@@ -172,7 +179,7 @@
                                 <div class="box-publicacion-buttons">
                                     <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
                                     <!--
-                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
                                     <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
                                     <div class="descripcion">
                                         <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -368,7 +375,7 @@
     <!-- Script -->
 
     <!-- Script para el apartado de categorias-->
-     
+
     <script>
         $(document).ready(function () {
             const allCategories = @json($categorias);
@@ -519,20 +526,20 @@
                         },
                         body: JSON.stringify({})
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Toggle icon según la respuesta
-                        if (data.liked) {
-                            icon.classList.remove('fa-regular');
-                            icon.classList.add('fa-solid');
-                        } else {
-                            icon.classList.remove('fa-solid');
-                            icon.classList.add('fa-regular');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            // Toggle icon según la respuesta
+                            if (data.liked) {
+                                icon.classList.remove('fa-regular');
+                                icon.classList.add('fa-solid');
+                            } else {
+                                icon.classList.remove('fa-solid');
+                                icon.classList.add('fa-regular');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                 });
             });
         });

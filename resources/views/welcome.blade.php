@@ -6,6 +6,7 @@
 
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
+
             <div class="opciones">
                 <div class="opciones-bar-separator">Home</div>
                 <li class="opciones-bar-item">
@@ -50,6 +51,7 @@
                     </a>
                 </li>
             </div>
+
             <div class="contenido">
                 @if (Auth::check())
                     <a href="#" class="box-crear-publicacion" data-toggle="modal" data-target="#exampleModalCenter">
@@ -366,6 +368,7 @@
     <!-- Script -->
 
     <!-- Script para el apartado de categorias-->
+     
     <script>
         $(document).ready(function () {
             const allCategories = @json($categorias);

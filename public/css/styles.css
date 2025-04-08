@@ -384,7 +384,6 @@ a.sidebar-link:hover {
 
     padding: 15px 20px;
 
-    display: flex;
     align-items: center;
 
     gap: 15px;
@@ -899,10 +898,14 @@ a.sidebar-link:hover {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
-
 .btn-login:hover {
     background-color: #0056b3;
+    color: white;
     scale: 1.1;
+    text-decoration: none;
+}
+.btn-login:active {
+    scale: 0.9;
 }
 
 .center-text {
@@ -928,7 +931,7 @@ a.sidebar-link:hover {
     align-items: center;
     padding: 5px 0;
 
-    padding-right: 100px;
+    padding-right: 90px;
 }
 
 a.opciones-bar-link {

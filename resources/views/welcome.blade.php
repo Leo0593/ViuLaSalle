@@ -6,6 +6,7 @@
 
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
+
             <div class="opciones">
                 <div class="opciones-bar-separator">Home</div>
                 <li class="opciones-bar-item">
@@ -50,6 +51,7 @@
                     </a>
                 </li>
             </div>
+
             <div class="contenido">
                 @if (Auth::check())
                     <a href="#" class="box-crear-publicacion" data-toggle="modal" data-target="#exampleModalCenter">
@@ -166,33 +168,20 @@
                                 </div>
                             @endif
 
-                            <!--
-                                                            @if($publicacion->fotos->count() > 0)
-                                                                <div class="box-publicacion-img-container">
-                                                                    @foreach($publicacion->fotos as $foto)
-                                                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
-                                                                        </div>
-                                                                    @endforeach
-                                                                </div>
-                                                                @if($publicacion->fotos->count() > 1)
-                                                                    <div class="dots-container">
-                                                                        @foreach($publicacion->fotos as $foto)
-                                                                            <span class="dot"></span>
-                                                                        @endforeach
-                                                                    </div>
-                                                                @endif
-                                                            @else
-                                                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
-                                                            @endif -->
-
                             <div class="box-publicacion-footer">
-                                <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                <!--
-                                                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
-                                <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                <div class="descripcion">
-                                    <strong>{{ $publicacion->usuario->name }}: </strong>
-                                    {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                <div class="box-publicacion-buttons">
+                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                    <!--
+                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                    <div class="descripcion">
+                                        <strong>{{ $publicacion->usuario->name }}: </strong>
+                                        {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                    </div>
+                                </div>
+
+                                <div class="box-publicacion-comentarios">
+                                    <p><strong>User: </strong>Hola</p>
                                 </div>
                             </div>
                         </div>
@@ -204,8 +193,8 @@
 
             <div class="perfil">
                 <div class="perfil-box">
-                    <div class="perfil-header" style="background-image: url('../../img/Fondo.png');">
-                        <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
+                    <div class="perfil-header">
+                        <img src="../../img/Fondo.png" alt="Fondo de perfil">
                     </div>
                     <div class="perfil-foto">
                         @if(Auth::check() && Auth::user()->avatar)
@@ -354,9 +343,6 @@
                         </div>
 
                     </form>
-
-
-
                 </div>
 
                 <!--<div class="modal-body">
@@ -382,6 +368,7 @@
     <!-- Script -->
 
     <!-- Script para el apartado de categorias-->
+     
     <script>
         $(document).ready(function () {
             const allCategories = @json($categorias);

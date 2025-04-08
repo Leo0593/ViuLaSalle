@@ -186,13 +186,19 @@
                                                             @endif -->
 
                             <div class="box-publicacion-footer">
-                                <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                <!--
-                                                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
-                                <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                <div class="descripcion">
-                                    <strong>{{ $publicacion->usuario->name }}: </strong>
-                                    {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                <div class="box-publicacion-buttons">
+                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                    <!--
+                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                    <div class="descripcion">
+                                        <strong>{{ $publicacion->usuario->name }}: </strong>
+                                        {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                    </div>
+                                </div>
+
+                                <div class="box-publicacion-comentarios">
+                                    <p><strong>User: </strong>Hola</p>
                                 </div>
                             </div>
                         </div>

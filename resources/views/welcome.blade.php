@@ -162,33 +162,21 @@
                                 <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
                             @endif
 
-                            <!--
-                            @if($publicacion->fotos->count() > 0)
-                                <div class="box-publicacion-img-container">
-                                    @foreach($publicacion->fotos as $foto)
-                                        <div class="box-publicacion-img" style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @if($publicacion->fotos->count() > 1)
-                                    <div class="dots-container">
-                                        @foreach($publicacion->fotos as $foto)
-                                            <span class="dot"></span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            @else
-                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');"></div>
-                            @endif -->
-
                             <div class="box-publicacion-footer">
-                                <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                <!--
-                                <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
-                                <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                <div class="descripcion">
-                                    <strong>{{ $publicacion->usuario->name }}: </strong>
-                                    {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                <div class="box-publicacion-buttons">
+                                    <button class="btn-like">
+                                        <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                    </button>
+                                    <!--
+                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                    <div class="descripcion">
+                                        <strong>{{ $publicacion->usuario->name }}: </strong>
+                                        {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                    </div>
+                                </div>
+                                <div class="box-publicacion-comentarios">
+                                    <p><strong>User: </strong>Hola</p>
                                 </div>
                             </div>
                         </div>
@@ -200,8 +188,8 @@
 
             <div class="perfil">
                 <div class="perfil-box">
-                    <div class="perfil-header" style="background-image: url('../../img/Fondo.png');">
-                    <!-- <img src="../../img/Fondo.png" alt="Fondo de perfil"> -->
+                    <div class="perfil-header">
+                        <img src="../../img/Fondo.png" alt="Fondo de perfil">
                     </div>
                     <div class="perfil-foto">
                         @if(Auth::check() && Auth::user()->avatar)
@@ -219,7 +207,7 @@
                     <!-- Overlay borroso y botón -->
                     @if(!Auth::check())
                         <div class="perfil-overlay">
-                            <button class="btn-login"><strong>Iniciar Sesión</strong></button>
+                            <a class="btn-login"><strong>Iniciar Sesión</strong></a>
                         </div>
                     @endif
 
@@ -276,7 +264,9 @@
                     <form action="{{ route('publicaciones.store') }}" method="POST" enctype="multipart/form-data">
 
                         @csrf
-                        <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
+                        @if(Auth::check())
+                            <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
+                        @endif
 
 
                         <div class="form-group">
@@ -509,6 +499,42 @@
 
             // Inicializamos el estado de los puntos
             updateDots();
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const likeButtons = document.querySelectorAll('.btn-like');
+
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const icon = this.querySelector('i');
+                    const publicacionId = this.getAttribute('data-id');
+
+                    fetch('/publicaciones/' + publicacionId + '/like', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                        body: JSON.stringify({})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Toggle icon según la respuesta
+                        if (data.liked) {
+                            icon.classList.remove('fa-regular');
+                            icon.classList.add('fa-solid');
+                        } else {
+                            icon.classList.remove('fa-solid');
+                            icon.classList.add('fa-regular');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            });
         });
     </script>
 

@@ -499,6 +499,8 @@ a.sidebar-link:hover {
     gap: 5px;
 }
 
+
+
 .box-publicacion-buttons {
     display: flex;
     align-items: center;
@@ -543,7 +545,7 @@ a.sidebar-link:hover {
 
 .descripcion {
     padding: 10px 0;
-    margin-left: 15px;
+    margin-left: 5px;
     font-size: 15px;
 }
 

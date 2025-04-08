@@ -8,6 +8,8 @@ use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Welcome;
+use App\Http\Controllers\NivelEducativoController;
+
 
 
 Route::get('/', [welcome::class, 'index'])->name('welcome');
@@ -22,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('users')->name('users.')->group(function() {
+Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/create', [UserController::class, 'create'])->name('create');
     Route::post('/', [UserController::class, 'store'])->name('store');
@@ -68,10 +70,18 @@ Route::get('/publicacion/{id}/comentarios', [ComentarioController::class, 'verCo
 Route::post('/comentarios/store', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::put('comentarios/{id}/cambiar-estado', [ComentarioController::class, 'changeStatus'])->name('comentarios.changeStatus');
 
-
+Route::prefix('niveles')->name('niveles.')->group(function () {
+    Route::get('/', [NivelEducativoController::class, 'index'])->name('index');
+    Route::get('/create', [NivelEducativoController::class, 'create'])->name('create');
+    Route::post('/', [NivelEducativoController::class, 'store'])->name('store');
+    Route::get('{id}/edit', [NivelEducativoController::class, 'edit'])->name('edit');
+    Route::put('{id}', [NivelEducativoController::class, 'update'])->name('update');
+    Route::delete('{id}', [NivelEducativoController::class, 'destroy'])->name('destroy');
+    Route::put('{id}/activate', [NivelEducativoController::class, 'activate'])->name('activate');
+});
 
 
 use App\Http\Controllers\InfoController;
 Route::get('/info', [InfoController::class, 'index'])->name('info.index');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

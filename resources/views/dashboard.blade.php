@@ -30,9 +30,15 @@
                     {{ __('Publicaciones') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.index')">
+                <x-responsive-nav-link :href="route('categorias.index')"
+                    :active="request()->routeIs('categorias.index')">
                     {{ __('Categorias') }}
                 </x-responsive-nav-link>
+                
+                <x-responsive-nav-link :href="route('niveles.index')" :active="request()->routeIs('niveles.index')">
+                    {{ __('Niveles Educativos') }}
+                </x-responsive-nav-link>
+
             </div>
         </div>
 

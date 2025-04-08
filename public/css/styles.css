@@ -899,10 +899,14 @@ a.sidebar-link:hover {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
-
 .btn-login:hover {
     background-color: #0056b3;
+    color: white;
     scale: 1.1;
+    text-decoration: none;
+}
+.btn-login:active {
+    scale: 0.9;
 }
 
 .center-text {

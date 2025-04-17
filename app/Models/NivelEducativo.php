@@ -15,4 +15,9 @@ class NivelEducativo extends Model
         'nombre',
         'status'
     ];
+
+    public function cursos()
+    {
+        return $this->hasMany(Curso::class, 'id_nivel');
+    }
 }

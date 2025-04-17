@@ -39,6 +39,10 @@
                     {{ __('Niveles Educativos') }}
                 </x-responsive-nav-link>
 
+                <x-responsive-nav-link :href="route('cursos.index')" :active="request()->routeIs('cursos.index')">
+                    {{ __('Cursos') }}
+                </x-responsive-nav-link>
+
             </div>
         </div>
 

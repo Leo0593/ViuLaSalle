@@ -12,6 +12,9 @@ use App\Http\Controllers\NivelEducativoController;
 use App\Http\Controllers\CursoController;
 
 Route::get('/', [welcome::class, 'index'])->name('welcome');
+Route::post('/publicaciones/{id}/like', [Welcome::class, 'toggleLike'])->name('publicaciones.like');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

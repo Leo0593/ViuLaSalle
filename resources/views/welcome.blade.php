@@ -1,5 +1,23 @@
 @include('layouts.head')
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const botones = document.querySelectorAll('.btn-comentarios');
+
+        botones.forEach(boton => {
+            boton.addEventListener('click', () => {
+                const comentarios = boton.parentElement.querySelector('.box-publicacion-comentarios');
+
+                if (comentarios) {
+                    comentarios.classList.toggle('activo');
+                } else {
+                    console.error('No se encontró el div .box-publicacion-comentarios');
+                }
+            });
+        });
+    });
+</script>
+
 <body>
 
     @include('layouts.navheader')
@@ -173,7 +191,11 @@
                                     <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
                                     <!--
                                                                     <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
-                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                    
+                                    <button class="btn-comentarios">
+                                        <i class="fa-regular fa-comments"></i>
+                                    </button>
+                                    
                                     <div class="descripcion">
                                         <strong>{{ $publicacion->usuario->name }}: </strong>
                                         {{ Str::words($publicacion->descripcion, 100, '...') }}
@@ -368,7 +390,7 @@
     <!-- Script -->
 
     <!-- Script para el apartado de categorias-->
-     
+
     <script>
         $(document).ready(function () {
             const allCategories = @json($categorias);
@@ -537,6 +559,9 @@
             });
         });
     </script>
+
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

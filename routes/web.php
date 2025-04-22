@@ -9,8 +9,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Welcome;
 use App\Http\Controllers\NivelEducativoController;
-
-
+use App\Http\Controllers\CursoController;
 
 Route::get('/', [welcome::class, 'index'])->name('welcome');
 
@@ -78,6 +77,16 @@ Route::prefix('niveles')->name('niveles.')->group(function () {
     Route::put('{id}', [NivelEducativoController::class, 'update'])->name('update');
     Route::delete('{id}', [NivelEducativoController::class, 'destroy'])->name('destroy');
     Route::put('{id}/activate', [NivelEducativoController::class, 'activate'])->name('activate');
+});
+
+Route::prefix('cursos')->name('cursos.')->group(function () {
+    Route::get('/', [CursoController::class, 'index'])->name('index');
+    Route::get('/create', [CursoController::class, 'create'])->name('create');
+    Route::post('/', [CursoController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [CursoController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [CursoController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CursoController::class, 'destroy'])->name('destroy');
+    Route::put('/{id}/activate', [CursoController::class, 'activate'])->name('activate');
 });
 
 

@@ -533,9 +533,6 @@ a.sidebar-link:hover {
     margin-top: 10px;
     padding: 5px 5px;
 }
-.box-publicacion-comentarios.activo {
-    display: block;
-}
 
 .box-publicacion-comentarios p {
     margin: 0;
@@ -545,6 +542,46 @@ a.sidebar-link:hover {
 .box-publicacion-comentarios strong {
     margin: 0;
     padding: 0;
+}
+
+.comentario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.agregar-comentario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+
+    width: 100%;
+}
+
+.enviar-comentario {
+    background-color: var(--azul);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+}
+.enviar-comentario i {
+    font-size: 20px;
+}
+.enviar-comentario:hover, .enviar-comentario:focus {
+    transform: scale(1.05);
+    opacity: 0.8;
+    outline: none;
+}
+.enviar-comentario:active {
+    transform: scale(0.9);
 }
 
 .descripcion {
@@ -1062,7 +1099,7 @@ textarea#publicacion-texto {
 }
 
 .btn-publicar {
-    background-color: var(--azul);
+    background-color: rgba(2, 77, 223, 0.8);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -1080,6 +1117,8 @@ textarea#publicacion-texto {
 }
 
 .box-publicacion-header-options {
+    position: relative;
+
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1103,3 +1142,40 @@ textarea#publicacion-texto {
     outline: none;
 }
 
+.menu-opciones {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: rgb(255, 255, 255);
+    width:auto;
+    z-index: 100;
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+}
+
+.menu-opciones ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-opciones li a {
+    display: block;
+    padding: 8px;
+    color: black;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+.menu-opciones li a:hover {
+    background: var(--amarillo);
+    scale: 1.05;
+}
+
+.menu-opciones li a:active {
+    scale: 0.9;
+}

@@ -33,4 +33,5 @@ class Comentario extends Model
     {
         return $this->belongsTo(Publicacion::class, 'id_publicacion');
     }
+
 }

@@ -1,17 +1,29 @@
 @include('layouts.head')
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const botones = document.querySelectorAll('.btn-comentarios');
+    $(document).ready(function () {
+        $('.like-btn').click(function () {
+            let button = $(this);
+            let icon = button.find('i');
+            let publicacionId = button.data('id');
 
-        botones.forEach(boton => {
-            boton.addEventListener('click', () => {
-                const comentarios = boton.parentElement.querySelector('.box-publicacion-comentarios');
+            $.ajax({
+                url: '/publicaciones/' + publicacionId + '/like',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    // Actualizar contador
+                    button.siblings('.like-count').text(response.likes);
 
-                if (comentarios) {
-                    comentarios.classList.toggle('activo');
-                } else {
-                    console.error('No se encontró el div .box-publicacion-comentarios');
+                    // Cambiar clase del ícono
+                    if (response.liked) {
+                        icon.removeClass('fa-regular').addClass('fa-solid').css('color', 'red');
+                    } else {
+                        icon.removeClass('fa-solid').addClass('fa-regular').css('color', 'black');
+                    }
                 }
             });
         });
@@ -117,9 +129,19 @@
                                 {{ $publicacion->usuario->name }}
 
                                 <div class="box-publicacion-header-options">
-                                    <button type="button" class="">
+                                    <button type="button" class="ellipsis-btn">
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </button>
+
+                                    <ul class="menu-opciones">
+                                        <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar</a></li>
+                                    </ul>
+                                    <!-- Menú flotante 
+                                    <ul class="menu-opciones">
+                                        <li><a href="#">Ver publicación</a></li>
+                                        <li><a href="#">Editar</a></li>
+                                        <li><a href="#">Eliminar</a></li>
+                                    </ul>-->
                                 </div>
                             </div>
 
@@ -195,24 +217,67 @@
 
                             <div class="box-publicacion-footer">
                                 <div class="box-publicacion-buttons">
-                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                    <!--
-                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+                                    <button class="like-btn" data-id="{{ $publicacion->id }}" style="background: none; border: none; cursor: pointer;">
+                                        <i class="{{ $publicacion->user_liked ? 'fa-solid' : 'fa-regular' }} fa-heart" style="font-size: 25px; color: {{ $publicacion->user_liked ? 'red' : 'black' }}"></i>
+                                    </button>
+                                    <span class="like-count">{{ $publicacion->likes_count }}</span>
                                     
-                                    <button class="btn-comentarios">
+                                    <!--
+                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                    -->
+                                    
+                                    <!-- Botón de comentarios -->
+                                    <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
                                         <i class="fa-regular fa-comments"></i>
                                     </button>
                                     
-                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> -->
+                                    <!--
+                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
                                     <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                    -->
+                                    
                                     <div class="descripcion">
                                         <strong>{{ $publicacion->usuario->name }}: </strong>
                                         {{ Str::words($publicacion->descripcion, 100, '...') }}
                                     </div>
                                 </div>
 
-                                <div class="box-publicacion-comentarios">
-                                    <p><strong>User: </strong>Hola</p>
+                                <!-- Caja de comentarios -->
+                                <div class="box-publicacion-comentarios" id="comentarios-{{ $publicacion->id }}">
+                                    @if($publicacion->comentarios->isNotEmpty())
+                                        @foreach($publicacion->comentarios as $comentario)
+                                            <div class="comentario">
+                                                <div class="box-publicacion-header-user" style="margin-right: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0); border: 0.8px solid rgb(200 200 200 / 50%);">
+                                                    <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}" alt="Avatar usuario">
+                                                </div>
+                                                <strong>{{ $comentario->usuario->name ?? 'User' }}:</strong>
+                                                <p>{{ $comentario->contenido }}</p>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <p>No hay comentarios aún.</p>
+                                    @endif
+
+                                    @if(Auth::check())
+                                    <div>
+                                        <form action="{{ route('comentarios.store') }}" method="POST" class="agregar-comentario">
+                                            @csrf
+                                            <div class="box-crear-publicacion-header-foto" style="margin-right: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0); border: 0.8px solid rgb(200 200 200 / 50%);">
+                                                @if(Auth::check() && Auth::user()->avatar)
+                                                    <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar usuario"
+                                                        onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                                                @else
+                                                    <img src="{{ asset('img/user-icon.png') }}" alt="Avatar por defecto">
+                                                @endif
+                                            </div>
+
+                                            <input type="hidden" name="id_publicacion" value="{{ $publicacion->id }}">
+                                            <input class="box-crear-publicacion-header-texto" style="padding: 10px; height: auto;" type="text" name="contenido" placeholder="Escribe un comentario..." required>
+                                            <button class="enviar-comentario" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                        </form>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -294,7 +359,6 @@
 
                 <div class="modal-body">
                     <form action="{{ route('publicaciones.store') }}" method="POST" enctype="multipart/form-data">
-
                         @csrf
 
                         @auth
@@ -399,7 +463,6 @@
     <!-- Script -->
 
     <!-- Script para el apartado de categorias-->
-
     <script>
         $(document).ready(function () {
             const allCategories = @json($categorias);
@@ -478,6 +541,7 @@
         });
     </script>
 
+    <!-- Script para el selector de archivos -->
     <script>
         // Seleccionar los iconos
         const iconoImagen = document.getElementById('icono-imagen');
@@ -504,35 +568,35 @@
 
     </script>
 
+    <!-- Script DOTS -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const container = document.querySelector('.box-publicacion-img-container');
-            const dots = document.querySelectorAll('.dot');
+            const publicaciones = document.querySelectorAll('.box-publicacion');
 
-            // Función para actualizar los puntos
-            function updateDots() {
-                const scrollPosition = container.scrollLeft;
-                const containerWidth = container.offsetWidth;
-                const totalImages = dots.length;
-                const activeIndex = Math.floor(scrollPosition / containerWidth);
+            publicaciones.forEach(publicacion => {
+                const container = publicacion.querySelector('.box-publicacion-img-container');
+                const dots = publicacion.querySelectorAll('.dot');
 
-                dots.forEach((dot, index) => {
-                    if (index === activeIndex) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
+                if (!container || dots.length === 0) return;
 
-            // Actualizamos los puntos cuando se hace scroll
-            container.addEventListener('scroll', updateDots);
+                function updateDots() {
+                    const scrollPosition = container.scrollLeft;
+                    const containerWidth = container.offsetWidth;
+                    const activeIndex = Math.round(scrollPosition / containerWidth);
 
-            // Inicializamos el estado de los puntos
-            updateDots();
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === activeIndex);
+                    });
+                }
+
+                container.addEventListener('scroll', updateDots);
+                updateDots();
+            });
         });
     </script>
 
+
+    <!-- Script para el botón de "me gusta" 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const likeButtons = document.querySelectorAll('.btn-like');
@@ -567,8 +631,46 @@
                 });
             });
         });
+    </script>-->
+
+    <!-- Script para mostrar/ocultar comentarios -->
+    <script>
+        $(document).ready(function () {
+            $('.btn-comentarios').click(function () {
+                const id = $(this).data('id');
+                $('#comentarios-' + id).slideToggle(); // cambia display entre none y block con animación
+            });
+        });
     </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleMenus = document.querySelectorAll('.ellipsis-btn');
+
+    toggleMenus.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation(); // ¡evita que se cierre justo después!
+
+            const menu = this.nextElementSibling;
+
+            // Cerrar todos menos el actual
+            document.querySelectorAll('.menu-opciones').forEach(m => {
+                if (m !== menu) m.style.display = 'none';
+            });
+
+            // Mostrar u ocultar este menú
+            menu.style.display = (getComputedStyle(menu).display === 'none') ? 'flex' : 'none';
+        });
+    });
+
+    // Cierra todos los menús si haces clic fuera
+    document.addEventListener('click', function () {
+        document.querySelectorAll('.menu-opciones').forEach(menu => {
+            menu.style.display = 'none';
+        });
+    });
+});
+</script>
 
 
 

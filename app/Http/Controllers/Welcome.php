@@ -33,34 +33,7 @@ class Welcome extends Controller
         return view('welcome', compact('user', 'publicaciones', 'nopublicaciones', 'eventos', 'categorias', 'categoriasSugeridas'));
     }
 
-    public function toggleLike($id)
-    {
-        $publicacion = Publicacion::findOrFail($id);
-        $user = Auth::user();
-
-        if (!$user) {
-            return response()->json(['error' => 'No autenticado'], 403);
-        }
-
-        $like = Like::where('user_id', $user->id)->where('publicacion_id', $id)->first();
-
-        if ($like) {
-            // Si ya existe el like, lo eliminamos
-            $like->delete();
-            $publicacion->decrement('likes');
-            $liked = false;
-        } else {
-            // Si no existe, lo creamos
-            Like::create([
-                'user_id' => $user->id,
-                'publicacion_id' => $id,
-            ]);
-            $publicacion->increment('likes');
-            $liked = true;
-        }
-
-        return response()->json(['likes' => $publicacion->likes, 'liked' => $liked]);
-    }
+    
     
     /**
      * Show the form for creating a new resource.

@@ -97,7 +97,7 @@ class PublicacionController extends Controller
                 if ($this->esContenidoInapropiado($resultadoVision)) {
                     // Si se detecta contenido inapropiado, eliminamos la publicación y mostramos un mensaje
                     $publicacion->delete(); // Eliminamos la publicación de la base de datos
-                    return redirect()->route('publicaciones.create')->with('error', 'La publicación contiene contenido inapropiado.');
+                    return redirect()->route('welcome')->with('error', 'La publicación contiene contenido inapropiado.');
                 }
 
                 // Crear una nueva entrada en la tabla de fotos asociada a la publicación

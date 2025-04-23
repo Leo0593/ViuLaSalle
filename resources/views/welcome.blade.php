@@ -33,6 +33,12 @@
 <body>
 
     @include('layouts.navheader')
+    <!-- Mostrar la alerta si hay un mensaje de error en la sesión -->
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
 
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
@@ -159,11 +165,11 @@
                                                         @endif
                                                     </ul>
                                                     <!-- Menú flotante 
-                                                                                            <ul class="menu-opciones">
-                                                                                                <li><a href="#">Ver publicación</a></li>
-                                                                                                <li><a href="#">Editar</a></li>
-                                                                                                <li><a href="#">Eliminar</a></li>
-                                                                                            </ul>-->
+                                                                                                                    <ul class="menu-opciones">
+                                                                                                                        <li><a href="#">Ver publicación</a></li>
+                                                                                                                        <li><a href="#">Editar</a></li>
+                                                                                                                        <li><a href="#">Eliminar</a></li>
+                                                                                                                    </ul>-->
                                                 </div>
                                             </div>
 
@@ -248,9 +254,9 @@
                                                     <span class="like-count">{{ $publicacion->likes_count }}</span>
 
                                                     <!--
-                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                            -->
+                                                                                                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                                                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                    -->
 
                                                     <!-- Botón de comentarios -->
                                                     <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
@@ -258,9 +264,9 @@
                                                     </button>
 
                                                     <!--
-                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                                                                            -->
+                                                                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                                                                                                    -->
 
                                                     <div class="descripcion">
                                                         <strong>{{ $publicacion->usuario->name }}: </strong>

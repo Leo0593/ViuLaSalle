@@ -13,6 +13,7 @@
 
         <h1 class="mb-4">Lista de Eventos</h1>
         <a href="{{ route('eventos.create') }}" class="btn btn-success mb-3">Crear Eventor</a>
+        <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
 
         <table class="table table-bordered">
             <thead>

@@ -36,6 +36,7 @@
     <div class="container mt-5">
         <h1>Listado de Publicaciones</h1>
         <a href="{{ route('publicaciones.create') }}" class="btn btn-primary mb-3">Crear Publicación</a>
+        <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
 
         <table class="table table-bordered">
             <thead>

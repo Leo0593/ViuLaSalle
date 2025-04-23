@@ -13,6 +13,9 @@
         <a href="{{ route('cursos.create') }}">
             <button>Crear curso</button>
         </a>
+
+        <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
+
     @endif
 
 

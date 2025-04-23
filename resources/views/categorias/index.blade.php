@@ -12,7 +12,8 @@
 
         <h1 class="mb-4">Lista de Categorias</h1>
         <a href="{{ route('categorias.create') }}" class="btn btn-success mb-3">Crear Categoria</a>
-        
+        <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
+
         <table class="table table-bordered">
             <thead>
                 <tr>

@@ -14,6 +14,7 @@
 
         <!-- Botón para Crear Usuario -->
         <a href="{{ route('users.create') }}" class="btn btn-success mb-3">Crear Usuario</a>
+        <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
 
         <table class="table table-bordered">
             <thead>

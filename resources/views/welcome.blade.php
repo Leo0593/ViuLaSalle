@@ -119,198 +119,201 @@
                 @endif
 
                 @if(isset($publicaciones) && $publicaciones->isNotEmpty())
-                    @foreach ($publicaciones as $publicacion)
-                        <div class="box-publicacion">
-                            <div class="box-publicacion-header">
-                                <div class="box-publicacion-header-user">
-                                    <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}"
-                                        alt="Avatar usuario">
-                                </div>
-                                {{ $publicacion->usuario->name }}
-
-                                <div class="box-publicacion-header-options">
-                                    <button type="button" class="ellipsis-btn">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-
-                                    @php
-                                        $yaReportado = \App\Models\Reporte::where('user_id', auth()->id())
-                                            ->where('publicacion_id', $publicacion->id)
-                                            ->exists();
-                                    @endphp
-
-                                    <ul class="menu-opciones">
-                                        @if (!$yaReportado)
-                                            <li>
-                                                <form action="{{ route('publicaciones.reportar', $publicacion->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas reportar esta publicación?');">
-                                                    @csrf
-                                                    <button type="submit" style="background: none; border: none; padding: 0; color: red; cursor: pointer;">
-                                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar
-                                                    </button>
-                                                </form>
-                                            </li>
-                                        @else
-                                            <li style="color: gray; cursor: not-allowed;">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportado
-                                            </li>
-                                        @endif
-                                    </ul>
-                                    <!-- Menú flotante 
-                                            <ul class="menu-opciones">
-                                                <li><a href="#">Ver publicación</a></li>
-                                                <li><a href="#">Editar</a></li>
-                                                <li><a href="#">Eliminar</a></li>
-                                            </ul>-->
-                                </div>
-                            </div>
-
-                            @if($publicacion->fotos->count() > 0 && $publicacion->videos->count() > 0)
-                                <div class="box-publicacion-media-container">
-                                    <div class="box-publicacion-media-container-media">
-                                        <!-- Mostrar fotos -->
-                                        @foreach($publicacion->fotos as $foto)
-                                            <div class="box-publicacion-media-item box-publicacion-img"
-                                                style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
-                                            </div>
-                                        @endforeach
-
-                                        <!-- Mostrar videos -->
-                                        @foreach($publicacion->videos as $video)
-                                            <div class="box-publicacion-media-item box-publicacion-video">
-                                                <video autoplay controls loop>
-                                                    <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}"
-                                                        type="video/mp4">
-                                                </video>
-                                            </div>
-                                        @endforeach
-                                    </div>
-
-                                    @if($publicacion->fotos->count() + $publicacion->videos->count() > 1)
-                                        <div class="dots-container">
-                                            <!-- Crear un punto por cada foto -->
-                                            @foreach($publicacion->fotos as $foto)
-                                                <span class="dot"></span>
-                                            @endforeach
-
-                                            <!-- Crear un punto por cada video -->
-                                            @foreach($publicacion->videos as $video)
-                                                <span class="dot"></span>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                                <!-- Si hay fotos -->
-                            @elseif($publicacion->fotos->count() > 0)
-                                <div class="box-publicacion-img-container">
-                                    @foreach($publicacion->fotos as $foto)
-                                        <div class="box-publicacion-img"
-                                            style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
-                                        </div>
-                                    @endforeach
-                                </div>
-
-                                @if($publicacion->fotos->count() > 1)
-                                    <div class="dots-container">
-                                        @foreach($publicacion->fotos as $foto)
-                                            <span class="dot"></span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                                <!-- Si hay videos -->
-                            @elseif($publicacion->videos->count() > 0)
-                                <div class="box-publicacion-video-container">
-                                    @foreach($publicacion->videos as $video)
-                                        <div class="box-publicacion-video">
-                                            <video autoplay controls loop>
-                                                <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}"
-                                                    type="video/mp4">
-                                            </video>
-                                        </div>
-                                    @endforeach
-                                </div>
-
-                            @else
-                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');">
-                                </div>
-                            @endif
-
-                            <div class="box-publicacion-footer">
-                                <div class="box-publicacion-buttons">
-                                    <button class="like-btn" data-id="{{ $publicacion->id }}"
-                                        style="background: none; border: none; cursor: pointer;">
-                                        <i class="{{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'fa-solid' : 'fa-regular' }} fa-heart"
-                                            style="font-size: 25px; color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};"></i>
-                                    </button>
-
-                                    <span class="like-count">{{ $publicacion->likes_count }}</span>
-
-                                    <!--
-                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                            -->
-
-                                    <!-- Botón de comentarios -->
-                                    <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
-                                        <i class="fa-regular fa-comments"></i>
-                                    </button>
-
-                                    <!--
-                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                            -->
-
-                                    <div class="descripcion">
-                                        <strong>{{ $publicacion->usuario->name }}: </strong>
-                                        {{ Str::words($publicacion->descripcion, 100, '...') }}
-                                    </div>
-                                </div>
-
-                                <!-- Caja de comentarios -->
-                                <div class="box-publicacion-comentarios" id="comentarios-{{ $publicacion->id }}">
-                                    @if($publicacion->comentarios->isNotEmpty())
-                                        @foreach($publicacion->comentarios as $comentario)
-                                            <div class="comentario">
-                                                <div class="box-publicacion-header-user"
-                                                    style="margin-right: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0); border: 0.8px solid rgb(200 200 200 / 50%);">
+                            @foreach ($publicaciones as $publicacion)
+                                        <div class="box-publicacion">
+                                            <div class="box-publicacion-header">
+                                                <div class="box-publicacion-header-user">
                                                     <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}"
                                                         alt="Avatar usuario">
                                                 </div>
-                                                <strong>{{ $comentario->usuario->name ?? 'User' }}:</strong>
-                                                <p>{{ $comentario->contenido }}</p>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <p>No hay comentarios aún.</p>
-                                    @endif
+                                                {{ $publicacion->usuario->name }}
 
-                                    @if(Auth::check())
-                                        <div>
-                                            <form action="{{ route('comentarios.store') }}" method="POST"
-                                                class="agregar-comentario">
-                                                @csrf
-                                                <div class="box-crear-publicacion-header-foto"
-                                                    style="margin-right: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0); border: 0.8px solid rgb(200 200 200 / 50%);">
-                                                    @if(Auth::check() && Auth::user()->avatar)
-                                                        <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar usuario"
-                                                            onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
-                                                    @else
-                                                        <img src="{{ asset('img/user-icon.png') }}" alt="Avatar por defecto">
+                                                <div class="box-publicacion-header-options">
+                                                    <button type="button" class="ellipsis-btn">
+                                                        <i class="fa-solid fa-ellipsis"></i>
+                                                    </button>
+
+                                                    @php
+                                                        $yaReportado = \App\Models\Reporte::where('user_id', auth()->id())
+                                                            ->where('publicacion_id', $publicacion->id)
+                                                            ->exists();
+                                                    @endphp
+
+                                                    <ul class="menu-opciones">
+                                                        @if (!$yaReportado)
+                                                            <li>
+                                                                <form action="{{ route('publicaciones.reportar', $publicacion->id) }}" method="POST"
+                                                                    style="display:inline;"
+                                                                    onsubmit="return confirm('¿Estás seguro de que deseas reportar esta publicación?');">
+                                                                    @csrf
+                                                                    <button type="submit"
+                                                                        style="background: none; border: none; padding: 0; color: red; cursor: pointer;">
+                                                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar
+                                                                    </button>
+                                                                </form>
+                                                            </li>
+                                                        @else
+                                                            <li style="color: gray; cursor: not-allowed;">
+                                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportado
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                    <!-- Menú flotante 
+                                                                    <ul class="menu-opciones">
+                                                                        <li><a href="#">Ver publicación</a></li>
+                                                                        <li><a href="#">Editar</a></li>
+                                                                        <li><a href="#">Eliminar</a></li>
+                                                                    </ul>-->
+                                                </div>
+                                            </div>
+
+                                            @if($publicacion->fotos->count() > 0 && $publicacion->videos->count() > 0)
+                                                <div class="box-publicacion-media-container">
+                                                    <div class="box-publicacion-media-container-media">
+                                                        <!-- Mostrar fotos -->
+                                                        @foreach($publicacion->fotos as $foto)
+                                                            <div class="box-publicacion-media-item box-publicacion-img"
+                                                                style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
+                                                            </div>
+                                                        @endforeach
+
+                                                        <!-- Mostrar videos -->
+                                                        @foreach($publicacion->videos as $video)
+                                                            <div class="box-publicacion-media-item box-publicacion-video">
+                                                                <video autoplay controls loop>
+                                                                    <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}"
+                                                                        type="video/mp4">
+                                                                </video>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+
+                                                    @if($publicacion->fotos->count() + $publicacion->videos->count() > 1)
+                                                        <div class="dots-container">
+                                                            <!-- Crear un punto por cada foto -->
+                                                            @foreach($publicacion->fotos as $foto)
+                                                                <span class="dot"></span>
+                                                            @endforeach
+
+                                                            <!-- Crear un punto por cada video -->
+                                                            @foreach($publicacion->videos as $video)
+                                                                <span class="dot"></span>
+                                                            @endforeach
+                                                        </div>
                                                     @endif
                                                 </div>
+                                                <!-- Si hay fotos -->
+                                            @elseif($publicacion->fotos->count() > 0)
+                                                <div class="box-publicacion-img-container">
+                                                    @foreach($publicacion->fotos as $foto)
+                                                        <div class="box-publicacion-img"
+                                                            style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
+                                                        </div>
+                                                    @endforeach
+                                                </div>
 
-                                                <input type="hidden" name="id_publicacion" value="{{ $publicacion->id }}">
-                                                <input class="box-crear-publicacion-header-texto"
-                                                    style="padding: 10px; height: auto;" type="text" name="contenido"
-                                                    placeholder="Escribe un comentario..." required>
-                                                <button class="enviar-comentario" type="submit"><i class="fa fa-paper-plane"
-                                                        aria-hidden="true"></i></button>
-                                            </form>
+                                                @if($publicacion->fotos->count() > 1)
+                                                    <div class="dots-container">
+                                                        @foreach($publicacion->fotos as $foto)
+                                                            <span class="dot"></span>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                                <!-- Si hay videos -->
+                                            @elseif($publicacion->videos->count() > 0)
+                                                <div class="box-publicacion-video-container">
+                                                    @foreach($publicacion->videos as $video)
+                                                        <div class="box-publicacion-video">
+                                                            <video autoplay controls loop>
+                                                                <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}"
+                                                                    type="video/mp4">
+                                                            </video>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                            @else
+                                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');">
+                                                </div>
+                                            @endif
+
+                                            <div class="box-publicacion-footer">
+                                                <div class="box-publicacion-buttons">
+                                                    <button class="like-btn" data-id="{{ $publicacion->id }}"
+                                                        style="background: none; border: none; cursor: pointer;">
+                                                        <i class="{{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'fa-solid' : 'fa-regular' }} fa-heart"
+                                                            style="font-size: 25px; color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};"></i>
+                                                    </button>
+
+                                                    <span class="like-count">{{ $publicacion->likes_count }}</span>
+
+                                                    <!--
+                                                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                    -->
+
+                                                    <!-- Botón de comentarios -->
+                                                    <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
+                                                        <i class="fa-regular fa-comments"></i>
+                                                    </button>
+
+                                                    <!--
+                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                                                    -->
+
+                                                    <div class="descripcion">
+                                                        <strong>{{ $publicacion->usuario->name }}: </strong>
+                                                        {{ Str::words($publicacion->descripcion, 100, '...') }}
+                                                    </div>
+                                                </div>
+
+                                                <!-- Caja de comentarios -->
+                                                <div class="box-publicacion-comentarios" id="comentarios-{{ $publicacion->id }}">
+                                                    @if($publicacion->comentarios->isNotEmpty())
+                                                        @foreach($publicacion->comentarios as $comentario)
+                                                            <div class="comentario">
+                                                                <div class="box-publicacion-header-user"
+                                                                    style="margin-right: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0); border: 0.8px solid rgb(200 200 200 / 50%);">
+                                                                    <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}"
+                                                                        alt="Avatar usuario">
+                                                                </div>
+                                                                <strong>{{ $comentario->usuario->name ?? 'User' }}:</strong>
+                                                                <p>{{ $comentario->contenido }}</p>
+                                                            </div>
+                                                        @endforeach
+                                                    @else
+                                                        <p>No hay comentarios aún.</p>
+                                                    @endif
+
+                                                    @if(Auth::check())
+                                                        <div>
+                                                            <form action="{{ route('comentarios.store') }}" method="POST"
+                                                                class="agregar-comentario">
+                                                                @csrf
+                                                                <div class="box-crear-publicacion-header-foto"
+                                                                    style="margin-right: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0); border: 0.8px solid rgb(200 200 200 / 50%);">
+                                                                    @if(Auth::check() && Auth::user()->avatar)
+                                                                        <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar usuario"
+                                                                            onerror="this.onerror=null;this.src='{{ asset('img/user-icon.png') }}';">
+                                                                    @else
+                                                                        <img src="{{ asset('img/user-icon.png') }}" alt="Avatar por defecto">
+                                                                    @endif
+                                                                </div>
+
+                                                                <input type="hidden" name="id_publicacion" value="{{ $publicacion->id }}">
+                                                                <input class="box-crear-publicacion-header-texto"
+                                                                    style="padding: 10px; height: auto;" type="text" name="contenido"
+                                                                    placeholder="Escribe un comentario..." required>
+                                                                <button class="enviar-comentario" type="submit"><i class="fa fa-paper-plane"
+                                                                        aria-hidden="true"></i></button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                            @endforeach
                 @else
                     <p>No hay publicaciones disponibles.</p>
                 @endif
@@ -353,6 +356,17 @@
                             {{ Auth::check() ? Auth::user()->description : 'No disponible' }}</p>
                         <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location : 'No disponible' }}
                         </p>
+                        @if (Auth::check())
+                            <form method="POST" action="{{ route('logout') }}" style="margin-top: 15px;">
+                                @csrf
+                                <button type="submit"
+                                    style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">
+                                    <i class="fa fa-sign-out-alt" aria-hidden="true" style="margin-right: 5px;"></i> Cerrar
+                                    Sesión
+                                </button>
+                            </form>
+                        @endif
+
                     </div>
                 </div>
             </div>

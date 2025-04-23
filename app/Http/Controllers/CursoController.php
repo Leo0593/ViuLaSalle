@@ -58,7 +58,7 @@ class CursoController extends Controller
             }
         }
 
-        return redirect()->route('welcome')->with('success', 'Publicación creada correctamente.');
+        return redirect()->route('cursos.index')->with('success', 'Publicación creada correctamente.');
 
     }
     

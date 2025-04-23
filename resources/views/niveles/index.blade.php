@@ -11,6 +11,7 @@
         <h1 class="mb-4">Lista de Niveles</h1>
         @if($user->role == 'ADMIN')
             <a href="{{ route('niveles.create') }}" class="btn btn-success mb-3">Crear Nivel</a>
+            <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
         @endif
 
         <table class="table table-bordered">

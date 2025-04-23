@@ -10,10 +10,10 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Welcome;
 use App\Http\Controllers\NivelEducativoController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\VerificacionController;
+
 
 Route::get('/', [welcome::class, 'index'])->name('welcome');
-Route::post('/publicaciones/{id}/like', [Welcome::class, 'toggleLike'])->name('publicaciones.like');
-
 
 
 Route::get('/dashboard', function () {
@@ -59,6 +59,8 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
 
 });
 
+
+
 Route::prefix('categorias')->name('categorias.')->group(function () {
     Route::get('/', [CategoriaController::class, 'index'])->name('index');
     Route::get('/create', [CategoriaController::class, 'create'])->name('create');
@@ -91,6 +93,10 @@ Route::prefix('cursos')->name('cursos.')->group(function () {
     Route::delete('/{id}', [CursoController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activate', [CursoController::class, 'activate'])->name('activate');
 });
+
+Route::get('/verificacion', [VerificacionController::class, 'index'])->name('verificacion.index');
+Route::post('/verificacion', [VerificacionController::class, 'validar'])->name('verificacion.validar');
+
 
 
 use App\Http\Controllers\InfoController;

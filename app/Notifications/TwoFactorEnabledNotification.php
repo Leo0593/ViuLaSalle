@@ -11,33 +11,26 @@ class TwoFactorEnabledNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
+    protected $codigo;
+
+    public function __construct(string $codigo)
     {
-        //
+        $this->codigo = $codigo;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Código de Verificación')
+            ->line('Tu código de verificación de 2 pasos es:')
+            ->line("**{$this->codigo}**")
+            ->line('Este código expira en unos minutos.')
+            ->line('Gracias por usar nuestra aplicación.');
     }
 
     /**

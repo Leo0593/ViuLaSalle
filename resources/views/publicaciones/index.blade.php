@@ -86,7 +86,7 @@
                                     </td>
 
 
-                                    <!-- Mostrar la cantidad de likes -->
+                                    <!-- Mostrar la cantidad de likwes -->
                                     <td>
                                         <button class="like-btn" data-id="{{ $publicacion->id }}"
                                             style="color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};">

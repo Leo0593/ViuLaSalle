@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\User; // Asegúrate de incluir el modelo User
 
+use Illuminate\Support\Str;
+use App\Notifications\TwoFactorEnabledNotification;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -20,29 +23,29 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Autenticamos al usuario
         $request->authenticate();
 
-        // Obtener el usuario autenticado
         $user = Auth::user();
 
-        // Verificar si el campo 'status' del usuario es 0
         if ($user->status == 0) {
-            // Si el valor de 'status' es 0, cerramos la sesión y redirigimos a la página de login con un mensaje
             Auth::logout();
             return redirect()->route('login')->withErrors(['account_inactive' => 'Tu cuenta está inactiva.']);
         }
 
-        // Regenerar la sesión
         $request->session()->regenerate();
 
-        // Redirigir al usuario a la página deseada
-        return redirect()->intended(route('welcome', absolute: false));
+        // ✅ Generar código aleatorio de 10 caracteres
+        $codigo = Str::upper(Str::random(10)); // letras y números, en mayúscula
+
+        // ✅ Guardar en sesión
+        session(['codigo_2fa' => $codigo]);
+
+        // ✅ Enviar notificación por correo
+        $user->notify(new TwoFactorEnabledNotification($codigo));
+
+        return redirect()->route('verificacion.index');
     }
 
     /**

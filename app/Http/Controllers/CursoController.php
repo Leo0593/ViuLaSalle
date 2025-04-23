@@ -9,9 +9,34 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\FotoCurso;
 
 
+
 class CursoController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
+    {
+        $user = auth()->user();
+        $query = Curso::with('nivelEducativo', 'fotos');
+
+        if ($user->role !== 'ADMIN') {
+            $query->where('status', 1);
+        }
+
+        // Si viene el filtro por nivel
+        if ($request->filled('nivel')) {
+            $nivel = strtolower($request->nivel);
+
+            $query->whereHas('nivelEducativo', function ($q) use ($nivel) {
+                $q->whereRaw('LOWER(nombre) = ?', [$nivel]);
+            });
+        }
+
+        $cursos = $query->get();
+
+        return view('cursos.index', compact('cursos', 'user'));
+    }
+    
+    /*public function index()
     {
         $user = auth()->user();
 
@@ -22,7 +47,7 @@ class CursoController extends Controller
         }
 
         return view('cursos.index', compact('cursos', 'user'));
-    }
+    }*/
 
     public function create()
     {

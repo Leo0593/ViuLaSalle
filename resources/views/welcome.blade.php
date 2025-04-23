@@ -64,6 +64,12 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('niveles.index') }}">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Niveles Educativos</span>
+                    </a>
+                </li>
 
                 <div class="opciones-bar-separator">Interfaces</div>
                 <li class="opciones-bar-item">
@@ -165,11 +171,11 @@
                                                         @endif
                                                     </ul>
                                                     <!-- Menú flotante 
-                                                                                                                    <ul class="menu-opciones">
-                                                                                                                        <li><a href="#">Ver publicación</a></li>
-                                                                                                                        <li><a href="#">Editar</a></li>
-                                                                                                                        <li><a href="#">Eliminar</a></li>
-                                                                                                                    </ul>-->
+                                                                                                                                                                                            <ul class="menu-opciones">
+                                                                                                                                                                                                <li><a href="#">Ver publicación</a></li>
+                                                                                                                                                                                                <li><a href="#">Editar</a></li>
+                                                                                                                                                                                                <li><a href="#">Eliminar</a></li>
+                                                                                                                                                                                            </ul>-->
                                                 </div>
                                             </div>
 
@@ -254,9 +260,9 @@
                                                     <span class="like-count">{{ $publicacion->likes_count }}</span>
 
                                                     <!--
-                                                                                                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                                                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                    -->
+                                                                                                                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                                                                                            -->
 
                                                     <!-- Botón de comentarios -->
                                                     <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
@@ -264,9 +270,9 @@
                                                     </button>
 
                                                     <!--
-                                                                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                                                                                                    -->
+                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                                                                                                                                                                            -->
 
                                                     <div class="descripcion">
                                                         <strong>{{ $publicacion->usuario->name }}: </strong>

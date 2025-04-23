@@ -29,8 +29,13 @@
                         <td>{{ $nivel->nombre }}</td>
 
                         <td>
+                            <a href="{{ route('cursos.index', ['nivel' => $nivel->nombre]) }}" class="btn btn-info btn-sm">
+                                Ver Cursos
+                            </a>
+                            
                             @if($user->role == 'ADMIN')
 
+                                <!-- Botón de editar -->
                                 <a href="{{ route('niveles.edit', $nivel->id) }}" class="btn btn-primary">Editar</a>
 
                                 @if ($nivel->status == 1)

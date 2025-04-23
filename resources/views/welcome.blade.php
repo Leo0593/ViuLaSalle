@@ -159,11 +159,11 @@
                                                         @endif
                                                     </ul>
                                                     <!-- Menú flotante 
-                                                                    <ul class="menu-opciones">
-                                                                        <li><a href="#">Ver publicación</a></li>
-                                                                        <li><a href="#">Editar</a></li>
-                                                                        <li><a href="#">Eliminar</a></li>
-                                                                    </ul>-->
+                                                                                            <ul class="menu-opciones">
+                                                                                                <li><a href="#">Ver publicación</a></li>
+                                                                                                <li><a href="#">Editar</a></li>
+                                                                                                <li><a href="#">Eliminar</a></li>
+                                                                                            </ul>-->
                                                 </div>
                                             </div>
 
@@ -248,9 +248,9 @@
                                                     <span class="like-count">{{ $publicacion->likes_count }}</span>
 
                                                     <!--
-                                                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                    -->
+                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                            -->
 
                                                     <!-- Botón de comentarios -->
                                                     <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
@@ -258,9 +258,9 @@
                                                     </button>
 
                                                     <!--
-                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                                                    -->
+                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                                                                            -->
 
                                                     <div class="descripcion">
                                                         <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -357,16 +357,23 @@
                         <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location : 'No disponible' }}
                         </p>
                         @if (Auth::check())
-                            <form method="POST" action="{{ route('logout') }}" style="margin-top: 15px;">
-                                @csrf
-                                <button type="submit"
-                                    style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">
-                                    <i class="fa fa-sign-out-alt" aria-hidden="true" style="margin-right: 5px;"></i> Cerrar
-                                    Sesión
-                                </button>
-                            </form>
-                        @endif
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <!-- Botón Editar Perfil -->
+                                <a href="{{ route('profile.edit') }}"
+                                    style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 5px; text-decoration: none; display: flex; align-items: center;">
+                                    <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
+                                </a>
 
+                                <!-- Botón Cerrar Sesión -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center;">
+                                        <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

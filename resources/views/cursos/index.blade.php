@@ -56,6 +56,10 @@
                                 <button>Editar</button>
                             </a>
 
+                            <a href="{{ route('cursos.show', $curso->id) }}">
+                                <button>ver mas</button>
+                            </a>
+
                             @if($curso->status)
                                 <form action="{{ route('cursos.destroy', $curso->id) }}" method="POST" style="display:inline;">
                                     @csrf

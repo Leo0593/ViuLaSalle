@@ -92,6 +92,7 @@ Route::prefix('cursos')->name('cursos.')->group(function () {
     Route::put('/{id}', [CursoController::class, 'update'])->name('update');
     Route::delete('/{id}', [CursoController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activate', [CursoController::class, 'activate'])->name('activate');
+    Route::get('/{id}', [CursoController::class, 'show'])->name('show');
 });
 
 Route::get('/verificacion', [VerificacionController::class, 'index'])->name('verificacion.index');

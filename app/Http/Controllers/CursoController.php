@@ -35,14 +35,30 @@ class CursoController extends Controller
         $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
             'nombre' => 'required|string|max:255',
+            'duracion' => 'nullable|string|max:100',
+            'posibilidades_continuidad' => 'nullable|string',
+            'sector_profesional' => 'nullable|string|max:255',
+            'salidas_profesionales' => 'nullable|string',
+            'asignaturas_pdf' => 'nullable|mimes:pdf|max:2048',
             'fotos' => 'nullable|array',
             'fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // Subida del PDF (si se envió)
+        $pdfPath = null;
+        if ($request->hasFile('asignaturas_pdf')) {
+            $pdfPath = $request->file('asignaturas_pdf')->store('asignaturas_pdfs', 'public');
+        }
 
         // Crear el curso
         $curso = Curso::create([
             'id_nivel' => $request->id_nivel,
             'nombre' => $request->nombre,
+            'duracion' => $request->duracion,
+            'posibilidades_continuidad' => $request->posibilidades_continuidad,
+            'sector_profesional' => $request->sector_profesional,
+            'salidas_profesionales' => $request->salidas_profesionales,
+            'asignaturas_pdf' => $pdfPath,
             'status' => 1,
         ]);
 
@@ -61,7 +77,7 @@ class CursoController extends Controller
         return redirect()->route('cursos.index')->with('success', 'Publicación creada correctamente.');
 
     }
-    
+
     public function edit(string $id)
     {
         $curso = Curso::with('fotos')->findOrFail($id);
@@ -77,15 +93,25 @@ class CursoController extends Controller
         $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
             'nombre' => 'required|string|max:255',
+            'duracion' => 'nullable|string|max:100',
+            'posibilidades_continuidad' => 'nullable|string',
+            'sector_profesional' => 'nullable|string|max:255',
+            'salidas_profesionales' => 'nullable|string',
             'fotos' => 'nullable|array',
             'fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'delete_fotos' => 'nullable|array',
+            'asignaturas_pdf' => 'nullable|file|mimes:pdf|max:2048',
+            'delete_pdf' => 'nullable|boolean',
         ]);
 
         // Actualizar curso
         $curso->update([
             'id_nivel' => $request->id_nivel,
             'nombre' => $request->nombre,
+            'duracion' => $request->duracion,
+            'posibilidades_continuidad' => $request->posibilidades_continuidad,
+            'sector_profesional' => $request->sector_profesional,
+            'salidas_profesionales' => $request->salidas_profesionales,
         ]);
 
         // Eliminar fotos seleccionadas
@@ -110,6 +136,25 @@ class CursoController extends Controller
             }
         }
 
+        // Eliminar PDF existente si se marcó
+        if ($request->has('delete_pdf') && $curso->asignaturas_pdf) {
+            Storage::disk('public')->delete($curso->asignaturas_pdf);
+            $curso->asignaturas_pdf = null;
+            $curso->save();
+        }
+
+        // Subir nuevo PDF
+        if ($request->hasFile('asignaturas_pdf')) {
+            // Borrar anterior si existe
+            if ($curso->asignaturas_pdf) {
+                Storage::disk('public')->delete($curso->asignaturas_pdf);
+            }
+
+            $pdfPath = $request->file('asignaturas_pdf')->store('pdf_asignaturas', 'public');
+            $curso->asignaturas_pdf = $pdfPath;
+            $curso->save();
+        }
+
         return redirect()->route('cursos.index')->with('success', 'Curso actualizado correctamente.');
     }
 
@@ -128,6 +173,12 @@ class CursoController extends Controller
         $curso->update(['status' => 1]);
 
         return redirect()->route('cursos.index')->with('success', 'Curso activado correctamente.');
+    }
+
+    public function show(string $id)
+    {
+        $curso = Curso::with('nivelEducativo', 'fotos')->findOrFail($id);
+        return view('cursos.show', compact('curso'));
     }
 
 

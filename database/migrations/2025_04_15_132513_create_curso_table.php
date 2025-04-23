@@ -15,6 +15,11 @@ return new class extends Migration
             $table->foreignId('id_nivel')->constrained('nivel_educativo')->onDelete('cascade');
             // Otros campos
             $table->string('nombre');
+            $table->string('duracion')->nullable(); // Ej: "2 años"
+            $table->text('posibilidades_continuidad')->nullable(); // Texto largo
+            $table->string('sector_profesional')->nullable();
+            $table->text('salidas_profesionales')->nullable();
+            $table->string('asignaturas_pdf')->nullable(); // Ruta del archivo PDF
             $table->boolean('status')->default(1); // 1 = Activo, 0 = Inactivo
 
             $table->timestamps();

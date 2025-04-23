@@ -25,6 +25,43 @@
         <label for="nombre">Nombre del curso:</label>
         <input type="text" name="nombre" value="{{ $curso->nombre }}" required>
 
+        <!-- Duración -->
+        <label for="duracion">Duración:</label>
+        <input type="text" name="duracion" id="duracion" value="{{ $curso->duracion }}">
+        <br><br>
+
+        <!-- Posibilidades de continuidad -->
+        <label for="posibilidades_continuidad">Posibilidades de continuidad:</label>
+        <textarea name="posibilidades_continuidad" id="posibilidades_continuidad"
+            rows="3">{{ $curso->posibilidades_continuidad }}</textarea>
+        <br><br>
+
+        <!-- Sector profesional -->
+        <label for="sector_profesional">Sector profesional:</label>
+        <input type="text" name="sector_profesional" id="sector_profesional" value="{{ $curso->sector_profesional }}">
+        <br><br>
+
+        <!-- Salidas profesionales -->
+        <label for="salidas_profesionales">Salidas profesionales:</label>
+        <textarea name="salidas_profesionales" id="salidas_profesionales"
+            rows="3">{{ $curso->salidas_profesionales }}</textarea>
+        <br><br>
+
+        <!-- PDF actual -->
+        @if($curso->asignaturas_pdf)
+            <h3>Asignaturas Principales (PDF actual):</h3>
+            <div>
+                <a href="{{ asset('storage/' . $curso->asignaturas_pdf) }}" target="_blank">Ver PDF actual</a><br>
+                <label>
+                    <input type="checkbox" name="delete_pdf" value="1"> Eliminar PDF
+                </label>
+            </div>
+        @endif
+
+        <!-- Subir nuevo PDF -->
+        <h3>Subir nuevo PDF de asignaturas:</h3>
+        <input type="file" name="asignaturas_pdf" accept="application/pdf">
+
         <h3>Fotos actuales:</h3>
         @foreach($curso->fotos as $foto)
             <div>

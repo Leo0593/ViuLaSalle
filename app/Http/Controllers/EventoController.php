@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Evento;
 use Illuminate\Http\Request;
+use App\Models\Publicacion;
+use App\Models\User;
+use Carbon\Carbon; // Para obtener la fecha actual
+use App\Models\FotoPublicacion;
+use App\Models\VideoPublicacion;
+use App\Models\Categoria;
 
 class EventoController extends Controller
 {
@@ -17,9 +23,22 @@ class EventoController extends Controller
             $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
         }
 
-        return view('eventos.todoseventos', compact('eventos', 'user')); // Retornar vista con datos
+        return view('eventos.index', compact('eventos', 'user')); // Retornar vista con datos
     }
 
+    public function todoseventos()
+    {
+        $user = auth()->user(); // Obtener el usuario autenticado
+        $publicaciones = null; // Inicializar publicaciones como nul
+
+        if ($user && $user->role == 'ADMIN') {
+            $eventos = Evento::all(); // Mostrar todos los eventos para ADMIN
+        } else {
+            $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
+        }
+
+        return view('eventos.todoseventos', compact('eventos', )); // Retornar vista con datos
+    }
 
     public function create()
     {
@@ -113,4 +132,19 @@ class EventoController extends Controller
         return redirect()->route('eventos.index')->with('success', 'El evento ha sido activado correctamente.');
     }
 
+    //show por id
+    public function show($id)
+    {
+        $evento = Evento::findOrFail($id); // Busca el evento por ID
+
+        $user = auth()->user(); // Obtener el usuario autenticado
+
+        $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
+        $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])
+        ->where('status', 1)
+        ->orderBy('fecha_publicacion', 'desc') // Ordenar por fecha de publicación (más recientes primero)
+        ->get();
+
+        return view('eventos.show', compact('evento', 'publicaciones', 'user')); // Retornar vista con datos
+    }
 }

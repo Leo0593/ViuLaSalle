@@ -532,8 +532,6 @@ a.sidebar-link:hover {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 100%;
-
     gap: 10px;
 }
 .box-publicacion-buttons button {
@@ -736,10 +734,10 @@ a.sidebar-link:hover {
   
 .evento-banner {
     width: 100%; 
-    height: 450px;
-  
-    background-image: url("../../img/navidad.webp");
+    height: 480px;
 
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0)), url('../../img/Fondo.png');
+  
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -781,15 +779,15 @@ a.sidebar-link:hover {
     color: black;
     text-decoration: none;
     font-size: 15px;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 8px;
+    border-radius: 10px;
     transition: all 0.3s ease-in-out;
 }
 .nav-link:hover {
-    background-color: rgba(2, 77, 223, 0.8);
+    background-color: rgba(252, 194, 29, 0.8);
     color: white;
     text-decoration: none;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .main-evento{
@@ -802,38 +800,88 @@ a.sidebar-link:hover {
 .box-evento {
     width: 100%;
     background-color: white;
-    padding: 20px 50px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
   
     margin: 20px;
 
     border-radius: 20px;
-}
-@media screen and (max-width: 1000px) {
-    .main-evento {
-        width: 100%;
-    }
-    .box-evento {
-        padding: 20px 20px;
-    }    
+
+    overflow: hidden;
 }
 
 .eventos-title-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.evento-info {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.evento-imagen, .evento-descripcion {
+    width: calc(50% - 10px);
+}
+
+.evento-descripcion {
+    position: relative;
+    padding: 20px;
+    font-size: 15px;
+    color: black;
+    text-align: justify;
+}
+.descripcion-texto {
+    flex: 1; /* ocupa el resto del espacio */
+}
+
+.evento-imagen {
+    margin-top: 20px;
+
+    border-top-left-radius: 20px;
+
+    background-image: url('../../img/naavidad2.avif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 1000px) {
+    .main-evento {
+        width: 100%;
+    }  
+
+    .evento-info {
+        gap: 0px;
+    }
+    .evento-imagen, .evento-descripcion {
+        width: 100%;
+    }
+
+    .evento-imagen {
+        height: 300px;
+        margin-top: 0px;
+        border-top-left-radius: 0px;
+    }
 }
 
 .calendar {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     background-color: white;
 
-    border-radius: 30px;
+    border-radius: 20px;
     overflow: hidden;
 
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    
+    float: left; /* hace que el texto lo rodee */
+    margin-right: 20px; /* espacio entre calendario y texto */
+    margin-bottom: 5px;
 }
 
 .calendar-header {
@@ -846,23 +894,43 @@ a.sidebar-link:hover {
     align-items: center;
 
     color: white;
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .calendar-body {
     width: 100%;
-    height: 100px;
+    height: 70px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     color: black;
-    font-size: 60px;
+    font-size: 40px;
 }
 
-
-
+.evento-posts {
+    border-top: #ccc 2px solid;
+    
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 50px;
+}
+.evento-posts .post {
+    width: calc(33.33% - 33.33px);    
+    box-sizing: border-box;
+}
+@media screen and (max-width: 1000px) {
+    .evento-posts {
+        padding: 30px;
+        gap: 40px;
+    }
+    .evento-posts .post {
+        width: 100%;
+    }    
+}
 
 
 .perfil-box {
@@ -1287,3 +1355,7 @@ textarea#publicacion-texto {
     margin: 0;
     padding: 0;
 }
+
+
+
+

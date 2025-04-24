@@ -16,4 +16,11 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+
+    <!-- Script DOTS -->
+    <script src="{{ asset('/js/dots.js') }}"></script>
 </head>

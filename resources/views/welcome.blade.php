@@ -72,7 +72,7 @@
                 </li>
 
                 <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('eventos.index') }}">
+                    <a class="opciones-bar-link" href="{{ route('eventos.todos') }}">
                         <i class="fa-solid fa-calendar"></i>
                         <span>Eventos</span>
                     </a>
@@ -640,71 +640,6 @@
 
     </script>
 
-    <!-- Script DOTS -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const publicaciones = document.querySelectorAll('.box-publicacion');
-
-            publicaciones.forEach(publicacion => {
-                const container = publicacion.querySelector('.box-publicacion-img-container');
-                const dots = publicacion.querySelectorAll('.dot');
-
-                if (!container || dots.length === 0) return;
-
-                function updateDots() {
-                    const scrollPosition = container.scrollLeft;
-                    const containerWidth = container.offsetWidth;
-                    const activeIndex = Math.round(scrollPosition / containerWidth);
-
-                    dots.forEach((dot, index) => {
-                        dot.classList.toggle('active', index === activeIndex);
-                    });
-                }
-
-                container.addEventListener('scroll', updateDots);
-                updateDots();
-            });
-        });
-    </script>
-
-
-    <!-- Script para el botón de "me gusta" 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const likeButtons = document.querySelectorAll('.btn-like');
-
-            likeButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const icon = this.querySelector('i');
-                    const publicacionId = this.getAttribute('data-id');
-
-                    fetch('/publicaciones/' + publicacionId + '/like', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                        body: JSON.stringify({})
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Toggle icon según la respuesta
-                            if (data.liked) {
-                                icon.classList.remove('fa-regular');
-                                icon.classList.add('fa-solid');
-                            } else {
-                                icon.classList.remove('fa-solid');
-                                icon.classList.add('fa-regular');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                });
-            });
-        });
-    </script>-->
-
     <!-- Script para mostrar/ocultar comentarios -->
     <script>
         $(document).ready(function () {
@@ -715,6 +650,7 @@
         });
     </script>
 
+    <!-- Script para el menú de opciones -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const toggleMenus = document.querySelectorAll('.ellipsis-btn');
@@ -746,7 +682,7 @@
 
 
 
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

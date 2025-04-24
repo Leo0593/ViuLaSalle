@@ -13,18 +13,31 @@ use App\Models\Categoria;
 
 class EventoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $user = auth()->user(); // Obtener el usuario autenticado
+        $user = auth()->user();
+        $nombre = $request->input('nombre');
+        $status = $request->input('status');
 
-        if ($user && $user->role == 'ADMIN') {
-            $eventos = Evento::all(); // Mostrar todos los eventos para ADMIN
-        } else {
-            $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
+        $query = Evento::query();
+
+        if (!$user || $user->role != 'ADMIN') {
+            $query->where('status', 1); // Solo visibles para no admin
         }
 
-        return view('eventos.index', compact('eventos', 'user')); // Retornar vista con datos
+        $query->when($nombre, function ($q) use ($nombre) {
+            $q->where('nombre', 'like', '%' . $nombre . '%');
+        });
+
+        if ($status !== null) {
+            $query->where('status', $status);
+        }
+
+        $eventos = $query->get();
+
+        return view('eventos.index', compact('eventos', 'user'));
     }
+
 
     public function todoseventos()
     {
@@ -141,9 +154,9 @@ class EventoController extends Controller
 
         $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
         $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])
-        ->where('status', 1)
-        ->orderBy('fecha_publicacion', 'desc') // Ordenar por fecha de publicación (más recientes primero)
-        ->get();
+            ->where('status', 1)
+            ->orderBy('fecha_publicacion', 'desc') // Ordenar por fecha de publicación (más recientes primero)
+            ->get();
 
         return view('eventos.show', compact('evento', 'publicaciones', 'user')); // Retornar vista con datos
     }

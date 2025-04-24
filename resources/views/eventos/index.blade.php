@@ -4,14 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuarios</title>
+    <title>Lista de Usuariods</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 
 <body>
+
+
     <div class="container mt-5">
 
         <h1 class="mb-4">Lista de Eventos</h1>
+
+        <form method="GET" action="{{ route('eventos.index') }}" class="row g-3 mb-4">
+            <div class="col-md-4">
+                <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre"
+                    value="{{ request('nombre') }}">
+            </div>
+            <div class="col-md-4">
+                <select name="status" class="form-select">
+                    <option value="">-- Estado de visibilidad --</option>
+                    <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Visible</option>
+                    <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>No visible</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <a href="{{ route('eventos.index') }}" class="btn btn-secondary">Limpiar</a>
+            </div>
+        </form>
+
         <a href="{{ route('eventos.create') }}" class="btn btn-success mb-3">Crear Eventor</a>
         <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
 

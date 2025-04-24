@@ -177,7 +177,7 @@
                                                             </li>
                                                         @endif
                                                     </ul>
-                                                    <!-- Menú flotante 
+                                                    <!-- Menú flotante
                                                                                                                                                                                             <ul class="menu-opciones">
                                                                                                                                                                                                 <li><a href="#">Ver publicación</a></li>
                                                                                                                                                                                                 <li><a href="#">Editar</a></li>

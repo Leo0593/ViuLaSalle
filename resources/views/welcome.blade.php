@@ -264,22 +264,10 @@
                                                             style="font-size: 25px; color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};"></i>
                                                     </button>
 
-                                                    <span class="like-count">{{ $publicacion->likes_count }}</span>
-
-                                                    <!--
-                                                                                                                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                            -->
-
                                                     <!-- Botón de comentarios -->
                                                     <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
                                                         <i class="fa-regular fa-comments"></i>
                                                     </button>
-
-                                                    <!--
-                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                                                                                                                                                                            -->
 
                                                     <div class="descripcion">
                                                         <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -294,8 +282,7 @@
                                                             <div class="comentario">
                                                                 <div class="box-publicacion-header-user"
                                                                     style="margin-right: 0px; box-shadow: 0 0 0 rgba(0, 0, 0, 0); border: 0.8px solid rgb(200 200 200 / 50%);">
-                                                                    <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}"
-                                                                        alt="Avatar usuario">
+                                                                    <img src="{{ $comentario->usuario->avatar ? Storage::url($comentario->usuario->avatar) : asset('img/user-icon.png') }}" alt="Avatar usuario">
                                                                 </div>
                                                                 <strong>{{ $comentario->usuario->name ?? 'User' }}:</strong>
                                                                 <p>{{ $comentario->contenido }}</p>

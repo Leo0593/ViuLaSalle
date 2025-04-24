@@ -18,4 +18,7 @@
     <!-- AOS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
+
+    <!-- Script DOTS -->
+    <script src="{{ asset('/js/dots.js') }}"></script>
 </head>

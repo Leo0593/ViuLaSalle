@@ -1,76 +1,113 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuario</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
+@include('layouts.head')
 
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Editar Usuario</h1>
+    @include('layouts.navheader')
 
-        <!-- Mensajes de error -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <!-- Formulario para editar usuario -->
-        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PATCH')
-
-            <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}"
-                    required>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" name="email"
-                    value="{{ old('email', $user->email) }}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="phone" class="form-label">Teléfono (Opcional)</label>
-                <input type="text" class="form-control" id="phone" name="phone"
-                    value="{{ old('phone', $user->phone) }}">
-            </div>
-            
-            <div class="mb-3">
-                <label for="role" class="form-label">Rol</label>
-                <select class="form-control" id="role" name="role" required>
-                    <option value="USER" {{ old('role', $user->role) == 'USER' ? 'selected' : '' }}>Usuario</option>
-                    <option value="ADMIN" {{ old('role', $user->role) == 'ADMIN' ? 'selected' : '' }}>Administrador
-                    </option>
-                    <option value="PROFESOR" {{ old('role', $user->role) == 'PROFESOR' ? 'selected' : '' }}>Profesor
-                    </option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="avatar" class="form-label">Foto de Perfil (Opcional)</label>
-                <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
-                @if($user->avatar)
-                    <div class="mt-2">
-                        <p>Imagen actual:</p>
-                        <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" width="50" height="50">
+    <div class="container mt-5 mb-5" style="margin-top: 200px !important;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Tarjeta con esquinas redondeadas -->
+                <div class="card shadow-sm" style="border-radius: 15px;">
+                    <div class="card-header bg-white border-0 pt-4">
+                        <h1 class="h2 text-center" style="font-size: 2rem;">Editar Usuario</h1>
+                        <!-- Título más grande -->
                     </div>
-                @endif
-            </div>
 
-            <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
-            <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
-        </form>
+                    <div class="card-body px-5 pb-5">
+                        <!-- Mensajes de error -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger" style="font-size: 1.05rem;"> <!-- Texto de error más grande -->
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <!-- Formulario para editar usuario -->
+                        <form action="{{ route('users.update', $user->id) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
+
+                            <!-- Imagen de perfil circular centrada y más grande -->
+                            <div class="text-center mb-4">
+                                @if($user->avatar)
+                                    <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" class="rounded-circle"
+                                        style="width: 180px; height: 180px; object-fit: cover; border: 4px solid #f0f0f0;">
+                                    <!-- Imagen más grande -->
+                                @else
+                                    <div class="rounded-circle d-inline-flex align-items-center justify-content-center"
+                                        style="width: 180px; height: 180px; background-color: #f0f0f0; border: 4px solid #e0e0e0;">
+                                        <i class="fas fa-user fa-4x text-secondary"></i> <!-- Ícono más grande -->
+                                    </div>
+                                @endif
+
+                                <!-- Botón para seleccionar imagen -->
+                                <div class="mt-4">
+                                    <label for="avatar" class="btn btn-outline-primary rounded-pill"
+                                        style="font-size: 1.1rem; padding: 0.5rem 1.5rem;">
+                                        <i class="fas fa-camera me-2"></i> Seleccionar Foto
+                                    </label>
+                                    <input type="file" id="avatar" name="avatar" accept="image/*" class="d-none">
+                                </div>
+                            </div>
+
+
+
+                            <div class="mb-4">
+                                <label for="name" class="form-label" style="font-size: 1.1rem;">Nombre</label>
+                                <input type="text" class="form-control rounded-pill py-2" style="font-size: 1.1rem;"
+                                    id="name" name="name" value="{{ old('name', $user->name) }}" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="email" class="form-label" style="font-size: 1.1rem;">Correo
+                                    Electrónico</label>
+                                <input type="email" class="form-control rounded-pill py-2" style="font-size: 1.1rem;"
+                                    id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="phone" class="form-label" style="font-size: 1.1rem;">Teléfono
+                                    (Opcional)</label>
+                                <input type="text" class="form-control rounded-pill py-2" style="font-size: 1.1rem;"
+                                    id="phone" name="phone" value="{{ old('phone', $user->phone) }}">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="role" class="form-label" style="font-size: 1.1rem;">Rol</label>
+                                <select class="form-control rounded-pill py-2" style="font-size: 1.1rem;" id="role"
+                                    name="role" required>
+                                    <option value="USER" {{ old('role', $user->role) == 'USER' ? 'selected' : '' }}>
+                                        Usuario</option>
+                                    <option value="ADMIN" {{ old('role', $user->role) == 'ADMIN' ? 'selected' : '' }}>
+                                        Administrador</option>
+                                    <option value="PROFESOR" {{ old('role', $user->role) == 'PROFESOR' ? 'selected' : '' }}>Profesor</option>
+                                </select>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <div class="col-md-6 d-flex justify-content-md-end">
+
+                                    <a href="{{ route('users.index') }}"
+                                        class="btn btn-outline-secondary rounded-pill me-md-2 px-4"
+                                        style="font-size: 1.1rem;">
+                                        Cancelar
+                                    </a>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary rounded-pill px-4"
+                                    style="font-size: 1.1rem;">
+                                    Actualizar Usuario
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

@@ -11,11 +11,43 @@ class UserController extends Controller
     /**
      * Mostrar la lista de usuarios.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('usuarios.index', compact('users'));
+        $search = $request->input('search');
+        $role = $request->input('role');
+        $status = $request->input('status');
+
+        $users = User::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->when($role, function ($query, $role) {
+                return $query->where('role', $role);
+            })
+            ->when($status !== null, function ($query) use ($status) {
+                return $query->where('status', $status);
+            })
+            ->get(); // o paginate si lo usas
+
+        // Contadores
+        $countAdmin = User::where('role', 'ADMIN')->count();
+        $countUser = User::where('role', 'USER')->count();
+        $countProfesor = User::where('role', 'PROFESOR')->count();
+        $countActivos = User::where('status', 1)->count();
+        $countInactivos = User::where('status', 0)->count();
+
+        return view('usuarios.index', compact(
+            'users',
+            'countAdmin',
+            'countUser',
+            'countProfesor',
+            'countActivos',
+            'countInactivos'
+        ));
     }
+
+
 
     /**
      * Mostrar el formulario de creación.

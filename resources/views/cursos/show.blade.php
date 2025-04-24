@@ -37,7 +37,7 @@
         @endforelse
     </div>
 
-    <a href="{{ route('cursos.index') }}">← Volver al listado de cursos</a>
+    <a href="{{ route('niveles.index') }}">← Volver al listado de cursos</a>
 
 </body>
 </html>

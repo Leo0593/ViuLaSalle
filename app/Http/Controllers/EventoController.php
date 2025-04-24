@@ -113,4 +113,10 @@ class EventoController extends Controller
         return redirect()->route('eventos.index')->with('success', 'El evento ha sido activado correctamente.');
     }
 
+    //show por id
+    public function show($id)
+    {
+        $evento = Evento::findOrFail($id); // Busca el evento por ID
+        return view('eventos.show', compact('evento')); // Devuelve la vista para mostrar el evento
+    }
 }

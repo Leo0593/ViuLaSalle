@@ -4,7 +4,9 @@
     @include('layouts.navheader')
 
     <div>
-        <div id="banner" class="evento-banner"></div>
+        <div id="banner" class="evento-banner" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0)), url('{{ Storage::url($evento->foto) }}');"
+            data-aos="zoom-in" data-aos-duration="500">
+        </div>
 
         <div class="evento-header">
             <nav class="nav">
@@ -25,6 +27,10 @@
                     <div class="evento-info" style="display: flex; align-items: center; justify-content: space-between;padding: 20px;">
                         <div>
                             <div style="font-size: 20px; font-weight: bold;">Navidad Solidaria</div>
+                            <p> {{ $evento->nombre }}</p>
+                            <p> {{ $evento->descripcion }}</p>
+                            <p> {{ $evento->fecha }}</p>
+                            <p> {{ $evento->hora }}</p>
                         </div>
 
                         <div class="calendar">
@@ -67,4 +73,6 @@
             </div>
         </div>
     </div>
+
+    @include('layouts.footer')
 </body>

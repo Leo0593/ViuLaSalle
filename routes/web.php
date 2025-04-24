@@ -43,7 +43,7 @@ Route::prefix('eventos')->name('eventos.')->group(function () {
     Route::put('/{id}', [EventoController::class, 'update'])->name('update');
     Route::delete('/{id}', [EventoController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activate', [EventoController::class, 'activate'])->name('activate');
-
+    Route::get('/{id}', [EventoController::class, 'show'])->name('show');
 });
 
 Route::prefix('publicaciones')->name('publicaciones.')->group(function () {

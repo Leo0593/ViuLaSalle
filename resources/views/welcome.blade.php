@@ -72,7 +72,7 @@
                 </li>
 
                 <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('eventos.index') }}">
+                    <a class="opciones-bar-link" href="{{ route('eventos.todos') }}">
                         <i class="fa-solid fa-calendar"></i>
                         <span>Eventos</span>
                     </a>

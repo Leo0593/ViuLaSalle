@@ -19,10 +19,11 @@
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
             <div class="main-evento">
 
-                <div id="info" class="box-evento" data-aos="zoom-in" data-aos-duration="1200" style="scroll-margin-top: 110px;">
+                <!--
+                <div id="info" class="box-evento" data-aos="zoom-in" data-aos-duration="1200" style="scroll-margin-top: 110px;">    
                     <div class="eventos-title-container">
                         <h2 class="eventos-title">FECHA</h2>
-                    </div>
+                    </div> 
                     
                     <div class="evento-info" style="display: flex; align-items: center; justify-content: space-between;padding: 20px;">
                         <div>
@@ -39,7 +40,7 @@
                         </div>
                         
                     </div>
-                </div>
+                </div> -->
 
                 <div id="posts"
                     data-aos="zoom-in" data-aos-duration="1200"
@@ -50,21 +51,22 @@
                             <h2 class="eventos-title">INFO</h2>
                         </div>
 
-                        <div style="display: flex; padding: 20px; gap: 50px;">
-                            <div style="width: 50%;"> 
-                                <p>
-                                    Navidad Solidaria es una iniciativa que busca fomentar la generosidad y el espíritu de ayuda durante las fiestas navideñas. Se trata de realizar acciones solidarias, como donar ropa, juguetes, alimentos o tiempo a quienes más lo necesitan. Muchas organizaciones, empresas y grupos comunitarios organizan eventos benéficos, campañas de recolección y actividades para apoyar a personas en situación de vulnerabilidad.
-                                    El objetivo de una Navidad Solidaria es compartir más allá de los regalos materiales, promoviendo valores como la empatía, la unión y la gratitud. Puede incluir desde visitas a hospitales y hogares de ancianos hasta cenas comunitarias o apadrinamiento de niños en riesgo de exclusión social.
-                                    En esencia, se trata de recordar que el verdadero significado de la Navidad no está solo en la celebración, sino en hacer que todos puedan vivir estas fechas con alegría y esperanza.
-                                </p>
+                        <div class="evento-info">
+                            <div class="evento-descripcion"> 
+                                <div class="calendar">
+                                    <div class="calendar-header">Ene.</div>
+                                    <div class="calendar-body">30</div>
+                                </div>
+                                <div class="descripcion-texto">
+                                    <p>
+                                        Navidad Solidaria es una iniciativa que busca fomentar la generosidad y el espíritu de ayuda durante las fiestas navideñas. Se trata de realizar acciones solidarias, como donar ropa, juguetes, alimentos o tiempo a quienes más lo necesitan. Muchas organizaciones, empresas y grupos comunitarios organizan eventos benéficos, campañas de recolección y actividades para apoyar a personas en situación de vulnerabilidad.
+                                        El objetivo de una Navidad Solidaria es compartir más allá de los regalos materiales, promoviendo valores como la empatía, la unión y la gratitud. Puede incluir desde visitas a hospitales y hogares de ancianos hasta cenas comunitarias o apadrinamiento de niños en riesgo de exclusión social.
+                                        En esencia, se trata de recordar que el verdadero significado de la Navidad no está solo en la celebración, sino en hacer que todos puedan vivir estas fechas con alegría y esperanza.
+                                    </p>
+                                </div>
                             </div>
 
-                            <div style="width: 50%; border-radius: 10px;
-                                background-image: url('../../img/naavidad2.avif'); 
-                                background-size: cover;
-                                background-position: center;
-                                background-repeat: no-repeat;
-                                ">
+                            <div class="evento-imagen" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0)), url('{{ Storage::url($evento->foto) }}');">
                             </div>
                         </div>
                 </div>

@@ -37,6 +37,7 @@ Route::prefix('users')->name('users.')->group(function () {
 
 Route::prefix('eventos')->name('eventos.')->group(function () {
     Route::get('/', [EventoController::class, 'index'])->name('index');
+    Route::get('/todos', [EventoController::class, 'todoseventos'])->name('todos');
     Route::get('/create', [EventoController::class, 'create'])->name('create');
     Route::post('/', [EventoController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [EventoController::class, 'edit'])->name('edit');

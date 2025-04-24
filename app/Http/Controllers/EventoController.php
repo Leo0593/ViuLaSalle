@@ -17,9 +17,21 @@ class EventoController extends Controller
             $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
         }
 
-        return view('eventos.todoseventos', compact('eventos', 'user')); // Retornar vista con datos
+        return view('eventos.index', compact('eventos', 'user')); // Retornar vista con datos
     }
 
+    public function todoseventos()
+    {
+        $user = auth()->user(); // Obtener el usuario autenticado
+
+        if ($user && $user->role == 'ADMIN') {
+            $eventos = Evento::all(); // Mostrar todos los eventos para ADMIN
+        } else {
+            $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
+        }
+        
+        return view('eventos.todoseventos', compact('eventos')); // Retornar vista con datos
+    }
 
     public function create()
     {

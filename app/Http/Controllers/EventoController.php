@@ -17,7 +17,7 @@ class EventoController extends Controller
             $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
         }
 
-        return view('eventos.index', compact('eventos', 'user')); // Retornar vista con datos
+        return view('eventos.todoseventos', compact('eventos', 'user')); // Retornar vista con datos
     }
 
 
@@ -66,7 +66,7 @@ class EventoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // La foto es opcional
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp,|max:2048', // La foto es opcional
         ]);
 
         // Buscar el evento

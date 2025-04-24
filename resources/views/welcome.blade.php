@@ -71,6 +71,13 @@
                     </a>
                 </li>
 
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('eventos.index') }}">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span>Eventos</span>
+                    </a>
+                </li>
+
                 <div class="opciones-bar-separator">Interfaces</div>
                 <li class="opciones-bar-item">
                     <a class="opciones-bar-link">

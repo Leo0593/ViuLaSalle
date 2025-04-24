@@ -78,34 +78,7 @@
                     </a>
                 </li>
 
-                <div class="opciones-bar-separator">Interfaces</div>
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link">
-                        <i class="fa-solid fa-info-circle"></i>
-                        <span>ESO</span>
-                    </a>
-                </li>
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link">
-                        <i class="fa-solid fa-info-circle"></i>
-                        <span>Batxillerat</span>
-                    </a>
-                </li>
-
-                <div class="opciones-bar-separator">Ciclos</div>
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link">
-                        <i class="fa-solid fa-info-circle"></i>
-                        <span>CFGM</span>
-                    </a>
-                </li>
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link">
-                        <i class="fa-solid fa-info-circle"></i>
-                        <span>CFGS</span>
-                    </a>
-                </li>
+                
             </div>
 
             <div class="contenido">

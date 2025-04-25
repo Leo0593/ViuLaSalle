@@ -78,7 +78,7 @@
                     </a>
                 </li>
 
-                
+
             </div>
 
             <div class="contenido">
@@ -151,11 +151,11 @@
                                                         @endif
                                                     </ul>
                                                     <!-- Menú flotante 
-                                                                                                                                                                                                                    <ul class="menu-opciones">
-                                                                                                                                                                                                                        <li><a href="#">Ver publicación</a></li>
-                                                                                                                                                                                                                        <li><a href="#">Editar</a></li>
-                                                                                                                                                                                                                        <li><a href="#">Eliminar</a></li>
-                                                                                                                                                                                                                    </ul>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <ul class="menu-opciones">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Ver publicación</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Editar</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Eliminar</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>-->
                                                 </div>
                                             </div>
 
@@ -240,9 +240,9 @@
                                                     <span class="like-count">{{ $publicacion->likes_count }}</span>
 
                                                     <!--
-                                                                                                                                                                                                                    <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                                                                                                                                                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                                                    -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
 
                                                     <!-- Botón de comentarios -->
                                                     @if($publicacion->activar_comentarios == 1)
@@ -253,9 +253,9 @@
 
 
                                                     <!--
-                                                                                                                                                                                                                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                                                    <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                                                                                                                                                                                                    -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
 
                                                     <div class="descripcion">
                                                         <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -466,16 +466,31 @@
                             <label class="form-check-label" for="activar_comentarios">Permitir comentarios</label>
                         </div>
 
-                        <div class="form-group">
-                            <label for="fotos">Fotos</label>
-                            <input type="file" name="fotos[]" id="fotos" class="form-control" multiple>
+                        <div class="form-group mt-4">
+                            <label for="fotos" class="btn btn-outline-primary rounded-pill"
+                                style="font-size: 1.1rem; padding: 0.5rem 1.5rem;">
+                                <i class="fas fa-camera me-2"></i> Seleccionar Fotos
+                            </label>
+                            <input type="file" name="fotos[]" id="fotos" class="d-none" multiple accept="image/*">
+                            <small class="text-muted d-block mt-2">Puedes seleccionar múltiples archivos</small>
+
+                            <!-- Contenedor para previsualización -->
+                            <div class="d-flex flex-wrap gap-3 mt-3" id="preview-container"></div>
                         </div>
 
                         @if ($user && ($user->role == 'PROFESOR' || $user->role == 'ADMIN'))
-                            <div class="form-group">
-                                <label for="videos">Videos</label>
-                                <input type="file" name="videos[]" id="videos" class="form-control" multiple>
+                            <div class="form-group mt-4">
+                                <label for="videos" class="btn btn-outline-primary rounded-pill"
+                                    style="font-size: 1.1rem; padding: 0.5rem 1.5rem;">
+                                    <i class="fas fa-video me-2"></i> Seleccionar Videos
+                                </label>
+                                <input type="file" name="videos[]" id="videos" class="d-none" multiple accept="video/*">
+                                <small class="text-muted d-block mt-2">Puedes seleccionar múltiples archivos</small>
+
+                                <!-- Contenedor para previsualización -->
+                                <div class="d-flex flex-wrap gap-3 mt-3" id="video-preview-container"></div>
                             </div>
+
                         @endif
 
                         <div class="modal-footer">
@@ -653,9 +668,174 @@
         });
     </script>
 
+    <script>
+        let selectedFiles = [];
+
+        document.getElementById('fotos').addEventListener('change', function (e) {
+            selectedFiles = [...selectedFiles, ...Array.from(this.files)];
+            renderPreviews();
+        });
+
+        function renderPreviews() {
+            const previewContainer = document.getElementById('preview-container');
+            previewContainer.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const previewWrapper = document.createElement('div');
+                    previewWrapper.className = 'preview-wrapper';
+                    previewWrapper.style.position = 'relative';
+                    previewWrapper.style.width = '100px';
+                    previewWrapper.style.height = '100px';
+
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.className = 'preview-image';
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '8px';
+                    img.style.border = '1px solid #dee2e6';
+                    img.style.transition = 'all 0.3s ease';
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.innerHTML = '&times;';
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        removeImage(index);
+                    };
+
+                    previewWrapper.appendChild(img);
+                    previewWrapper.appendChild(deleteBtn);
+                    previewContainer.appendChild(previewWrapper);
+                }
+            });
+
+            updateFileInput();
+        }
+
+        function removeImage(index) {
+            selectedFiles.splice(index, 1);
+            renderPreviews();
+        }
+
+        function updateFileInput() {
+            const dataTransfer = new DataTransfer();
+            selectedFiles.forEach(file => dataTransfer.items.add(file));
+            document.getElementById('fotos').files = dataTransfer.files;
+        }
+    </script>
+
+    <script>
+        let selectedVideos = [];
+
+        document.getElementById('videos').addEventListener('change', function (e) {
+            selectedVideos = [...selectedVideos, ...Array.from(this.files)];
+            renderVideoPreviews();
+        });
+
+        function renderVideoPreviews() {
+            const previewContainer = document.getElementById('video-preview-container');
+            previewContainer.innerHTML = '';
+
+            selectedVideos.forEach((file, index) => {
+                if (file.type.startsWith('video/')) {
+                    const previewWrapper = document.createElement('div');
+                    previewWrapper.className = 'preview-wrapper';
+                    previewWrapper.style.position = 'relative';
+                    previewWrapper.style.width = '100px';
+                    previewWrapper.style.height = '100px';
+
+                    const video = document.createElement('video');
+                    video.src = URL.createObjectURL(file);
+                    video.className = 'preview-image';
+                    video.style.width = '100%';
+                    video.style.height = '100%';
+                    video.style.objectFit = 'cover';
+                    video.style.borderRadius = '8px';
+                    video.style.border = '1px solid #dee2e6';
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.loop = true;
+                    video.autoplay = true;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.innerHTML = '&times;';
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        removeVideo(index);
+                    };
+
+                    previewWrapper.appendChild(video);
+                    previewWrapper.appendChild(deleteBtn);
+                    previewContainer.appendChild(previewWrapper);
+                }
+            });
+
+            updateVideoInput();
+        }
+
+        function removeVideo(index) {
+            selectedVideos.splice(index, 1);
+            renderVideoPreviews();
+        }
+
+        function updateVideoInput() {
+            const dataTransfer = new DataTransfer();
+            selectedVideos.forEach(file => dataTransfer.items.add(file));
+            document.getElementById('videos').files = dataTransfer.files;
+        }
+    </script>
 
 
-    
+    <style>
+        .preview-wrapper {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .preview-wrapper:hover .preview-image {
+            filter: brightness(0.7);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 32px;
+            height: 32px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .preview-wrapper:hover .delete-btn {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .delete-btn:hover {
+            background-color: #bb2d3b;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+    </style>
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

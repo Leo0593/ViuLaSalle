@@ -154,11 +154,11 @@
                                                         @endif
                                                     </ul>
                                                     <!-- Menú flotante 
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <ul class="menu-opciones">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Ver publicación</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Editar</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Eliminar</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <ul class="menu-opciones">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Ver publicación</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Editar</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Eliminar</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>-->
                                                 </div>
                                             </div>
 
@@ -243,9 +243,9 @@
                                                     <span class="like-count">{{ $publicacion->likes_count }}</span>
 
                                                     <!--
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
 
                                                     <!-- Botón de comentarios -->
                                                     @if($publicacion->activar_comentarios == 1)
@@ -256,9 +256,9 @@
 
 
                                                     <!--
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
 
                                                     <div class="descripcion">
                                                         <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -355,25 +355,25 @@
                         <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location : 'No disponible' }}
                         </p>
                     </div>
-                    
+
                 </div>
 
                 @if (Auth::check())
                     <div style="whidth: 100%; display: flex; gap: 10px; flex-direction: column;">
-                                <!-- Botón Editar Perfil -->
-                                <a href="{{ route('profile.edit') }}"
-                                    style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
-                                    <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
-                                </a>
+                        <!-- Botón Editar Perfil -->
+                        <a href="{{ route('profile.edit') }}"
+                            style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+                            <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
+                        </a>
 
-                                <!-- Botón Cerrar Sesión -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit"
-                                        style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
-                                        <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
-                                    </button>
-                                </form>
+                        <!-- Botón Cerrar Sesión -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                                <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
+                            </button>
+                        </form>
                     </div>
                 @endif
             </div>
@@ -415,15 +415,40 @@
                             <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
                         @endauth
 
+                        <!-- Buscar Evento -->
                         <div class="form-group">
-                            <label for="id_evento">Evento</label>
-                            <select name="id_evento" id="id_evento" class="form-control" required>
-                                <option value="" selected disabled>Selecciona un evento</option> <!-- Opción inicial -->
+                            <label for="evento-search">Buscar Evento</label>
+                            <input type="text" id="evento-search" class="form-control" placeholder="Buscar eventos...">
+
+                            <!-- Input oculto para el evento seleccionado -->
+                            <select name="id_evento" id="id_evento" class="form-control" style="display: none;"
+                                required>
                                 @foreach($eventos as $evento)
                                     <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
                                 @endforeach
                             </select>
+
+                            <!-- Lista de eventos sugeridos como botones -->
+                            <div id="eventos-list" class="mt-2">
+                                @foreach($eventos->take(5) as $evento)
+                                    <button type="button" class="btn btn-outline-primary evento-btn"
+                                        data-id="{{ $evento->id }}">
+                                        {{ $evento->nombre }}
+                                    </button>
+                                @endforeach
+                            </div>
+
+                            <!-- Mostrar el evento seleccionado -->
+                            <div id="evento-seleccionado" class="mt-3" style="display: none;">
+                                <strong>Evento seleccionado:</strong>
+                                <div id="evento-nombre" class="badge badge-primary m-1">
+                                    <!-- Aquí se mostrará el evento -->
+                                </div>
+                            </div>
                         </div>
+
+
+
 
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
@@ -605,6 +630,51 @@
             updateSelectedTags();
         });
     </script>
+
+    <!-- Script para el apartado de eventos-->
+
+    <script>
+        $(document).ready(function () {
+            const allEventos = @json($eventos);
+            const sugeridos = allEventos.slice(0, 5); // Tomamos los 5 primeros
+
+            function renderEventoButtons(eventos) {
+                $('#eventos-list').empty();
+                eventos.forEach(evt => {
+                    $('#eventos-list').append(`
+                    <button type="button" class="btn btn-outline-primary evento-btn" data-id="${evt.id}">
+                        ${evt.nombre}
+                    </button>
+                `);
+                });
+            }
+
+            $('#evento-search').on('input', function () {
+                const searchText = $(this).val().toLowerCase();
+                if (searchText === '') {
+                    renderEventoButtons(sugeridos);
+                } else {
+                    const filtrados = allEventos.filter(evt => evt.nombre.toLowerCase().includes(searchText));
+                    renderEventoButtons(filtrados);
+                }
+            });
+
+            $(document).on('click', '.evento-btn', function () {
+                const eventoId = $(this).data('id').toString();
+                const evento = allEventos.find(e => e.id == eventoId);
+
+                if (evento) {
+                    $('#id_evento').val(eventoId);
+                    $('#evento-nombre').text(evento.nombre);
+                    $('#evento-seleccionado').show();
+                }
+
+                $('#evento-search').val('');
+                renderEventoButtons(sugeridos); // Mostrar los sugeridos de nuevo
+            });
+        });
+    </script>
+
 
     <!-- Script para el selector de archivos -->
     <script>

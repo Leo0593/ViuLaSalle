@@ -42,7 +42,6 @@
 
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
-
             <div class="opciones">
                 <div class="opciones-bar-separator">Home</div>
                 <li class="opciones-bar-item">
@@ -77,8 +76,13 @@
                         <span>Eventos</span>
                     </a>
                 </li>
-
-
+                
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        <span>Show</span>
+                    </a>
+                </li>
             </div>
 
             <div class="contenido">
@@ -240,25 +244,12 @@
                                                             style="font-size: 25px; color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};"></i>
                                                     </button>
 
-                                                    <span class="like-count">{{ $publicacion->likes_count }}</span>
-
-                                                    <!--
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-heart" style="font-size: 25px;"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
-
                                                     <!-- Botón de comentarios -->
                                                     @if($publicacion->activar_comentarios == 1)
                                                         <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
                                                             <i class="fa-regular fa-comments"></i>
                                                         </button>
                                                     @endif
-
-
-                                                    <!--
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-solid fa-heart" style="font-size: 25px;"></i> 
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="fa-regular fa-comments" style="font-size: 25px;"></i>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
 
                                                     <div class="descripcion">
                                                         <strong>{{ $publicacion->usuario->name }}: </strong>
@@ -361,7 +352,7 @@
                 @if (Auth::check())
                     <div style="whidth: 100%; display: flex; gap: 10px; flex-direction: column;">
                                 <!-- Botón Editar Perfil -->
-                                <a href="{{ route('profile.edit') }}"
+                                <a href="{{ route('profile.edit') }}" class="opacidad"
                                     style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
                                     <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
                                 </a>
@@ -369,7 +360,7 @@
                                 <!-- Botón Cerrar Sesión -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit"
+                                    <button type="submit" class="opacidad"
                                         style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
                                         <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
                                     </button>
@@ -794,7 +785,6 @@
         }
     </script>
 
-
     <style>
         .preview-wrapper {
             position: relative;
@@ -837,9 +827,6 @@
             transform: translate(-50%, -50%) scale(1.1);
         }
     </style>
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

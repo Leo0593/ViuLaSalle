@@ -73,4 +73,8 @@ class NivelEducativoController extends Controller
     }
 
 
+    public function show()
+    {
+        return view('niveles.show');
+    }
 }

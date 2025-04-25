@@ -83,6 +83,7 @@ Route::prefix('niveles')->name('niveles.')->group(function () {
     Route::put('{id}', [NivelEducativoController::class, 'update'])->name('update');
     Route::delete('{id}', [NivelEducativoController::class, 'destroy'])->name('destroy');
     Route::put('{id}/activate', [NivelEducativoController::class, 'activate'])->name('activate');
+    Route::get('/show', [NivelEducativoController::class, 'show'])->name('show');
 });
 
 Route::prefix('cursos')->name('cursos.')->group(function () {
@@ -98,8 +99,6 @@ Route::prefix('cursos')->name('cursos.')->group(function () {
 
 Route::get('/verificacion', [VerificacionController::class, 'index'])->name('verificacion.index');
 Route::post('/verificacion', [VerificacionController::class, 'validar'])->name('verificacion.validar');
-
-
 
 use App\Http\Controllers\InfoController;
 Route::get('/info', [InfoController::class, 'index'])->name('info.index');

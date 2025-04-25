@@ -12,7 +12,7 @@
                 >
                 <div class="evento-texto">
                     <h2>{{ $evento->nombre }}</h2>
-                    <p>{{ $evento->descripcion }}</p>
+                    <p>{{ Str::limit($evento->descripcion, 200, '...') }}</p>
                 </div>
             </a>
         @endforeach

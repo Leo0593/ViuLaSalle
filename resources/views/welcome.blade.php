@@ -118,7 +118,10 @@
                                                     <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}"
                                                         alt="Avatar usuario">
                                                 </div>
-                                                {{ $publicacion->usuario->name }}
+
+                                                <div class="box-publicacion-header-name">
+                                                    {{ $publicacion->usuario->name }}
+                                                </div>
 
                                                 <div class="box-publicacion-header-options">
                                                     <button type="button" class="ellipsis-btn">
@@ -138,8 +141,8 @@
                                                                     style="display:inline;"
                                                                     onsubmit="return confirm('¿Estás seguro de que deseas reportar esta publicación?');">
                                                                     @csrf
-                                                                    <button type="submit"
-                                                                        style="background: none; border: none; padding: 0; color: red; cursor: pointer;">
+                                                                    <button type="submit" class="btn-reportar">
+                                                                        <!-- style="background: none; border: none; padding: 0; color: red; cursor: pointer;" -->
                                                                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar
                                                                     </button>
                                                                 </form>
@@ -351,11 +354,15 @@
                             {{ Auth::check() ? Auth::user()->description : 'No disponible' }}</p>
                         <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location : 'No disponible' }}
                         </p>
-                        @if (Auth::check())
-                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    </div>
+                    
+                </div>
+
+                @if (Auth::check())
+                    <div style="whidth: 100%; display: flex; gap: 10px; flex-direction: column;">
                                 <!-- Botón Editar Perfil -->
                                 <a href="{{ route('profile.edit') }}"
-                                    style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 5px; text-decoration: none; display: flex; align-items: center;">
+                                    style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
                                     <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
                                 </a>
 
@@ -363,14 +370,12 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
-                                        style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center;">
+                                        style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
                                         <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
                                     </button>
                                 </form>
-                            </div>
-                        @endif
                     </div>
-                </div>
+                @endif
             </div>
 
         </div>

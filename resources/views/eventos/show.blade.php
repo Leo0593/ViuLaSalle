@@ -16,7 +16,7 @@
             </nav>
         </div>
 
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; margin-bottom: 30px;">
             <div class="main-evento">
                 <div id="info"
                     data-aos="zoom-in" data-aos-duration="1000"
@@ -35,7 +35,6 @@
                                 </div>
                                 <div class="descripcion-texto">
                                     <p>
-                                        {{ $evento->id }}
                                         Navidad Solidaria es una iniciativa que busca fomentar la generosidad y el espíritu de ayuda durante las fiestas navideñas. Se trata de realizar acciones solidarias, como donar ropa, juguetes, alimentos o tiempo a quienes más lo necesitan. Muchas organizaciones, empresas y grupos comunitarios organizan eventos benéficos, campañas de recolección y actividades para apoyar a personas en situación de vulnerabilidad.
                                         El objetivo de una Navidad Solidaria es compartir más allá de los regalos materiales, promoviendo valores como la empatía, la unión y la gratitud. Puede incluir desde visitas a hospitales y hogares de ancianos hasta cenas comunitarias o apadrinamiento de niños en riesgo de exclusión social.
                                         En esencia, se trata de recordar que el verdadero significado de la Navidad no está solo en la celebración, sino en hacer que todos puedan vivir estas fechas con alegría y esperanza.
@@ -60,7 +59,10 @@
                                 <div class="box-publicacion-header-user">
                                     <img src="{{ $publicacion->usuario->avatar ? Storage::url($publicacion->usuario->avatar) : asset('img/user-icon.png') }}" alt="Avatar usuario">
                                 </div>
-                                {{ $publicacion->usuario->name }}
+                                
+                                <div class="box-publicacion-header-name">
+                                    {{ $publicacion->usuario->name }}
+                                </div>
 
                                 <div class="box-publicacion-header-options">
                                     <button type="button" class="ellipsis-btn">
@@ -80,8 +82,8 @@
                                                                     style="display:inline;"
                                                                     onsubmit="return confirm('¿Estás seguro de que deseas reportar esta publicación?');">
                                                                     @csrf
-                                                                    <button type="submit"
-                                                                        style="background: none; border: none; padding: 0; color: red; cursor: pointer;">
+                                                                    <button type="submit" class="btn-reportar">
+                                                                        <!-- style="background: none; border: none; padding: 0; color: red; cursor: pointer;" -->
                                                                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar
                                                                     </button>
                                                                 </form>

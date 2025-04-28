@@ -18,14 +18,14 @@ class CursoController extends Controller
         $user = auth()->user();
         $query = Curso::with('nivelEducativo', 'fotos');
 
-        if ($user->role !== 'ADMIN') {
-            $query->where('status', 1);
+        // Filtramos por estado solo para usuarios no ADMIN
+        if ($user && $user->role !== 'ADMIN') {
+            $query->where('status', 1);  // Solo activos para usuarios que no sean admin
         }
 
         // Si viene el filtro por nivel
         if ($request->filled('nivel')) {
             $nivel = strtolower($request->nivel);
-
             $query->whereHas('nivelEducativo', function ($q) use ($nivel) {
                 $q->whereRaw('LOWER(nombre) = ?', [$nivel]);
             });
@@ -35,7 +35,7 @@ class CursoController extends Controller
 
         return view('cursos.index', compact('cursos', 'user'));
     }
-    
+
     /*public function index()
     {
         $user = auth()->user();

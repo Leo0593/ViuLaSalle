@@ -9,15 +9,16 @@
 
 <body>
     <h1>Tabla de cursos</h1>
-    @if($user->role == 'ADMIN')
-        <a href="{{ route('cursos.create') }}">
-            <button>Crear curso</button>
-        </a>
 
-        <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
+    @auth
+        @if($user->role == 'ADMIN')
+            <a href="{{ route('cursos.create') }}">
+                <button>Crear curso</button>
+            </a>
 
-    @endif
-
+            <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
+        @endif
+    @endauth
 
     <br><br>
 
@@ -50,35 +51,36 @@
                         @endif
                     </td>
                     <td>
-                        @if($user->role == 'ADMIN')
+                        <!-- Botón de ver más -->
+                        <a href="{{ route('cursos.show', $curso->id) }}">
+                            <button>Ver más</button>
+                        </a>
 
-                            <a href="{{ route('cursos.edit', $curso->id) }}">
-                                <button>Editar</button>
-                            </a>
-
-                            <a href="{{ route('cursos.show', $curso->id) }}">
-                                <button>ver mas</button>
-                            </a>
-
-                            @if($curso->status)
-                                <form action="{{ route('cursos.destroy', $curso->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        onclick="return confirm('¿Estás seguro de desactivar este curso?')">Desactivar</button>
-                                </form>
-                            @else
-                                <form action="{{ route('cursos.activate', $curso->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" onclick="return confirm('¿Deseas activar este curso?')">Activar</button>
-                                </form>
+                        @auth
+                            @if($user->role == 'ADMIN')
+                                <!-- Botón de editar -->
+                                <a href="{{ route('cursos.edit', $curso->id) }}">
+                                    <button>Editar</button>
+                                </a>
+                                @if($curso->status)
+                                    <!-- Botón de desactivar -->
+                                    <form action="{{ route('cursos.destroy', $curso->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            onclick="return confirm('¿Estás seguro de desactivar este curso?')">Desactivar</button>
+                                    </form>
+                                @else
+                                    <!-- Botón de activar -->
+                                    <form action="{{ route('cursos.activate', $curso->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" onclick="return confirm('¿Deseas activar este curso?')">Activar</button>
+                                    </form>
+                                @endif
                             @endif
-                        @endif
-
+                        @endauth
                     </td>
-
-
                 </tr>
             @empty
                 <tr>

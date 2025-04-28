@@ -57,12 +57,18 @@
                     </a>
                 </li>
 
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('dashboard') }}">
-                        <i class="fa-solid fa-tachometer-alt"></i> <!-- Icono de dashboard -->
-                        <span>Dashboard</span>
-                    </a>
-                </li>
+                @auth
+                    @if (auth()->user()->role == 'ADMIN')
+                        <li class="opciones-bar-item">
+                            <a class="opciones-bar-link" href="{{ route('dashboard') }}">
+                                <i class="fa-solid fa-tachometer-alt"></i> <!-- Icono de dashboard -->
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    @endif
+                @endauth
+
+
                 <li class="opciones-bar-item">
                     <a class="opciones-bar-link" href="{{ route('niveles.index') }}">
                         <i class="fa-solid fa-graduation-cap"></i>
@@ -76,7 +82,7 @@
                         <span>Eventos</span>
                     </a>
                 </li>
-                
+
                 <li class="opciones-bar-item">
                     <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
                         <i class="fa-solid fa-calendar-plus"></i>
@@ -158,11 +164,11 @@
                                                         @endif
                                                     </ul>
                                                     <!-- Menú flotante 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <ul class="menu-opciones">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Ver publicación</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Editar</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#">Eliminar</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <ul class="menu-opciones">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <li><a href="#">Ver publicación</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <li><a href="#">Editar</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <li><a href="#">Eliminar</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </ul>-->
                                                 </div>
                                             </div>
 
@@ -232,7 +238,8 @@
                                                 </div>
 
                                             @else
-                                                <div class="box-publicacion-img" style="background-image: url('{{ asset('../../img/Fondo.png') }}');">
+                                                <div class="box-publicacion-img"
+                                                    style="background-image: url('{{ asset('../../img/Fondo.png') }}');">
                                                 </div>
                                             @endif
 
@@ -351,20 +358,20 @@
 
                 @if (Auth::check())
                     <div style="whidth: 100%; display: flex; gap: 10px; flex-direction: column;">
-                                <!-- Botón Editar Perfil -->
-                                <a href="{{ route('profile.edit') }}"
-                                    style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
-                                    <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
-                                </a>
+                        <!-- Botón Editar Perfil -->
+                        <a href="{{ route('profile.edit') }}"
+                            style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+                            <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
+                        </a>
 
-                                <!-- Botón Cerrar Sesión -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit"
-                                        style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
-                                        <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
-                                    </button>
-                                </form>
+                        <!-- Botón Cerrar Sesión -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                                <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
+                            </button>
+                        </form>
                     </div>
                 @endif
             </div>

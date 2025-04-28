@@ -9,12 +9,14 @@ class NivelEducativoController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-        if ($user->role == 'ADMIN') {
-            $niveles = NivelEducativo::all();
+        $user = auth()->user(); // Puede ser null si no está logueado
+
+        if ($user && $user->role == 'ADMIN') {
+            $niveles = NivelEducativo::all(); // Admin ve todos
         } else {
-            $niveles = NivelEducativo::where('status', 1)->get();
+            $niveles = NivelEducativo::where('status', 1)->get(); // Otros ven solo activos
         }
+
         return view('niveles.index', compact('niveles', 'user'));
     }
 

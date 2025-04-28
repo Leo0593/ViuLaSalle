@@ -232,7 +232,7 @@
                                                 </div>
 
                                             @else
-                                                <div class="box-publicacion-img" style="background-image: url('{{ asset('img/default.jpg') }}');">
+                                                <div class="box-publicacion-img" style="background-image: url('{{ asset('../../img/Fondo.png') }}');">
                                                 </div>
                                             @endif
 

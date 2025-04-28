@@ -126,29 +126,6 @@
             </div>
         </div>
 
-        <!-- Modal para Crear Categoria -->
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered"> <!-- Centrado vertical y horizontal -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createModalLabel">Crear Categoria</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('categorias.store') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Crear Categoria</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Modal para Editar Categoria -->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered"> <!-- Agregamos la clase modal-dialog-centered aquí -->
@@ -171,6 +148,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal para Crear Categoria -->
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Centrado vertical y horizontal -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createModalLabel">Crear Categoria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('categorias.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Crear Categoria</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 
     <script>

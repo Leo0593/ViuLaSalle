@@ -1394,7 +1394,7 @@ textarea#publicacion-texto {
     width: 90%;
     height: 60vh;
 
-    background-image: linear-gradient(to bottom, rgba(2, 77, 223, 1), rgba(0, 0, 0, 0) 65%), url("../../img/navidad.webp");
+    background-image: linear-gradient(to top, rgba(2, 77, 223, 1), rgba(0, 0, 0, 0) 65%), url("../../img/navidad.webp");
 
     background-size: cover;
     background-position: center;
@@ -1412,6 +1412,10 @@ textarea#publicacion-texto {
     font-weight: bold;
 
     color: white;
+
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+    justify-content: flex-end;
 }
 .clase-banner img {
     width: 100%;
@@ -1430,22 +1434,52 @@ textarea#publicacion-texto {
     }   
 }
 
-.video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-    overflow: hidden;
-    max-width: 800px;
-    margin: 0 auto;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+.clase-descripcion {
+    width: 90%;
+    height: 500px;
+    margin: 0;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
 }
-  
-.video-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+
+.clase-descripcion-texto, .clase-descripcion-video {
+    height: 100%;
+}
+
+.clase-descripcion-texto {
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.clase-descripcion-texto h2{
+    font-size: 30px;
+    color: var(--azul);
+    text-decoration: underline;
+    line-height: 1.5;
+
+    margin-bottom: 20px;
+
+    display: flex;
+    text-align: center;
+}
+
+.clase-descripcion-video iframe {
     width: 100%;
     height: 100%;
 }
-  
+
+@media screen and (max-width: 1000px) {
+    .clase-descripcion {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .clase-descripcion-texto {
+        height: auto;
+    }
+    .clase-descripcion-video {
+        height: 450px;
+    }
+}

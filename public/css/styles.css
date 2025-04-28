@@ -922,7 +922,6 @@ a.sidebar-link:hover {
 
 .evento-posts {
     border-top: #ccc 2px solid;
-    
     width: 100%;
     display: flex;
     flex-wrap: wrap;

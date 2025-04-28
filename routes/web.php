@@ -69,6 +69,7 @@ Route::prefix('categorias')->name('categorias.')->group(function () {
     Route::get('/{id}/edit', [CategoriaController::class, 'edit'])->name('edit');
     Route::put('/{id}', [CategoriaController::class, 'update'])->name('update');
     Route::delete('/{id}', [CategoriaController::class, 'destroy'])->name('destroy');
+    Route::put('/{id}/activate', [CategoriaController::class, 'activate'])->name('activate');
 });
 
 Route::get('/publicacion/{id}/comentarios', [ComentarioController::class, 'verComentarios'])->name('comentarios.ver');

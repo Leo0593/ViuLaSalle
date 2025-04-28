@@ -7,11 +7,33 @@ use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categorias = Categoria::where('status', 1)->get();
-        return view('categorias.index', compact('categorias')); 
+        $user = auth()->user();
+
+        $query = Categoria::query();
+
+        // Si el usuario NO es ADMIN, solo mostrar las activas
+        if ($user->role != 'ADMIN') {
+            $query->where('status', 1);
+        }
+
+        // Filtro por nombre
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->nombre . '%');
+        }
+
+        // Filtro por estado (solo si es ADMIN, los demás ya tienen filtro por 'activo')
+        if ($user->role == 'ADMIN' && $request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $categorias = $query->get();
+
+        return view('categorias.index', compact('categorias', 'user'));
     }
+
+
 
     public function create()
     {
@@ -38,7 +60,9 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         $categoria = Categoria::findOrFail($id);
-        return view('categorias.edit', compact('categoria'));
+        //return view('categorias.edit', compact('categoria'));
+        return response()->json($categoria);
+
     }
 
     public function update(Request $request, $id)
@@ -57,9 +81,19 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         $categoria = Categoria::findOrFail($id);
-        $categoria->status = 0;
+        $categoria->status = 0; // Desactivar
         $categoria->save();
 
-        return redirect()->route('categorias.index')->with('success', 'Categoria eliminada correctamente.');
+        return redirect()->route('categorias.index')->with('success', 'Categoría desactivada correctamente.');
     }
+
+    public function activate($id)
+    {
+        $categoria = Categoria::findOrFail($id);
+        $categoria->status = 1; // Activar
+        $categoria->save();
+
+        return redirect()->route('categorias.index')->with('success', 'Categoría activada correctamente.');
+    }
+
 }

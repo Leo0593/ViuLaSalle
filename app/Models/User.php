@@ -51,7 +51,19 @@ class User extends Authenticatable
         ];
     }
 
-    //crud user
+    // Notificaciones que ha creado este usuario
+    public function notificacionesCreadas()
+    {
+        return $this->hasMany(Notificacion::class, 'creador_id');
+    }
 
-    
+    // Notificaciones que ha recibido este usuario
+    public function notificacionesRecibidas()
+    {
+        return $this->belongsToMany(Notificacion::class, 'notificacion_user')
+            ->withPivot('leido')
+            ->withTimestamps();
+    }
+
+
 }

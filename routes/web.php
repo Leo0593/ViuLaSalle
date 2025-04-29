@@ -11,6 +11,8 @@ use App\Http\Controllers\Welcome;
 use App\Http\Controllers\NivelEducativoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\VerificacionController;
+use App\Http\Controllers\NotificacionController;
+
 
 
 Route::get('/', [welcome::class, 'index'])->name('welcome');
@@ -60,8 +62,6 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
 
 });
 
-
-
 Route::prefix('categorias')->name('categorias.')->group(function () {
     Route::get('/', [CategoriaController::class, 'index'])->name('index');
     Route::get('/create', [CategoriaController::class, 'create'])->name('create');
@@ -96,6 +96,17 @@ Route::prefix('cursos')->name('cursos.')->group(function () {
     Route::delete('/{id}', [CursoController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activate', [CursoController::class, 'activate'])->name('activate');
     Route::get('/{id}', [CursoController::class, 'show'])->name('show');
+});
+
+Route::prefix('notificaciones')->name('notificaciones.')->group(function () {
+    Route::get('/', [NotificacionController::class, 'index'])->name('index');
+    Route::get('/create', [NotificacionController::class, 'create'])->name('create');
+    Route::post('/', [NotificacionController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [NotificacionController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [NotificacionController::class, 'update'])->name('update');
+    Route::delete('/{id}', [NotificacionController::class, 'destroy'])->name('destroy');
+    Route::put('/{id}/activate', [NotificacionController::class, 'activate'])->name('activate');
+    Route::get('/{id}', [NotificacionController::class, 'show'])->name('show');
 });
 
 Route::get('/verificacion', [VerificacionController::class, 'index'])->name('verificacion.index');

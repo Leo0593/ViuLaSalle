@@ -46,12 +46,25 @@
             </div>
 
             <div class="mb-3" id="usuarios_select" style="display: none;">
-                <label for="usuarios" class="form-label">Seleccionar usuarios</label>
-                <select name="usuarios[]" id="usuarios" class="form-select" multiple>
-                    @foreach ($usuarios as $usuario)
-                        <option value="{{ $usuario->id }}">{{ $usuario->name }} ({{ $usuario->email }})</option>
-                    @endforeach
-                </select>
+                <input type="text" id="buscar_usuario" class="form-control mb-2" placeholder="Buscar usuario..."
+                    onkeyup="filtrarUsuarios()">
+                <!-- Contenedor externo que limita la altura -->
+                <div class="border rounded p-3" style="max-height: 350px; overflow-y: auto;">
+                    <!-- Contenedor interno que tiene scroll si la lista crece -->
+                    <div id="usuarios_checklist" class="border rounded p-2"
+                        style="max-height: 80px; overflow-y: auto;">
+                        @foreach ($usuarios as $usuario)
+                            <div class="form-check usuario-item mb-1"
+                                data-nombre="{{ strtolower($usuario->name) }} {{ strtolower($usuario->email) }}">
+                                <input class="form-check-input usuario-checkbox" type="checkbox" name="usuarios[]"
+                                    value="{{ $usuario->id }}" id="usuario_{{ $usuario->id }}">
+                                <label class="form-check-label" for="usuario_{{ $usuario->id }}">
+                                    {{ $usuario->name }} ({{ $usuario->email }})
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
             <div class="text-end">
@@ -66,10 +79,39 @@
             document.getElementById('usuarios_select').style.display = valor == "0" ? 'block' : 'none';
         }
 
-        // Ejecutar al cargar por si ya hay valor seleccionado
+        function filtrarUsuarios() {
+            const input = document.getElementById('buscar_usuario').value.toLowerCase();
+            const items = document.querySelectorAll('.usuario-item');
+
+            items.forEach(item => {
+                const nombre = item.getAttribute('data-nombre');
+                item.style.display = nombre.includes(input) ? 'block' : 'none';
+            });
+        }
+
+        function reordenarUsuarios() {
+            const contenedor = document.getElementById('usuarios_checklist');
+            const items = Array.from(contenedor.querySelectorAll('.usuario-item'));
+
+            const seleccionados = items.filter(i => i.querySelector('input').checked);
+            const noSeleccionados = items.filter(i => !i.querySelector('input').checked);
+
+            // Limpiar contenedor
+            contenedor.innerHTML = '';
+
+            // Agregar seleccionados primero
+            seleccionados.forEach(i => contenedor.appendChild(i));
+            noSeleccionados.forEach(i => contenedor.appendChild(i));
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             toggleUsuarios(document.getElementById('es_global').value);
+
+            document.querySelectorAll('.usuario-checkbox').forEach(cb => {
+                cb.addEventListener('change', reordenarUsuarios);
+            });
         });
+
     </script>
 </body>
 

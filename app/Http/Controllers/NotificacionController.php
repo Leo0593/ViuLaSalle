@@ -16,10 +16,8 @@ class NotificacionController extends Controller
         $user = auth()->user();
 
         if ($user->role === 'ADMIN') {
-            // Admin ve todas las notificaciones, sin importar estado
             $notificaciones = Notificacion::with('creador')->latest()->get();
         } elseif ($user->role === 'PROFESOR') {
-            // Profesor ve globales, las suyas, y las que le mandaron, solo si están activas
             $notificaciones = Notificacion::with('creador')
                 ->where('status', 1)
                 ->where(function ($query) use ($user) {
@@ -32,7 +30,6 @@ class NotificacionController extends Controller
                 ->latest()
                 ->get();
         } else {
-            // USER ve globales y las que le enviaron, solo si están activas
             $notificaciones = Notificacion::with('creador')
                 ->where('status', 1)
                 ->where(function ($query) use ($user) {
@@ -48,14 +45,12 @@ class NotificacionController extends Controller
         return view('notificaciones.index', compact('notificaciones'));
     }
 
-    // Mostrar formulario de creación
     public function create()
     {
         $usuarios = User::all(); // para seleccionar destinatarios si es necesario
         return view('notificaciones.create', compact('usuarios'));
     }
 
-    // Guardar nueva notificación
     public function store(Request $request)
     {
         $request->validate([
@@ -80,7 +75,6 @@ class NotificacionController extends Controller
         return redirect()->route('notificaciones.index')->with('success', 'Notificación creada correctamente.');
     }
 
-    // Mostrar formulario de edición
     public function edit($id)
     {
         $notificacion = Notificacion::findOrFail($id);
@@ -90,7 +84,6 @@ class NotificacionController extends Controller
         return view('notificaciones.edit', compact('notificacion', 'usuarios', 'destinatariosSeleccionados'));
     }
 
-    // Actualizar notificación
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -116,25 +109,20 @@ class NotificacionController extends Controller
         return redirect()->route('notificaciones.index')->with('success', 'Notificación actualizada correctamente.');
     }
 
-    // Desactivar notificación
     public function destroy($id)
     {
         $notificacion = Notificacion::findOrFail($id);
         $notificacion->update(['status' => 0]);
-
         return redirect()->route('notificaciones.index')->with('success', 'Notificación desactivada correctamente.');
     }
 
-    // Activar notificación
     public function activate($id)
     {
         $notificacion = Notificacion::findOrFail($id);
         $notificacion->update(['status' => 1]);
-
         return redirect()->route('notificaciones.index')->with('success', 'Notificación activada correctamente.');
     }
 
-    // Mostrar detalles
     public function show($id)
     {
         $user = auth()->user();

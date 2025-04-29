@@ -3,7 +3,7 @@
 <body>
 
     @include('layouts.navheader')
-    
+
     <div class="body-container container">
         <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
 
@@ -27,11 +27,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm d-flex justify-content-center">
+            <form method="GET" action="{{ route('eventos.index') }}" class="row g-3 mb-4"
+                style="max-width: 800px; width: 100%;">
+                <div class="col-md-4">
+                    <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre"
+                        value="{{ request('nombre') }}">
+                </div>
+                <div class="col-md-4">
+                    <select name="status" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Visible</option>
+                        <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>No visible</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-filter me-1"></i> Filtrar
+                    </button>
+                    <a href="{{ route('eventos.index') }}" class="btn btn-secondary">
+                        <i class="fa fa-times me-1"></i> Limpiar
+                    </a>
+                </div>
+            </form>
+        </div>
+
     </div>
 
     <div class="eventos-organizados">
         @foreach ($eventos as $evento)
-            <a class="evento-container" style=" background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0)), url('{{ Storage::url($evento->foto) }}');"
+            <a class="evento-container"
+                style=" background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0)), url('{{ Storage::url($evento->foto) }}');"
                 href="{{ route('eventos.show', $evento->id) }}">
                 <div class="evento-texto">
                     <h2>{{ $evento->nombre }}</h2>

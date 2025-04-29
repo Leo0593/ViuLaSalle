@@ -5,10 +5,7 @@
     @include('layouts.navheader')
 
     <!-- Hero o Bienvenida -->
-    <div class="container mt-5 pt-5">
-
-        <div class="container mt-4 pt-4"> </div>
-
+    <div class="body-container container">
         <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
 
             <div class="text-center my-5">
@@ -29,8 +26,6 @@
                         <i class="fa fa-arrow-left me-1"></i> Volver a Dashboard
                     </a>
                 </div>
-
-
             </div>
         </div>
 

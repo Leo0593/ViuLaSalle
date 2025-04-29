@@ -1482,3 +1482,26 @@ textarea#publicacion-texto {
         height: 450px;
     }
 }
+
+.body-container {
+    margin-top: calc(var(--height-header) + 30px);
+}
+@media screen and (max-width: 1000px) {
+    .body-container {
+        margin-top: calc(var(--height-header-mobile) + 30px);
+    }
+}
+
+.eventos-organizados {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+}

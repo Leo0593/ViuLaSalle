@@ -62,6 +62,7 @@
                             $hayPublicaciones = true;
                         @endphp
                         <div class="post">
+                            <!--
                             <div class="box-publicacion">
                                 <div class="box-publicacion-header">
                                     <div class="box-publicacion-header-user">
@@ -91,7 +92,6 @@
                                                                         onsubmit="return confirm('¿Estás seguro de que deseas reportar esta publicación?');">
                                                                         @csrf
                                                                         <button type="submit" class="btn-reportar">
-                                                                            <!-- style="background: none; border: none; padding: 0; color: red; cursor: pointer;" -->
                                                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar
                                                                         </button>
                                                                     </form>
@@ -102,26 +102,18 @@
                                                                 </li>
                                                             @endif
                                                         </ul>
-                                                        <!-- Menú flotante
-                                                                                                                                                                                                <ul class="menu-opciones">
-                                                                                                                                                                                                    <li><a href="#">Ver publicación</a></li>
-                                                                                                                                                                                                    <li><a href="#">Editar</a></li>
-                                                                                                                                                                                                    <li><a href="#">Eliminar</a></li>
-                                                                                                                                                                                                </ul>-->
                                                     </div>
                                                 </div>
 
                                                 @if($publicacion->fotos->count() > 0 && $publicacion->videos->count() > 0)
                                                     <div class="box-publicacion-media-container">
                                                         <div class="box-publicacion-media-container-media">
-                                                            <!-- Mostrar fotos -->
                                                             @foreach($publicacion->fotos as $foto)
                                                                 <div class="box-publicacion-media-item box-publicacion-img"
                                                                     style="background-image: url('{{ asset('storage/publicaciones/' . $foto->ruta_foto) }}');">
                                                                 </div>
                                                             @endforeach
 
-                                                            <!-- Mostrar videos -->
                                                             @foreach($publicacion->videos as $video)
                                                                 <div class="box-publicacion-media-item box-publicacion-video">
                                                                     <video autoplay controls loop>
@@ -134,19 +126,16 @@
 
                                                         @if($publicacion->fotos->count() + $publicacion->videos->count() > 1)
                                                             <div class="dots-container">
-                                                                <!-- Crear un punto por cada foto -->
                                                                 @foreach($publicacion->fotos as $foto)
                                                                     <span class="dot"></span>
                                                                 @endforeach
 
-                                                                <!-- Crear un punto por cada video -->
                                                                 @foreach($publicacion->videos as $video)
                                                                     <span class="dot"></span>
                                                                 @endforeach
                                                             </div>
                                                         @endif
                                                     </div>
-                                                    <!-- Si hay fotos -->
                                                 @elseif($publicacion->fotos->count() > 0)
                                                     <div class="box-publicacion-img-container">
                                                         @foreach($publicacion->fotos as $foto)
@@ -163,7 +152,6 @@
                                                             @endforeach
                                                         </div>
                                                     @endif
-                                                    <!-- Si hay videos -->
                                                 @elseif($publicacion->videos->count() > 0)
                                                     <div class="box-publicacion-video-container">
                                                         @foreach($publicacion->videos as $video)
@@ -189,7 +177,6 @@
                                                                 style="font-size: 25px; color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};"></i>
                                                         </button>
 
-                                                        <!-- Botón de comentarios -->
                                                         <button class="btn-comentarios" data-id="{{ $publicacion->id }}">
                                                             <i class="fa-regular fa-comments"></i>
                                                         </button>
@@ -200,7 +187,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Caja de comentarios -->
                                                     <div class="box-publicacion-comentarios" id="comentarios-{{ $publicacion->id }}">
                                                         @if($publicacion->comentarios->isNotEmpty())
                                                             @foreach($publicacion->comentarios as $comentario)
@@ -243,7 +229,8 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                            </div>
+                            </div> -->
+                            @include('layouts.publicacion', ['publicacion' => $publicacion])     
                         </div>
                     @endif
                 @endforeach

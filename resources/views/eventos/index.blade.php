@@ -1,18 +1,59 @@
+@include('layouts.head')
+
+<body>
+
+    @include('layouts.navheader')
+    
+    <div class="body-container container">
+        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
+
+            <div class="text-center my-5">
+                <h1 class="display-5 fw-bold">Gestión de Eventos</h1>
+                <p class="lead text-muted">Aquí puedes ver, crear y editar eventos registrados en el sistema.</p>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-center gap-3 mb-4">
+                <div class="col-md-2">
+                    <a href="{{ route('eventos.create') }}" class="btn btn-success">
+                        <i class="fa fa-user-plus me-1"></i> Crear Usuario
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                        <i class="fa fa-arrow-left me-1"></i> Volver a Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="eventos-organizados">
+        @foreach ($eventos as $evento)
+            <a class="evento-container" style=" background-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0)), url('{{ Storage::url($evento->foto) }}');"
+                href="{{ route('eventos.show', $evento->id) }}">
+                <div class="evento-texto">
+                    <h2>{{ $evento->nombre }}</h2>
+                    <p>{{ Str::limit($evento->descripcion, 200, '...') }}</p>
+                </div>
+            </a>
+        @endforeach
+    </div>
+
+</body>
+
+<!--
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Usuariods</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-
 <body>
-
-
     <div class="container mt-5">
-
         <h1 class="mb-4">Lista de Eventos</h1>
 
         <form method="GET" action="{{ route('eventos.index') }}" class="row g-3 mb-4">
@@ -77,7 +118,7 @@
                             @if ($user->role == 'ADMIN' || $user->id == $evento->user_id)
                                 <a href="{{ route('eventos.edit', $evento->id) }}" class="btn btn-primary">Editar</a>
                                 @if ($evento->status == 1)
-                                    <!-- Botón de desactivar -->
+                                    Botón de desactivar 
                                     <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf
@@ -86,7 +127,7 @@
                                             onclick="return confirm('¿Estás seguro de que deseas ocultar este evento?')">Desactivar</button>
                                     </form>
                                 @else
-                                    <!-- Botón de activar -->
+                                     Botón de activar 
                                     <form action="{{ route('eventos.activate', $evento->id) }}" method="POST"
                                         style="display:inline;">
                                         @csrf
@@ -105,3 +146,5 @@
 </body>
 
 </html>
+
+-->

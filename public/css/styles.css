@@ -1505,3 +1505,93 @@ textarea#publicacion-texto {
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
+.perfil-body {
+    margin-top: var(--height-header);
+}
+@media screen and (max-width: 1000px) {
+    .perfil-body {
+        margin-top: var(--height-header-mobile);
+    }
+}
+
+.perfil-banner-container {
+    position: relative;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.perfil-banner {
+    width: 100%;
+    height: 45vh;
+    background-color: #0056b3;
+    overflow: hidden;
+}
+.perfil-banner img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px
+}
+@media screen and (max-width: 1000px) {
+
+    .perfil-banner-container {
+        width: 100%;
+    }
+    .perfil-banner {
+        width: 100%;
+        height: 25vh;
+    }    
+}
+
+/* Contenedor de imagen y nombre */
+.foto-perfil {
+    position: absolute;
+    bottom: -20%; 
+    left: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+}
+@media screen and (max-width: 1000px) {
+    .foto-perfil {
+        bottom: -35%; 
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* Imagen de perfil circular */
+.perfil-img {
+    width: 200px;
+    height: auto;
+    border: 4px solid white;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.perfil-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-perfil {
+    width: 80%;
+    margin-top: 100px;
+}
+
+@media screen and (max-width: 1000px) {
+    .info-perfil {
+        width: 95%;
+        margin-top: 90px;
+        text-align: center;
+    }
+}

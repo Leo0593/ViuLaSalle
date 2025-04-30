@@ -1,12 +1,9 @@
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@include('layouts.head')
 
 <body>
+
+    <!--@include('layouts.navheader')-->
+
     <div class="container mt-5">
         <h1 class="mb-4">Panel de Notificaciones</h1>
 

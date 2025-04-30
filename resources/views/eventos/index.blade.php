@@ -16,7 +16,7 @@
             <div class="d-flex justify-content-center gap-3 mb-4">
                 <div class="col-md-2">
                     <a href="{{ route('eventos.create') }}" class="btn btn-success">
-                        <i class="fa fa-user-plus me-1"></i> Crear Usuario
+                        <i class="fa fa-calendar me-1"></i> Crear Eventos
                     </a>
                 </div>
 

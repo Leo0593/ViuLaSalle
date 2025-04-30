@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 // mmhv
 class User extends Authenticatable
 {
@@ -63,6 +63,21 @@ class User extends Authenticatable
         return $this->belongsToMany(Notificacion::class, 'notificacion_user')
             ->withPivot('leido')
             ->withTimestamps();
+    }
+
+    // Relación: el usuario puede acceder a muchas colecciones
+    public function colecciones(): BelongsToMany
+    {
+        return $this->belongsToMany(Coleccion::class, 'coleccion_user')
+            ->using(ColeccionUser::class)
+            ->withTimestamps();
+    }
+
+
+    // Relación: el usuario puede haber creado muchas colecciones
+    public function coleccionesCreadas()
+    {
+        return $this->hasMany(Coleccion::class, 'creador_id');
     }
 
 

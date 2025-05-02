@@ -41,7 +41,10 @@
                             @endforeach
                         </td>
                         <td>
-                            
+                            <!-- ver mas colección -->
+                            <a href="{{ route('colecciones.show', $coleccion->id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa-solid fa-edit"></i> Ver Mas
+                            </a>
 
                             <!-- Editar colección -->
                             <a href="{{ route('colecciones.edit', $coleccion->id) }}" class="btn btn-warning btn-sm">

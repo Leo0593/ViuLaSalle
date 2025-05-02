@@ -13,6 +13,7 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\VerificacionController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ColeccionController;
+use App\Http\Controllers\PublicacionColeccionController;
 
 
 
@@ -118,7 +119,19 @@ Route::prefix('colecciones')->name('colecciones.')->group(function () {
     Route::put('/{id}', [ColeccionController::class, 'update'])->name('update');
     Route::delete('/{id}', [ColeccionController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activate', [ColeccionController::class, 'activate'])->name('activate');
+    Route::get('/{id}', [ColeccionController::class, 'show'])->name('show');
 });
+
+Route::prefix('publicacioncolecciones')->name('publicacioncolecciones.')->group(function () {
+    Route::get('/', [PublicacionColeccionController::class, 'index'])->name('index');
+    Route::get('/create', [PublicacionColeccionController::class, 'create'])->name('create');
+    Route::post('/', [PublicacionColeccionController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [PublicacionColeccionController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PublicacionColeccionController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PublicacionColeccionController::class, 'destroy'])->name('destroy');
+    Route::put('/{id}/activar', [PublicacionColeccionController::class, 'activate'])->name('activate');
+});
+
 
 
 

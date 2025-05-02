@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Coleccion;
+use App\Models\PublicacionColeccion;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -126,5 +127,26 @@ class ColeccionController extends Controller
         $coleccion->update(['status' => 1]);
         return redirect()->route('colecciones.index')->with('success', 'Publicación activada correctamente.');
     }
+
+    public function show($id)
+    {
+        $user = auth()->user();  
+
+        if ($user->role == 'ADMIN') {
+            $publicaciones = PublicacionColeccion::with('usuario', 'fotos')
+                ->where('coleccion_id', $id)
+                ->get();
+        } else {
+            $publicaciones = PublicacionColeccion::with('usuario', 'fotos')
+                ->where('coleccion_id', $id)
+                ->where('status', 1)  
+                ->get();
+        }
+
+        $coleccion = Coleccion::with('creador', 'usuarios')->findOrFail($id);
+
+        return view('coleccion.show', compact('coleccion', 'publicaciones'));
+    }
+
 
 }

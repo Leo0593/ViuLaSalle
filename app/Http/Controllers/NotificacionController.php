@@ -7,6 +7,8 @@ use App\Models\NotificacionUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NotificacionCreada;
+
 
 class NotificacionController extends Controller
 {
@@ -47,7 +49,7 @@ class NotificacionController extends Controller
 
     public function create()
     {
-        $usuarios = User::all(); // para seleccionar destinatarios si es necesario
+        $usuarios = User::all(); // para  seleccionar destinatarios si es necesario
         return view('notificaciones.create', compact('usuarios'));
     }
 
@@ -70,9 +72,21 @@ class NotificacionController extends Controller
 
         if (!$request->es_global && $request->has('usuarios')) {
             $notificacion->destinatarios()->attach($request->usuarios);
+
+            // Enviar correo a cada usuario seleccionado
+            $usuarios = User::whereIn('id', $request->usuarios)->get();
+            foreach ($usuarios as $usuario) {
+                $usuario->notify(new NotificacionCreada($notificacion->titulo, $notificacion->mensaje));
+            }
+        } elseif ($request->es_global) {
+            // Enviar a todos los usuarios activos excepto al creador
+            $usuarios = User::where('id', '!=', Auth::id())->get();
+            foreach ($usuarios as $usuario) {
+                $usuario->notify(new NotificacionCreada($notificacion->titulo, $notificacion->mensaje));
+            }
         }
 
-        return redirect()->route('notificaciones.index')->with('success', 'Notificación creada correctamente.');
+        return redirect()->route('notificaciones.index')->with('success', 'Notificación creada y enviada por correo.');
     }
 
     public function edit($id)

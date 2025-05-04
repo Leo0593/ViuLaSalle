@@ -73,7 +73,7 @@
             @else
                 <p>No hay fotos adjuntas.</p>
             @endif
-            
+
             <a href="{{ route('publicacioncolecciones.edit', $publicacion->id) }}" class="btn btn-sm btn-info">Editar</a>
 
             <!-- Botones de activación y desactivación -->
@@ -81,17 +81,22 @@
                 <form method="POST" action="{{ route('publicacioncolecciones.destroy', $publicacion->id) }}">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-sm btn-danger" onclick="return confirm('¿Desactivar esta publicación?')">Desactivar</button>
+                    <button class="btn btn-sm btn-danger"
+                        onclick="return confirm('¿Desactivar esta publicación?')">Desactivar</button>
                 </form>
             @else
                 <form method="POST" action="{{ route('publicacioncolecciones.activate', $publicacion->id) }}">
                     @csrf
                     @method('PUT')
-                    <button class="btn btn-sm btn-success" onclick="return confirm('¿Activar esta publicación?')">Activar</button>
+                    <button class="btn btn-sm btn-success"
+                        onclick="return confirm('¿Activar esta publicación?')">Activar</button>
                 </form>
             @endif
         </div>
     @endforeach
+
+    <!-- Pagination de Modals -->
+
 </body>
 
 </html>

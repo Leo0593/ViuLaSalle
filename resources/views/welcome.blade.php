@@ -84,6 +84,13 @@
                 </li>
 
                 <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('colecciones.index') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Grupos</span>
+                    </a>
+                </li>
+
+                <li class="opciones-bar-item">
                     <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
                         <i class="fa-solid fa-calendar-plus"></i>
                         <span>Show</span>

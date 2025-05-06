@@ -28,7 +28,8 @@ class UserController extends Controller
             ->when($status !== null, function ($query) use ($status) {
                 return $query->where('status', $status);
             })
-            ->get(); // o paginate si lo usas
+            ->paginate(6)
+            ->appends($request->except('page')); // Mantiene filtros en la paginación
 
         // Contadores
         $countAdmin = User::where('role', 'ADMIN')->count();

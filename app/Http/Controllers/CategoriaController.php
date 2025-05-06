@@ -28,7 +28,7 @@ class CategoriaController extends Controller
             $query->where('status', $request->status);
         }
 
-        $categorias = $query->get();
+        $categorias = $query->paginate(15)->appends($request->except('page'));
 
         return view('categorias.index', compact('categorias', 'user'));
     }

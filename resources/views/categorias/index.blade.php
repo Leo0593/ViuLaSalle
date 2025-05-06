@@ -124,6 +124,9 @@
                     </div>
                 @endforeach
             </div>
+            <div class="d-flex justify-content-center mt-4">
+                {{ $categorias->links() }}
+            </div>
         </div>
 
         <!-- Modal para Editar Categoria -->
@@ -170,7 +173,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <script>

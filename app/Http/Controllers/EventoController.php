@@ -44,13 +44,9 @@ class EventoController extends Controller
         $user = auth()->user(); // Obtener el usuario autenticado
         $publicaciones = null; // Inicializar publicaciones como nul
 
-        if ($user && $user->role == 'ADMIN') {
-            $eventos = Evento::all(); // Mostrar todos los eventos para ADMIN
-        } else {
-            $eventos = Evento::where('status', 1)->get(); // Solo eventos visibles para los demás
-        }
+        $eventos = Evento::where('status', 1)->get();
 
-        return view('eventos.todoseventos', compact('eventos', )); // Retornar vista con datos
+        return view('eventos.todoseventos', compact('eventos', 'publicaciones')); // Retornar vista con datos
     }
 
     public function create()
@@ -64,7 +60,7 @@ class EventoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validación para archivos de imagen
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp,|max:2048', // Validación para archivos de imagen
         ]);
 
         // Obtener el usuario autenticado

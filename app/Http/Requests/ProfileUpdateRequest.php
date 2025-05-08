@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Publicacion;
+
 
 class ProfileUpdateRequest extends FormRequest
 {

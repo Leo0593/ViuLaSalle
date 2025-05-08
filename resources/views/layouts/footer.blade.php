@@ -60,6 +60,13 @@
                     <i class="fab fa-youtube"></i>
                 </div>
             </a>
+
+            <a href="https://www.linkedin.com/company/lasallemollerussa/" target="_blank">
+                <div class="redes-circle">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+            </a>
+            
         </div>
     </div>
 

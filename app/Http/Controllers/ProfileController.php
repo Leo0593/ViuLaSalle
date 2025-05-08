@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+use App\Models\Publicacion;
+
 class ProfileController extends Controller
 {
     /**
@@ -16,8 +18,16 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $publicaciones = $user
+        ->publicaciones()
+        ->where('status', 1)
+        ->latest()
+        ->get();
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'publicaciones' => $publicaciones,
         ]);
     }
 

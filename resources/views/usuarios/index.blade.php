@@ -110,7 +110,7 @@
                 </div>
 
                 <!-- Filtro por Estado -->
-                <div class="col-md-2" style="min-width: 250px" >
+                <div class="col-md-2" style="min-width: 250px">
                     <label for="status" class="form-label">Estado</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fa fa-circle-check"></i></span>
@@ -123,11 +123,11 @@
                 </div>
 
                 <!-- Botón -->
-                <div >
+                <div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-filter me-1"></i> Filtrar
                     </button>
-                     <a href="{{ route('users.index') }}" class="btn btn-secondary">
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary">
                         <i class="fa fa-times me-1"></i> Limpiar
                     </a>
                 </div>
@@ -200,6 +200,10 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                {{ $users->links() }}
             </div>
         </div>
 

@@ -16,9 +16,10 @@ class NotificacionController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $usuarios = User::all(); // para  seleccionar destinatarios si es necesario
 
         if ($user->role === 'ADMIN') {
-            $notificaciones = Notificacion::with('creador')->latest()->get();
+            $notificaciones = Notificacion::with('creador')->latest()->paginate(5);
         } elseif ($user->role === 'PROFESOR') {
             $notificaciones = Notificacion::with('creador')
                 ->where('status', 1)
@@ -30,7 +31,7 @@ class NotificacionController extends Controller
                         });
                 })
                 ->latest()
-                ->get();
+                ->paginate(5);
         } else {
             $notificaciones = Notificacion::with('creador')
                 ->where('status', 1)
@@ -41,11 +42,12 @@ class NotificacionController extends Controller
                         });
                 })
                 ->latest()
-                ->get();
+                ->paginate(5);
         }
 
-        return view('notificaciones.index', compact('notificaciones'));
+        return view('notificaciones.index', compact('notificaciones', 'usuarios'));
     }
+
 
     public function create()
     {
@@ -95,6 +97,7 @@ class NotificacionController extends Controller
         $usuarios = User::all();
         $destinatariosSeleccionados = $notificacion->destinatarios->pluck('id')->toArray();
 
+        
         return view('notificaciones.edit', compact('notificacion', 'usuarios', 'destinatariosSeleccionados'));
     }
 

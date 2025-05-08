@@ -33,7 +33,7 @@ class EventoController extends Controller
             $query->where('status', $status);
         }
 
-        $eventos = $query->get();
+        $eventos = $query->paginate(6)->appends($request->except('page'));
 
         return view('eventos.index', compact('eventos', 'user'));
     }

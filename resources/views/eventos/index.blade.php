@@ -56,6 +56,10 @@
 
     </div>
 
+    <div class="d-flex justify-content-center mt-4">
+        {{ $eventos->links() }}
+    </div>
+
     <div class="eventos-organizados">
         @foreach ($eventos as $evento)
             <a class="evento-container"
@@ -68,7 +72,7 @@
             </a>
         @endforeach
     </div>
-
+    
 </body>
 
 <!--

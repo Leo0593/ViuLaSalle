@@ -16,13 +16,6 @@
                 </div>
             </a>
         @endforeach
-
-        @for ($i = 0; $i < 4; $i++)
-            <div class="evento-container">
-                a
-            </div>
-        @endfor
     </div>
-
-    @include('layouts.footer')
 </body>
+@include('layouts.footer')

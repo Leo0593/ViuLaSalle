@@ -180,7 +180,7 @@
                 </div>
 
                 @if (Auth::check())
-                    <div style="whidth: 100%; display: flex; gap: 10px; flex-direction: column;">
+                    <div style="margin-top:40px; width: 100%; display: flex; gap: 10px; flex-direction: column;">
                         <!-- Botón Editar Perfil -->
                         <a class="opacidad" 
                             href="{{ route('profile.edit') }}"
@@ -749,3 +749,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+@include('layouts.footer')

@@ -13,40 +13,73 @@ use App\Notifications\NotificacionCreada;
 class NotificacionController extends Controller
 {
     // Mostrar listado de notificaciones
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
-        $usuarios = User::all(); // para  seleccionar destinatarios si es necesario
+        $usuarios = User::all();
 
+        // Obtener filtros
+        $titulo = $request->input('titulo');
+        $status = $request->input('status');
+        $creadorNombre = $request->input('creador');
+        $fechaInicio = $request->input('fecha_inicio');
+        $fechaFin = $request->input('fecha_fin');
+
+        $query = Notificacion::with('creador');
+
+        // Filtro por rol
         if ($user->role === 'ADMIN') {
-            $notificaciones = Notificacion::with('creador')->latest()->paginate(5);
+            // Sin restricciones por destinatarios
         } elseif ($user->role === 'PROFESOR') {
-            $notificaciones = Notificacion::with('creador')
-                ->where('status', 1)
-                ->where(function ($query) use ($user) {
-                    $query->where('es_global', true)
+            $query->where('status', 1)
+                ->where(function ($q) use ($user) {
+                    $q->where('es_global', true)
                         ->orWhere('creador_id', $user->id)
-                        ->orWhereHas('destinatarios', function ($q) use ($user) {
-                            $q->where('user_id', $user->id);
+                        ->orWhereHas('destinatarios', function ($q2) use ($user) {
+                            $q2->where('user_id', $user->id);
                         });
-                })
-                ->latest()
-                ->paginate(5);
+                });
         } else {
-            $notificaciones = Notificacion::with('creador')
-                ->where('status', 1)
-                ->where(function ($query) use ($user) {
-                    $query->where('es_global', true)
-                        ->orWhereHas('destinatarios', function ($q) use ($user) {
-                            $q->where('user_id', $user->id);
+            $query->where('status', 1)
+                ->where(function ($q) use ($user) {
+                    $q->where('es_global', true)
+                        ->orWhereHas('destinatarios', function ($q2) use ($user) {
+                            $q2->where('user_id', $user->id);
                         });
-                })
-                ->latest()
-                ->paginate(5);
+                });
         }
+
+        // Aplicar filtros si están presentes
+        if (!empty($titulo)) {
+            $query->where('titulo', 'like', "%$titulo%");
+        }
+
+        if ($status !== null && $status !== '') {
+            $query->where('status', $status);
+        }
+
+        if (!empty($creadorNombre)) {
+            $query->whereHas('creador', function ($q) use ($creadorNombre) {
+                $q->where('name', 'like', "%$creadorNombre%");
+            });
+        }
+        
+        if ($fechaInicio) {
+            $query->whereDate('created_at', '>=', $fechaInicio);
+        }
+        
+        if ($fechaFin) {
+            $query->whereDate('created_at', '<=', $fechaFin);
+        }
+
+        // Obtener resultados paginados con filtros mantenidos
+        $notificaciones = $query->latest()
+            ->paginate(5)
+            ->appends($request->except('page'));
 
         return view('notificaciones.index', compact('notificaciones', 'usuarios'));
     }
+
 
 
     public function create()
@@ -97,7 +130,7 @@ class NotificacionController extends Controller
         $usuarios = User::all();
         $destinatariosSeleccionados = $notificacion->destinatarios->pluck('id')->toArray();
 
-        
+
         return view('notificaciones.edit', compact('notificacion', 'usuarios', 'destinatariosSeleccionados'));
     }
 

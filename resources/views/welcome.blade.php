@@ -156,6 +156,10 @@
                             <a href="{{ route('login') }}" class="btn-login">
                                 <strong>Iniciar Sesión</strong>
                             </a>
+
+                            <a href="{{ route('register') }}" class="btn-register">
+                                <strong>Registrarse</strong>
+                            </a>
                         </div>
                     @endif
 

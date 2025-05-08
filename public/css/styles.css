@@ -1043,6 +1043,8 @@ a.sidebar-link:hover {
     align-items: center;
     flex-direction: column;
     z-index: 1;
+
+    gap: 30px;
 }
 
 .btn-login {
@@ -1054,6 +1056,7 @@ a.sidebar-link:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    text-decoration: none;
 }
 .btn-login:hover {
     background-color: #0056b3;
@@ -1062,6 +1065,27 @@ a.sidebar-link:hover {
     text-decoration: none;
 }
 .btn-login:active {
+    scale: 0.9;
+}
+
+.btn-register {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+.btn-register:hover {
+    background-color: #0056b3;
+    color: white;
+    scale: 1.1;
+    text-decoration: none;
+}
+.btn-register:active {
     scale: 0.9;
 }
 
@@ -1679,3 +1703,4 @@ textarea#publicacion-texto {
     font-size: 0.8em;
     color: #999;
 }
+

@@ -11,77 +11,191 @@
         @endif
 
 
-        <div class="bg-white p-4 rounded-4 mb-4 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h1 class="mb-1"><i class="fas fa-bell me-3 text-primary"></i> Panel de Notificaciones</h1>
-                    <p class="text-muted mb-0">Administra todas las notificaciones de tu sistema</p>
+        <div class="bg-white p-3 p-md-4 rounded-3 mb-3 mb-md-4 shadow-sm border">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 gap-md-0">
+                <!-- Texto del título -->
+                <div class="w-100">
+                    <h1 class="h4 h3-md mb-1">
+                        <i class="fas fa-bell me-2 me-md-3 text-primary"></i>
+                        <span class="d-inline-block">Panel de Notificaciones</span>
+                    </h1>
+                    <p class="text-muted mb-0 small d-none d-sm-block">
+                        Administra todas las notificaciones de tu sistema
+                    </p>
+                    <p class="text-muted mb-0 small d-block d-sm-none">
+                        Administrar notificaciones
+                    </p>
                 </div>
-                <div>
 
-                    <!-- Botón para crear una notificacion sin modal
-                    <a href="{{ route('notificaciones.create') }}" class="btn btn-success">
-                        <i class="fas fa-plus-circle me-2"></i> Nueva Notificación
-                    </a> -->
-
-                    <!-- Botón para abrir el modal -->
+                <!-- Botones - versión desktop (derecha) -->
+                <div class="d-none d-md-flex align-items-center ms-auto">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#crearNotificacionModal">
                         <i class="fas fa-plus me-2"></i>Crear Notificación
                     </button>
 
-
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary ms-2">
                         <i class="fas fa-arrow-left me-2"></i> Volver
                     </a>
+                </div>
+
+                <!-- Botón crear - versión móvil (debajo del texto) -->
+                <div class="d-block d-md-none w-100 mt-2">
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-primary btn-sm flex-grow-1 flex-md-grow-0"
+                            data-bs-toggle="modal" data-bs-target="#crearNotificacionModal">
+                            <i class="fas fa-plus me-1"></i> Crear
+                        </button>
+
+                        <a href="{{ route('dashboard') }}"
+                            class="btn btn-outline-secondary btn-sm flex-grow-1 flex-md-grow-0">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Filtros de búsqueda -->
-        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
-            <form method="GET" action="{{ route('notificaciones.index') }}" class="row mb-4">
-                <div class="col-md-5 mb-2">
-                    <input type="text" name="titulo" class="form-control" placeholder="Buscar por título..."
-                        value="{{ request('titulo') }}">
+        <!-- Filtros de búsqueda - Versión mejorada -->
+        <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border">
+            <h5 class="mb-3 text-primary">
+                <i class="fas fa-filter me-2"></i>Filtrar Notificaciones
+            </h5>
+
+            <form method="GET" action="{{ route('notificaciones.index') }}" class="row g-3 align-items-end">
+                <!-- Filtro por título -->
+                <div class="col-md-4 col-lg-3">
+                    <label for="titulo" class="form-label small text-muted">Título</label>
+                    <input type="text" name="titulo" id="titulo" class="form-control form-control-sm"
+                        placeholder="Buscar por título..." value="{{ request('titulo') }}">
                 </div>
-                <div class="col-md-3 mb-2">
-                    <select name="status" class="form-select">
-                        <option value="">Todos los estados</option>
+
+                <!-- Filtro por estado -->
+                <div class="col-md-3 col-lg-2">
+                    <label for="status" class="form-label small text-muted">Estado</label>
+                    <select name="status" id="status" class="form-select form-select-sm">
+                        <option value="">Todos</option>
                         <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Activo</option>
                         <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactivo</option>
                     </select>
                 </div>
-                <div class="col-md-2 d-grid mb-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-filter me-1"></i> Filtrar
-                    </button>
+
+                <!-- Filtro por creador -->
+                <div class="col-md-4 col-lg-3">
+                    <label for="creador" class="form-label small text-muted">Creador</label>
+                    <input type="text" name="creador" id="creador" class="form-control form-control-sm"
+                        placeholder="Buscar por creador..." value="{{ request('creador') }}">
                 </div>
-                <div class="col-md-2 d-grid mb-2">
-                    <a href="{{ route('notificaciones.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-undo me-1"></i> Limpiar
+
+                <!-- Filtro por rango de fechas -->
+                <div class="col-md-5 col-lg-4">
+                    <label class="form-label small text-muted d-block">Rango de fechas</label>
+                    <div class="input-group input-group-sm">
+                        <input type="date" name="fecha_inicio" class="form-control form-control-sm"
+                            value="{{ request('fecha_inicio') }}" aria-label="Fecha inicio">
+                        <span class="input-group-text bg-light">a</span>
+                        <input type="date" name="fecha_fin" class="form-control form-control-sm"
+                            value="{{ request('fecha_fin') }}" aria-label="Fecha fin">
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="col-md-4 col-lg-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1">
+                        <i class="fas fa-filter me-1"></i> Aplicar
+                    </button>
+                    <a href="{{ route('notificaciones.index') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-undo me-1"></i>
                     </a>
                 </div>
             </form>
         </div>
 
         <!-- Tarjetas de notificaciones -->
-        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
+        <div class="bg-light p-3 p-md-4 rounded-4 mb-4 shadow-sm">
             @if($notificaciones->isEmpty())
-                <div class="text-center py-5">
-                    <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+                <div class="text-center py-4 py-md-5">
+                    <i class="fas fa-bell-slash fa-2x fa-md-3x text-muted mb-3"></i>
                     <h4 class="text-muted">No hay notificaciones registradas</h4>
                 </div>
             @else
                 <div class="row">
                     @foreach ($notificaciones as $notificacion)
-                        <div class="col-12 mb-4">
+                        <div class="col-12 mb-3 mb-md-4">
                             <div class="card h-100 shadow-sm">
-                                <div class="card-body d-flex">
-                                    <!-- Contenido principal -->
-                                    <div class="flex-grow-1 pe-3">
-                                        <!-- Header con título y estado -->
-                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="card-body">
+                                    <!-- Layout para pantallas grandes -->
+                                    <div class="d-none d-md-flex">
+                                        <!-- Contenido principal -->
+                                        <div class="flex-grow-1 pe-3">
+                                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                                <h5 class="card-title mb-0">{{ $notificacion->titulo }}</h5>
+                                                <span
+                                                    class="badge rounded-pill {{ $notificacion->status ? 'bg-success' : 'bg-secondary' }}">
+                                                    {{ $notificacion->status ? 'Activo' : 'Inactivo' }}
+                                                </span>
+                                            </div>
+
+                                            <span class="badge bg-info mb-2">
+                                                {{ $notificacion->es_global ? 'Global' : 'Personalizada' }}
+                                            </span>
+
+                                            <p class="card-text text-muted mb-3">
+                                                {{ Str::limit($notificacion->mensaje, 100) }}
+                                            </p>
+
+                                            <div class="d-flex justify-content-between text-muted small">
+                                                <div>
+                                                    <i class="fas fa-user me-1"></i>
+                                                    {{ $notificacion->creador->name ?? 'N/A' }}
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-calendar me-1"></i>
+                                                    {{ $notificacion->created_at->format('d/m/Y') }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Botones de acción -->
+                                        <div class="d-flex flex-column justify-content-between" style="min-width: 120px;">
+                                            <button class="btn btn-sm btn-outline-primary mb-2 ver-notificacion"
+                                                data-url="{{ route('notificaciones.show', $notificacion->id) }}">
+                                                <i class="fas fa-eye me-1"></i> Ver
+                                            </button>
+
+                                            <a href="{{ route('notificaciones.edit', $notificacion->id) }}"
+                                                class="btn btn-sm btn-outline-warning mb-2">
+                                                <i class="fas fa-edit me-1"></i> Editar
+                                            </a>
+
+                                            @if ($notificacion->status)
+                                                <form method="POST"
+                                                    action="{{ route('notificaciones.destroy', $notificacion->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-outline-danger w-100"
+                                                        onclick="return confirm('¿Desactivar esta notificación?')">
+                                                        <i class="fas fa-toggle-off me-1"></i> Desactivar
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <form method="POST"
+                                                    action="{{ route('notificaciones.activate', $notificacion->id) }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="btn btn-sm btn-outline-success w-100"
+                                                        onclick="return confirm('¿Activar esta notificación?')">
+                                                        <i class="fas fa-toggle-on me-1"></i> Activar
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!-- Layout para móviles -->
+                                    <div class="d-flex flex-column d-md-none">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
                                             <h5 class="card-title mb-0">{{ $notificacion->titulo }}</h5>
                                             <span
                                                 class="badge rounded-pill {{ $notificacion->status ? 'bg-success' : 'bg-secondary' }}">
@@ -89,67 +203,65 @@
                                             </span>
                                         </div>
 
-                                        <!-- Tipo de notificación -->
-                                        <span class="badge bg-info mb-2">
-                                            {{ $notificacion->es_global ? 'Global' : 'Personalizada' }}
-                                        </span>
-
-                                        <!-- Mensaje resumido -->
-                                        <p class="card-text text-muted mb-3">
-                                            {{ Str::limit($notificacion->mensaje, 100) }}
-                                        </p>
-
-                                        <!-- Información adicional -->
-                                        <div class="d-flex justify-content-between text-muted small">
-                                            <div>
-                                                <i class="fas fa-user me-1"></i>
-                                                {{ $notificacion->creador->name ?? 'N/A' }}
-                                            </div>
-                                            <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge bg-info">
+                                                {{ $notificacion->es_global ? 'Global' : 'Personalizada' }}
+                                            </span>
+                                            <small class="text-muted">
                                                 <i class="fas fa-calendar me-1"></i>
                                                 {{ $notificacion->created_at->format('d/m/Y') }}
-                                            </div>
+                                            </small>
                                         </div>
-                                    </div>
 
-                                    <!-- Botones de acción (vertical) -->
-                                    <div class="d-flex flex-column justify-content-between" style="width: 120px;">
+                                        <p class="card-text text-muted mb-3">
+                                            {{ Str::limit($notificacion->mensaje, 80) }}
+                                        </p>
 
-                                        <button class="btn btn-sm btn-outline-primary mb-2 ver-notificacion"
-                                            data-url="{{ route('notificaciones.show', $notificacion->id) }}">
-                                            <i class="fas fa-eye me-1"></i> Ver
-                                        </button>
-                                        <!--
-                                        <a href="{{ route('notificaciones.show', $notificacion->id) }}"
-                                        class="btn btn-sm btn-outline-primary mb-2">
-                                        <i class="fas fa-eye me-1"></i> Ver
-                                        </a>
-                                        -->
+                                        <div class="mb-2 text-muted small">
+                                            <i class="fas fa-user me-1"></i>
+                                            {{ $notificacion->creador->name ?? 'N/A' }}
+                                        </div>
 
-                                        <a href="{{ route('notificaciones.edit', $notificacion->id) }}"
-                                            class="btn btn-sm btn-outline-warning mb-2">
-                                            <i class="fas fa-edit me-1"></i> Editar
-                                        </a>
+                                        <!-- Botones en horizontal para móviles -->
+                                        <div class="d-flex gap-2 mt-2">
+                                            <button class="btn btn-sm btn-outline-primary flex-grow-1 ver-notificacion"
+                                                data-url="{{ route('notificaciones.show', $notificacion->id) }}">
+                                                <i class="fas fa-eye"></i>
+                                                <span class="d-none d-sm-inline"> Ver</span>
+                                            </button>
 
-                                        @if ($notificacion->status)
-                                            <form method="POST" action="{{ route('notificaciones.destroy', $notificacion->id) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-sm btn-outline-danger w-100"
-                                                    onclick="return confirm('¿Desactivar esta notificación?')">
-                                                    <i class="fas fa-toggle-off me-1"></i> Desactivar
-                                                </button>
-                                            </form>
-                                        @else
-                                            <form method="POST" action="{{ route('notificaciones.activate', $notificacion->id) }}">
-                                                @csrf
-                                                @method('PUT')
-                                                <button class="btn btn-sm btn-outline-success w-100"
-                                                    onclick="return confirm('¿Activar esta notificación?')">
-                                                    <i class="fas fa-toggle-on me-1"></i> Activar
-                                                </button>
-                                            </form>
-                                        @endif
+                                            <a href="{{ route('notificaciones.edit', $notificacion->id) }}"
+                                                class="btn btn-sm btn-outline-warning flex-grow-1">
+                                                <i class="fas fa-edit"></i>
+                                                <span class="d-none d-sm-inline"> Editar</span>
+                                            </a>
+
+                                            @if ($notificacion->status)
+                                                <form method="POST"
+                                                    action="{{ route('notificaciones.destroy', $notificacion->id) }}"
+                                                    class="flex-grow-1">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-outline-danger w-100"
+                                                        onclick="return confirm('¿Desactivar esta notificación?')">
+                                                        <i class="fas fa-toggle-off"></i>
+                                                        <span class="d-none d-sm-inline"> Desactivar</span>
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <form method="POST"
+                                                    action="{{ route('notificaciones.activate', $notificacion->id) }}"
+                                                    class="flex-grow-1">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="btn btn-sm btn-outline-success w-100"
+                                                        onclick="return confirm('¿Activar esta notificación?')">
+                                                        <i class="fas fa-toggle-on"></i>
+                                                        <span class="d-none d-sm-inline"> Activar</span>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -157,13 +269,12 @@
                     @endforeach
                 </div>
 
-                <div class="d-flex justify-content-center mt-4">
+                <div class="d-flex justify-content-center mt-3 mt-md-4">
                     {{ $notificaciones->links() }}
                 </div>
-
             @endif
         </div>
-
+    
         <!-- Modal de creación -->
         <div class="modal fade" id="crearNotificacionModal" tabindex="-1" aria-labelledby="crearNotificacionModalLabel"
             aria-hidden="true">

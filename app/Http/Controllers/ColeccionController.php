@@ -46,6 +46,18 @@ class ColeccionController extends Controller
         return view('coleccion.index', compact('colecciones'));
     }
 
+    public function misgrupos()
+    {
+        $user = auth()->user();
+        $colecciones = Coleccion::with('creador', 'usuarios')
+            ->where('status', 1)
+            ->whereHas('usuarios', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->get();
+
+        return view('coleccion.misgrupos', compact('colecciones'));
+    }
 
     public function create()
     {

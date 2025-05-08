@@ -156,6 +156,10 @@
                             <a href="{{ route('login') }}" class="btn-login">
                                 <strong>Iniciar Sesión</strong>
                             </a>
+
+                            <a href="{{ route('register') }}" class="btn-register">
+                                <strong>Registrarse</strong>
+                            </a>
                         </div>
                     @endif
 
@@ -178,7 +182,8 @@
                 @if (Auth::check())
                     <div style="whidth: 100%; display: flex; gap: 10px; flex-direction: column;">
                         <!-- Botón Editar Perfil -->
-                        <a href="{{ route('profile.edit') }}"
+                        <a class="opacidad" 
+                            href="{{ route('profile.edit') }}"
                             style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
                             <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
                         </a>
@@ -186,11 +191,44 @@
                         <!-- Botón Cerrar Sesión -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit"
+                            <button class="opacidad" type="submit"
                                 style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
                                 <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
                             </button>
                         </form>
+
+
+                        <a class="opacidad"
+                            href="{{ route('colecciones.misgrupos') }}"
+                            style="background-color: #ffc107; color: black; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+                            <i class="fa fa-users" 
+                                style="margin-right: 5px;">
+                            </i> Mis Grupos
+                        </a>
+
+                        <div class="notif-container">
+                            <a class="notif-btn opacidad" 
+                                onclick="toggleNotificaciones()">
+                                <i class="fa-solid fa-bell" style="margin-right: 5px;"></i>
+                                Notificaciones
+                            </a>
+
+                            <div class="notif-window" id="ventanaNotificaciones">
+                                <ul>
+                                    @foreach ($notificaciones as $notificacion)
+                                        <li>  
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            <div class="notif-content">
+                                                <p class="notif-title">{{ $notificacion->titulo }}</p>
+                                                <p class="notif-message">{{ $notificacion->mensaje }}</p>  
+                                                <p class="notif-time"><i class="fa-regular fa-clock"></i>
+                                                {{ $notificacion->created_at->diffForHumans() }}</p>
+                                            </div>
+                                        </li>
+                                    @endforeach                                    
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -690,6 +728,23 @@
             transform: translate(-50%, -50%) scale(1.1);
         }
     </style>
+
+    <!-- Ventana de notificaciones -->
+    <script>
+        function toggleNotificaciones() {
+            const ventana = document.getElementById("ventanaNotificaciones");
+            ventana.style.display = ventana.style.display === "block" ? "none" : "block";
+        }
+
+        // Cerrar si haces clic fuera
+        document.addEventListener("click", function(event) {
+            const ventana = document.getElementById("ventanaNotificaciones");
+            const boton = document.querySelector(".notif-btn");
+            if (!ventana.contains(event.target) && !boton.contains(event.target)) {
+                ventana.style.display = "none";
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

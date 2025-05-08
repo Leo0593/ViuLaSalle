@@ -4,7 +4,7 @@
     </button> 
 
     <div class="logo-container">
-        <a >
+        <a  href="/">
             <img src="../../img/ViuSalle.png" alt="Viu LaSalle">
         </a>
     </div>

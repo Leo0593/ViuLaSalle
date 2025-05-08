@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Publicacion;
 use App\Models\Evento;
 use App\Models\Categoria;
+use App\Models\Notificacion;
 
 
 class Welcome extends Controller
@@ -19,7 +20,6 @@ class Welcome extends Controller
         $categorias = Categoria::all(); // Obtener todas las categorías
         $categoriasSugeridas = Categoria::inRandomOrder()->limit(5)->get(); // 5 aleatorias
 
-
         $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias', 'comentarios'])
             ->where('status', 1)
             ->orderBy('fecha_publicacion', 'desc') // Ordenar por fecha de publicación (más recientes primero)
@@ -30,7 +30,13 @@ class Welcome extends Controller
             ->orderBy('fecha_publicacion', 'desc') // Aplicar el mismo orden
             ->get();
 
-        return view('welcome', compact('user', 'publicaciones', 'nopublicaciones', 'eventos', 'categorias', 'categoriasSugeridas'));
+        $notificaciones = Notificacion::with('creador')
+            ->where('es_global', 1)
+            ->where('status', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('welcome', compact('user', 'publicaciones', 'nopublicaciones', 'eventos', 'categorias', 'categoriasSugeridas', 'notificaciones'));
     }
 
     

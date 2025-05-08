@@ -120,6 +120,8 @@ Route::prefix('colecciones')->name('colecciones.')->group(function () {
     Route::delete('/{id}', [ColeccionController::class, 'destroy'])->name('destroy');
     Route::put('/{id}/activate', [ColeccionController::class, 'activate'])->name('activate');
     Route::get('/{id}', [ColeccionController::class, 'show'])->name('show');
+    // mis grupos
+    Route::get('/misgrupos', [ColeccionController::class, 'misgrupos'])->name('misgrupos');
 });
 
 Route::prefix('publicacioncolecciones')->name('publicacioncolecciones.')->group(function () {

@@ -4,7 +4,7 @@
 
     @include('layouts.navheader')
 
-    <div class="body-container container">
+    <div class="body-container container mt-header pt-3">
         <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
 
             <div class="text-center my-5">

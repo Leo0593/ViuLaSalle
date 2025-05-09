@@ -252,7 +252,7 @@
         }
         @media screen and (max-width: 1000px) {
             .redes {
-                width: 350px;
+                max-width: 90%;
                 height: 100px;
             }
             .contactanos-texto {

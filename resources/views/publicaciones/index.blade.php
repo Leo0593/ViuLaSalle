@@ -3,8 +3,9 @@
 <body>
 
     @include('layouts.navheader')
-
-    <body>
+    
+    <div class="body-container container">
+        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
 
         <div class="container py-4">
             <!-- Hero Section -->
@@ -105,15 +106,16 @@
                                 @endif
                             </div>
 
-                            <!-- Card Footer -->
-                            <div class="card-footer">
-                                <!-- Like Button -->
-                                <button
-                                    class="btn-like {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'liked' : '' }}"
-                                    data-id="{{ $publicacion->id }}">
-                                    <i class="fas fa-heart me-1"></i>
-                                    <span class="like-count">{{ $publicacion->likes }}</span>
+                            <td>
+                                <!--
+                                <button class="like-btn" data-id="{{ $publicacion->id }}"
+                                    style="color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};">
+                                    ❤️ <span class="like-count">{{ $publicacion->likes }}</span>
                                 </button>
+                                -->
+                                <i class="fa fa-heart"></i>
+                                <span class="like-count">{{ $publicacion->likes }}</span>
+                            </td>
 
                                 <!-- Actions -->
                                 <div class="action-buttons">

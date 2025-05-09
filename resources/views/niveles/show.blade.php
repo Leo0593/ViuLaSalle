@@ -209,6 +209,24 @@
                     </div>
                 </div>
             </div>
+
+            <div style="display: flex; flex-direction: column; width: 100%; align-items: center;">
+                <div class="clase-posts-separador">
+                    <i class="fa fa-th" aria-hidden="true"></i>
+                </div>
+                <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                    <div class="clase-posts">
+                    
+                        @for ($i = 0; $i < 5; $i++)
+                            <div class="clase-posts-post">
+                                <img src="{{ asset('../../img/bp1.jpg') }}" alt="Portada">
+                            </div>
+                        @endfor
+
+                    </div>
+                    
+                </div>
+            </div>
         </div>
     </div>
 

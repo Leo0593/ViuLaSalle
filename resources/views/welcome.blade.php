@@ -129,7 +129,7 @@
 
                 @if(isset($publicaciones) && $publicaciones->isNotEmpty())
                     @foreach ($publicaciones as $publicacion)
-                        @include('layouts.publicacion', ['publicacion' => $publicacion])         
+                        @include('layouts.publicacion', ['publicacion' => $publicacion])
                     @endforeach
                 @else
                     <p>No hay publicaciones disponibles.</p>
@@ -158,32 +158,29 @@
                                         </li>
                                     @endif
                                     @foreach ($notificaciones as $notificacion)
-                                        <li>  
+                                        <li>
                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                             <div class="notif-content">
                                                 <p class="notif-title">{{ $notificacion->titulo }}</p>
-                                                <p class="notif-message">{{ $notificacion->mensaje }}</p>  
+                                                <p class="notif-message">{{ $notificacion->mensaje }}</p>
                                                 <p class="notif-time"><i class="fa-regular fa-clock"></i>
-                                                {{ $notificacion->created_at->diffForHumans() }}</p>
+                                                    {{ $notificacion->created_at->diffForHumans() }}</p>
                                             </div>
                                         </li>
-                                    @endforeach                                    
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
-                    
+
                         <!-- Botón Editar Perfil -->
-                        <a class="botones-new-1" 
-                            href="{{ route('profile.edit') }}"
+                        <a class="botones-new-1" href="{{ route('profile.edit') }}"
                             style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
                             <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
                         </a>
 
-                        <a class="botones-new-1"
-                            href="{{ route('colecciones.misgrupos') }}"
+                        <a class="botones-new-1" href="{{ route('colecciones.misgrupos') }}"
                             style="background-color: #ffb706; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
-                            <i class="fa fa-users" 
-                                style="margin-right: 5px;">
+                            <i class="fa fa-users" style="margin-right: 5px;">
                             </i> Mis Grupos
                         </a>
 
@@ -228,7 +225,8 @@
                         <div class="center-text" style="margin-bottom: 10px;">
                             <h3>{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</h3>
                         </div>
-                        <p><strong>Correo: </strong> <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
+                        <p><strong>Correo: </strong>
+                            <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
                         <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
                         <p><strong>Fecha de nacimiento: </strong>
                             {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
@@ -283,8 +281,9 @@
                             <input type="text" id="evento-search" class="form-control" placeholder="Buscar eventos...">
 
                             <!-- Input oculto para el evento seleccionado -->
-                            <select name="id_evento" id="id_evento" class="form-control" style="display: none;"
-                                required>
+                            <select name="id_evento" id="id_evento" class="form-control" style="display: none;">
+                                <option value="0" selected>Sin evento</option> <!-- Valor por defecto -->
+
                                 @foreach($eventos as $evento)
                                     <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
                                 @endforeach
@@ -360,7 +359,8 @@
                                 style="font-size: 1.1rem; padding: 0.5rem 1.5rem;">
                                 <i class="fas fa-camera me-2"></i> Seleccionar Fotos
                             </label>
-                            <input type="file" name="fotos[]" id="fotos" class="d-none" multiple accept="image/*"required>
+                            <input type="file" name="fotos[]" id="fotos" class="d-none" multiple accept="image/*"
+                                required>
                             <small class="text-muted d-block mt-2">Puedes seleccionar múltiples archivos</small>
 
                             <!-- Contenedor para previsualización -->
@@ -403,9 +403,9 @@
             const defaultCategories = @json($categoriasSugeridas);
 
             function renderCategoryButtons(categories) {
-                    $('#categorias-list').empty();
-                    categories.forEach(cat => {
-                        $('#categorias-list').append(`
+                $('#categorias-list').empty();
+                categories.forEach(cat => {
+                    $('#categorias-list').append(`
                         <button type="button" class="btn btn-outline-primary category-btn" data-id="${cat.id}">
                             ${cat.nombre}
                         </button>
@@ -727,7 +727,7 @@
         }
 
         // Cerrar si haces clic fuera
-        document.addEventListener("click", function(event) {
+        document.addEventListener("click", function (event) {
             const ventana = document.getElementById("ventanaNotificaciones");
             const boton = document.querySelector(".notif-btn");
             if (!ventana.contains(event.target) && !boton.contains(event.target)) {
@@ -736,7 +736,7 @@
         });
     </script>
 
-        <!-- Opciones/Reportar -->
+    <!-- Opciones/Reportar -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const toggleMenus = document.querySelectorAll('.ellipsis-btn');

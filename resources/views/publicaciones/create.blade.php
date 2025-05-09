@@ -30,8 +30,8 @@
 
             <div class="form-group">
                 <label for="id_evento">Evento</label>
-                <select name="id_evento" id="id_evento" class="form-control" required>
-                    <option value="" selected disabled>Selecciona un evento</option> <!-- Opción inicial -->
+                <select name="id_evento" id="id_evento" class="form-control">
+                    <option value="0" selected>Sin evento</option> <!-- Valor por defecto -->
                     @foreach($eventos as $evento)
                         <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
                     @endforeach

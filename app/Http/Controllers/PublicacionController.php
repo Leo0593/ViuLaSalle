@@ -60,7 +60,7 @@ class PublicacionController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'id_user' => 'required|exists:users,id',       // Verifica que el usuario exista
-            'id_evento' => 'required|exists:eventos,id',   // Verifica que el evento exista
+            'id_evento' => 'nullable|integer', // Ahora es opcional
             'descripcion' => 'required|string|max:255',    // Descripción es obligatoria y tiene un límite de caracteres
             'fotos' => 'nullable|array',                    // Aceptar un array de fotos
             'fotos.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048', // Validación para las fotos
@@ -72,7 +72,7 @@ class PublicacionController extends Controller
         // Crear la publicación (y guardarla en la base de datos)
         $publicacion = Publicacion::create([
             'id_user' => auth()->user()->id,  // Usar el ID del usuario logueado
-            'id_evento' => $request->id_evento,
+            'id_evento' => $request->id_evento == 0 ? null : $request->id_evento, // 👈 Aquí es donde va
             'descripcion' => $request->descripcion,
             'fecha_publicacion' => Carbon::now(), // Fecha actual
             'status' => 1, // Estado por defecto es 1

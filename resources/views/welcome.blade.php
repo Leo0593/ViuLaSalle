@@ -360,7 +360,7 @@
                                 style="font-size: 1.1rem; padding: 0.5rem 1.5rem;">
                                 <i class="fas fa-camera me-2"></i> Seleccionar Fotos
                             </label>
-                            <input type="file" name="fotos[]" id="fotos" class="d-none" multiple accept="image/*">
+                            <input type="file" name="fotos[]" id="fotos" class="d-none" multiple accept="image/*"required>
                             <small class="text-muted d-block mt-2">Puedes seleccionar múltiples archivos</small>
 
                             <!-- Contenedor para previsualización -->

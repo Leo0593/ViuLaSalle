@@ -666,7 +666,7 @@ a.sidebar-link:hover {
 .box-publicacion-media-item {
     flex: 0 0 auto; /* No expandir ni contraer */
     width: 100%;
-    height: 500px;
+    aspect-ratio: 4 / 3; 
     scroll-snap-align: start; /* Alinea las fotos y videos al comienzo del contenedor */
     background-size: cover;
     background-position: center;

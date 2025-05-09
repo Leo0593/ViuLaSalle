@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('info.index') }}">
+                    <a class="opciones-bar-link" href="{{ route('profile.edit') }}">
                         <i class="fa-solid fa-user"></i>
                         <span>Perfil</span>
                     </a>
@@ -137,6 +137,67 @@
             </div>
 
             <div class="perfil">
+                @if (Auth::check())
+                    <div style="width: 100%; display: flex; gap: 10px; flex-direction: column; margin-bottom:30px;">
+                        <div class="notif-container">
+                            <a class="botones-new-1  notif-btn" style="color:white !important;"
+                                onclick="toggleNotificaciones()">
+                                <i class="fa-solid fa-bell" style="margin-right: 5px;"></i>
+                                Notificaciones
+                            </a>
+
+                            <div class="notif-window" id="ventanaNotificaciones">
+                                <ul>
+                                    @if ($notificaciones->isEmpty())
+                                        <li>
+                                            <i class="fa fa-exclamation" aria-hidden="true"></i>
+                                            <div class="notif-content">
+                                                <p class="notif-title">Sin notificaciones</p>
+                                                <p class="notif-message">No tienes notificaciones nuevas.</p>
+                                            </div>
+                                        </li>
+                                    @endif
+                                    @foreach ($notificaciones as $notificacion)
+                                        <li>  
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            <div class="notif-content">
+                                                <p class="notif-title">{{ $notificacion->titulo }}</p>
+                                                <p class="notif-message">{{ $notificacion->mensaje }}</p>  
+                                                <p class="notif-time"><i class="fa-regular fa-clock"></i>
+                                                {{ $notificacion->created_at->diffForHumans() }}</p>
+                                            </div>
+                                        </li>
+                                    @endforeach                                    
+                                </ul>
+                            </div>
+                        </div>
+                    
+                        <!-- Botón Editar Perfil -->
+                        <a class="botones-new-1" 
+                            href="{{ route('profile.edit') }}"
+                            style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+                            <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
+                        </a>
+
+                        <a class="botones-new-1"
+                            href="{{ route('colecciones.misgrupos') }}"
+                            style="background-color: #ffb706; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+                            <i class="fa fa-users" 
+                                style="margin-right: 5px;">
+                            </i> Mis Grupos
+                        </a>
+
+                        <!-- Botón Cerrar Sesión -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="botones-new-1" type="submit"
+                                style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                                <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
+                            </button>
+                        </form>
+                    </div>
+                @endif
+
                 <div class="perfil-box">
                     <div class="perfil-header">
                         <img src="../../img/Fondo.png" alt="Fondo de perfil">
@@ -167,7 +228,7 @@
                         <div class="center-text" style="margin-bottom: 10px;">
                             <h3>{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</h3>
                         </div>
-                        <p><strong>Correo: </strong> {{ Auth::check() ? Auth::user()->email : 'No disponible' }}</p>
+                        <p><strong>Correo: </strong> <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
                         <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
                         <p><strong>Fecha de nacimiento: </strong>
                             {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
@@ -178,59 +239,6 @@
                     </div>
 
                 </div>
-
-                @if (Auth::check())
-                    <div style="margin-top:40px; width: 100%; display: flex; gap: 10px; flex-direction: column;">
-                        <!-- Botón Editar Perfil -->
-                        <a class="opacidad" 
-                            href="{{ route('profile.edit') }}"
-                            style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
-                            <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
-                        </a>
-
-                        <!-- Botón Cerrar Sesión -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button class="opacidad" type="submit"
-                                style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
-                                <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
-                            </button>
-                        </form>
-
-
-                        <a class="opacidad"
-                            href="{{ route('colecciones.misgrupos') }}"
-                            style="background-color: #ffc107; color: black; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
-                            <i class="fa fa-users" 
-                                style="margin-right: 5px;">
-                            </i> Mis Grupos
-                        </a>
-
-                        <div class="notif-container">
-                            <a class="notif-btn opacidad" 
-                                onclick="toggleNotificaciones()">
-                                <i class="fa-solid fa-bell" style="margin-right: 5px;"></i>
-                                Notificaciones
-                            </a>
-
-                            <div class="notif-window" id="ventanaNotificaciones">
-                                <ul>
-                                    @foreach ($notificaciones as $notificacion)
-                                        <li>  
-                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                            <div class="notif-content">
-                                                <p class="notif-title">{{ $notificacion->titulo }}</p>
-                                                <p class="notif-message">{{ $notificacion->mensaje }}</p>  
-                                                <p class="notif-time"><i class="fa-regular fa-clock"></i>
-                                                {{ $notificacion->created_at->diffForHumans() }}</p>
-                                            </div>
-                                        </li>
-                                    @endforeach                                    
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                @endif
             </div>
         </div>
     </div>
@@ -300,9 +308,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
 
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
@@ -384,21 +389,6 @@
                     </form>
                 </div>
 
-                <!--<div class="modal-body">
-                    <textarea class="form-control" id="publicacion-texto" rows="5" placeholder="Escribe tu publicación aquí..."></textarea>
-                    
-                    <div class="modal-archivos">
-                        <div class="icono" id="icono-imagen">
-                            <i class="fa-solid fa-image"></i> 
-                        </div>
-                        <div class="icono" id="icono-video">
-                            <i class="fa-solid fa-video"></i> 
-                        </div>
-                    </div>
-
-                    <input type="file" id="file-input" style="display: none;" accept="image/*, video/*">
-                </div>-->
-
 
             </div>
         </div>
@@ -413,13 +403,13 @@
             const defaultCategories = @json($categoriasSugeridas);
 
             function renderCategoryButtons(categories) {
-                $('#categorias-list').empty();
-                categories.forEach(cat => {
-                    $('#categorias-list').append(`
-                    <button type="button" class="btn btn-outline-primary category-btn" data-id="${cat.id}">
-                        ${cat.nombre}
-                    </button>
-                `);
+                    $('#categorias-list').empty();
+                    categories.forEach(cat => {
+                        $('#categorias-list').append(`
+                        <button type="button" class="btn btn-outline-primary category-btn" data-id="${cat.id}">
+                            ${cat.nombre}
+                        </button>
+                    `);
                 });
             }
 
@@ -743,6 +733,36 @@
             if (!ventana.contains(event.target) && !boton.contains(event.target)) {
                 ventana.style.display = "none";
             }
+        });
+    </script>
+
+        <!-- Opciones/Reportar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleMenus = document.querySelectorAll('.ellipsis-btn');
+
+            toggleMenus.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation(); // ¡evita que se cierre justo después!
+
+                    const menu = this.nextElementSibling;
+
+                    // Cerrar todos menos el actual
+                    document.querySelectorAll('.menu-opciones').forEach(m => {
+                        if (m !== menu) m.style.display = 'none';
+                    });
+
+                    // Mostrar u ocultar este menú
+                    menu.style.display = (getComputedStyle(menu).display === 'none') ? 'flex' : 'none';
+                });
+            });
+
+            // Cierra todos los menús si haces clic fuera
+            document.addEventListener('click', function () {
+                document.querySelectorAll('.menu-opciones').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+            });
         });
     </script>
 

@@ -80,5 +80,8 @@ class User extends Authenticatable
         return $this->hasMany(Coleccion::class, 'creador_id');
     }
 
-
+    public function publicaciones()
+    {
+        return $this->hasMany(Publicacion::class, 'id_user');
+    }
 }

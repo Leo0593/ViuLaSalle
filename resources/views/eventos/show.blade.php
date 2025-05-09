@@ -54,8 +54,6 @@
         @endphp
         <div id="posts" class="evento-posts">
             @if(isset($publicaciones) && $publicaciones->isNotEmpty())
-                
-
                 @foreach ($publicaciones as $publicacion)
                     @if($publicacion->id_evento == $evento->id)
                         @php

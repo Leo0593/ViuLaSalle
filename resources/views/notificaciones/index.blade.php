@@ -3,8 +3,7 @@
 <body>
     @include('layouts.navheader')
 
-    <div class="container mt-5 pt-5">
-        <div class="container mt-4 pt-4"></div>
+    <div class="container mt-header pt-2">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

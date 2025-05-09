@@ -228,7 +228,7 @@
                         <div class="center-text" style="margin-bottom: 10px;">
                             <h3>{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</h3>
                         </div>
-                        <p><strong>Correo: </strong> <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
+                        <p><strong>Correo: </strong> {{ Auth::check() ? Auth::user()->email : 'No disponible' }} </p>
                         <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
                         <p><strong>Fecha de nacimiento: </strong>
                             {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>

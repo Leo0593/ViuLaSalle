@@ -3,11 +3,9 @@
 <body>
     @include('layouts.navheader')
 
-    <div class="container mt-5 pt-5">
+    <div class="container mt-header">
 
-        <div class="container mt-4 pt-4"> </div>
-
-        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm text-center my-5 ">
+        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm text-center my-5 mt-4">
             <h1 class="text-2xl font-bold text-gray-800">Panel de Administración</h1>
             <div class="mt-4">
                 <p class="text-gray-600">Bienvenido al panel de administración. Aquí puedes gestionar los usuarios,
@@ -22,7 +20,7 @@
             <div class="row">
                 <!-- Tarjeta Usuarios -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-users" style="font-size: 80px; color: #6c757d;"></i>
@@ -39,7 +37,7 @@
 
                 <!-- Tarjeta Eventos -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-calendar-days" style="font-size: 80px; color: #6c757d;"></i>
@@ -56,7 +54,7 @@
 
                 <!-- Tarjeta Publicaciones -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-newspaper" style="font-size: 80px; color: #6c757d;"></i>
@@ -73,7 +71,7 @@
 
                 <!-- Tarjeta Categorías -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-tags" style="font-size: 80px; color: #6c757d;"></i>
@@ -90,7 +88,7 @@
 
                 <!-- Tarjeta Niveles Educativos -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-graduation-cap" style="font-size: 80px; color: #6c757d;"></i>
@@ -108,7 +106,7 @@
 
                 <!-- Tarjeta Cursos -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-book-open" style="font-size: 80px; color: #6c757d;"></i>
@@ -125,7 +123,7 @@
 
                 <!-- Tarjeta notificaciones -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-bell" style="font-size: 80px; color: #6c757d;"></i>
@@ -143,7 +141,7 @@
 
                 <!-- Tarjeta colleciones -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-users" style="font-size: 80px; color: #6c757d;"></i>
@@ -161,7 +159,7 @@
 
                 <!-- Tarjeta Retornar -->
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important;">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
                             style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
                             <i class="fa-solid fa-door-open" style="font-size: 80px; color: #6c757d;"></i>

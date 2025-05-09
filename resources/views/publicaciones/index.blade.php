@@ -4,7 +4,7 @@
 
     @include('layouts.navheader')
     
-    <div class="body-container container">
+    <div class="body-container container mt-header pt-3">
         <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
 
             <div class="text-center my-5">
@@ -65,12 +65,7 @@
                             </td>
 
                             <td>
-                                <!--
-                                <button class="like-btn" data-id="{{ $publicacion->id }}"
-                                    style="color: {{ Auth::check() && $publicacion->isLikedByUser(Auth::id()) ? 'red' : 'black' }};">
-                                    ❤️ <span class="like-count">{{ $publicacion->likes }}</span>
-                                </button>
-                                -->
+
                                 <i class="fa fa-heart"></i>
                                 <span class="like-count">{{ $publicacion->likes }}</span>
                             </td>

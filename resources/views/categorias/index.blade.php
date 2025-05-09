@@ -3,9 +3,7 @@
 <body>
     @include('layouts.navheader')
 
-    <div class="container mt-5 pt-5">
-        <div class="container mt-4 pt-4"></div>
-
+    <div class="container mt-header pt-3">
         <div class="bg-white p-4 rounded-4 mb-4 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>

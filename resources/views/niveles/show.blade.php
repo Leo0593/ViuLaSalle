@@ -65,65 +65,36 @@
                     </div> 
                     
                     <div class="clase-infos-info-body">
-                        <ul>
-                            <li>Mòduls professionals --- Durada (h)</li>
-                            <li>Desenvolupament d’aplicacions multiplataforma --- 121h</li>
-                            <li>Desenvolupament d’aplicacions web --- 110h</li>
-                            <li>Desenvolupament d’aplicacions mòbils --- 187h</li>
-                            <li>Desenvolupament d’interfícies --- 77h</li>
-                            <li>Entorns de desenvolupament --- 55h</li>
-                            <li>Accés a dades --- 88h</li>
-                            <li>Desenvolupament d’interfícies --- 88h</li>
-                            <li>Programació multimèdia i dispositius mòbils --- 77h</li>
-                            <li>Programació de serveis i processos --- 55h</li>
-                            <li>Sistemes de gestió empresarial --- 55h</li>
-                            <li>Formació i orientació laboral --- 66h</li>
-                            <li>Empresa i iniciativa emprenedora --- 66h</li>
-                            <li>Projecte de desenvolupament d’aplicacions multiplataforma, perfil videojocs i oci digital --- 297h</li>
-                            <li>Formació en centres de treball --- 383h</li>
-                            <li>Game design --- 33h</li>
-                            <li>Disseny 2D i 3D --- 88h</li>
-                            <li>Programació de videojocs 2D i 3D --- 154h</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa-solid fa-book"></i>
-                        <h2>Què aprendràs?</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <ul>
-                            <li>Crearàs vídeojocs utilitzant dissenys 2D i 3D.</li>
-                            <li>Crearàs pàgines web amb html, php, css.</li>
-                            <li>Desenvoluparàs aplicacions mòbils.</li>
-                            <li>Sistemas informàtics segons el seu hardware, software i la xarxa de connexió.</li>
-                            <li>Desenvoluparàs aplicacions d'escriptori i d'ERP.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa-solid fa-book"></i>
-                        <h2>Què aprendràs?</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <ul>
-                            <li>Crearàs vídeojocs utilitzant dissenys 2D i 3D.</li>
-                            <li>Crearàs pàgines web amb html, php, css.</li>
-                            <li>Desenvoluparàs aplicacions mòbils.</li>
-                            <li>Sistemas informàtics segons el seu hardware, software i la xarxa de connexió.</li>
-                            <li>Desenvoluparàs aplicacions d'escriptori i d'ERP.</li>
-                        </ul>
+                        <table class="moduls-table">
+                            <thead>
+                                <tr>
+                                    <th>Mòduls professionals</th>
+                                    <th>Durada (h)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Desenvolupament d’aplicacions multiplataforma</td><td>121h</td></tr>
+                                <tr><td>Desenvolupament d’aplicacions web</td><td>110h</td></tr>
+                                <tr><td>Desenvolupament d’aplicacions mòbils</td><td>187h</td></tr>
+                                <tr><td>Desenvolupament d’interfícies</td><td>77h</td></tr>
+                                <tr><td>Entorns de desenvolupament</td><td>55h</td></tr>
+                                <tr><td>Accés a dades</td><td>88h</td></tr>
+                                <tr><td>Desenvolupament d’interfícies</td><td>88h</td></tr>
+                                <tr><td>Programació multimèdia i dispositius mòbils</td><td>77h</td></tr>
+                                <tr><td>Programació de serveis i processos</td><td>55h</td></tr>
+                                <tr><td>Sistemes de gestió empresarial</td><td>55h</td></tr>
+                                <tr><td>Formació i orientació laboral</td><td>66h</td></tr>
+                                <tr><td>Empresa i iniciativa emprenedora</td><td>66h</td></tr>
+                                <tr><td>Projecte de desenvolupament d’aplicacions multiplataforma, perfil videojocs i oci digital</td><td>297h</td></tr>
+                                <tr><td>Formació en centres de treball</td><td>383h</td></tr>
+                                <tr><td>Game design</td><td>33h</td></tr>
+                                <tr><td>Disseny 2D i 3D</td><td>88h</td></tr>
+                                <tr><td>Programació de videojocs 2D i 3D</td><td>154h</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
-            
         </div>
     </div>
 

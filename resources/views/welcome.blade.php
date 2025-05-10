@@ -84,7 +84,7 @@
                 </li>
 
                 <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('colecciones.index') }}">
+                    <a class="opciones-bar-link" href="{{ route('colecciones.misgrupos') }}">
                         <i class="fa-solid fa-users"></i>
                         <span>Grupos</span>
                     </a>

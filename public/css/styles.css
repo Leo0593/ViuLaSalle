@@ -1554,6 +1554,7 @@ textarea#publicacion-texto {
         gap: 30px;
     }
 }
+
 .clase-infos-info {
     width: 100%;
     
@@ -1563,7 +1564,14 @@ textarea#publicacion-texto {
 
     border-radius: 15px;
     overflow: hidden;
+
+    transition: all 0.3s ease-in-out;
 }
+.clase-infos-info:hover {
+    transform: scale(1.05);
+    text-decoration: none;
+}
+
 .clase-infos-info-header {
     width: 100%;
     height: 80px;
@@ -1593,6 +1601,8 @@ textarea#publicacion-texto {
     font-size: 25px;
     color: white;
 }
+
+
 .clase-infos-info-body {
     width: 100%;
 

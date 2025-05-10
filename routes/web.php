@@ -103,6 +103,7 @@ Route::prefix('notificaciones')->name('notificaciones.')->group(function () {
 
 Route::prefix('colecciones')->name('colecciones.')->group(function () {
     Route::get('/', [ColeccionController::class, 'index'])->name('index');
+    Route::get('/misgrupos', [ColeccionController::class, 'misgrupos'])->name('misgrupos');
     Route::get('/create', [ColeccionController::class, 'create'])->name('create') ->middleware('role:ADMIN,PROFESOR');
     Route::post('/', [ColeccionController::class, 'store'])->name('store') ->middleware('role:ADMIN,PROFESOR');
     Route::get('/{id}/edit', [ColeccionController::class, 'edit'])->name('edit') ->middleware('role:ADMIN,PROFESOR');
@@ -110,7 +111,6 @@ Route::prefix('colecciones')->name('colecciones.')->group(function () {
     Route::delete('/{id}', [ColeccionController::class, 'destroy'])->name('destroy') ->middleware('role:ADMIN,PROFESOR');
     Route::put('/{id}/activate', [ColeccionController::class, 'activate'])->name('activate') ->middleware('role:ADMIN,PROFESOR');
     Route::get('/{id}', [ColeccionController::class, 'show'])->name('show');
-    Route::get('/misgrupos', [ColeccionController::class, 'misgrupos'])->name('misgrupos');
 });
 
 Route::prefix('publicacioncolecciones')->name('publicacioncolecciones.')->group(function () {

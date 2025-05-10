@@ -273,7 +273,7 @@
             width: 50px;
             height: 50px;
 
-            font-size: 30px;
+            font-size: 25px;
             text-decoration: none;
 
             display: flex;

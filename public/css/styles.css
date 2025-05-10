@@ -1942,18 +1942,22 @@ textarea#publicacion-texto {
 
     overflow: hidden;
 
+    display: grid;
+    place-items: center;
+    /*
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
 }
-.clase-posts-post img {
+.clase-posts-post img, .clase-posts-post video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: all 0.3s ease-in-out;
 }
-.clase-posts-post:hover img, .clase-posts-post:focus img {
+.clase-posts-post:hover img, .clase-posts-post:focus img,
+.clase-posts-post:hover video, .clase-posts-post:focus video {
     transform: scale(1.08);
     filter: brightness(0.6);
     cursor: pointer;

@@ -89,8 +89,8 @@
             </div>
         @endif
 
-    <!-- Mostrar videos -->
-    @elseif($publicacion->videos->count() > 0)
+    <!-- Mostrar Videos -->
+    @elseif($publicacion->fotos->count() > 0)
         <div class="box-publicacion-video-container">
             @foreach($publicacion->videos as $video)
                 <div class="box-publicacion-video">

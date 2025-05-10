@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Evento;
 use Illuminate\Http\Request;
-use App\Models\Publicacion;
 use App\Models\User;
 use Carbon\Carbon; // Para obtener la fecha actual
 use App\Models\FotoPublicacion;

@@ -83,12 +83,7 @@
                     </a>
                 </li>
 
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('colecciones.misgrupos') }}">
-                        <i class="fa-solid fa-users"></i>
-                        <span>Grupos</span>
-                    </a>
-                </li>
+                
 
                 <li class="opciones-bar-item">
                     <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
@@ -138,7 +133,7 @@
 
             <div class="perfil">
                 @if (Auth::check())
-                    <div style="width: 100%; display: flex; gap: 10px; flex-direction: column; margin-bottom:30px;">
+                    <div style="width: 100%; display: flex; gap: 10px; flex-direction: column; margin-bottom:20px;">
                         <div class="notif-container">
                             <a class="botones-new-1  notif-btn" style="color:white !important;"
                                 onclick="toggleNotificaciones()">

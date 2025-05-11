@@ -1972,3 +1972,255 @@ textarea#publicacion-texto {
     filter: brightness(0.6);
     cursor: pointer;
 }
+
+.misgrupos-body {
+    width: 100%;
+    height: calc(100vh - var(--height-header));
+    display: grid;
+    grid-template-columns: 35% 65%; 
+    align-items: start;
+}
+.misgrupos-izq, .misgrupos-der {
+    width: 100%;
+    position: sticky;
+    top: var(--height-header);
+    align-self: start; 
+    position: relative;
+}
+
+.misgrupos-der {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-left: 1px solid #ccc;
+    padding: 10px;
+}
+
+.misgrupos-chat {
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+
+    border-radius: 999px;
+    padding: 10px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    gap: 10px;
+
+    position: sticky;
+    bottom: 0;
+
+    margin-top: auto;
+}
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+.icon-btn:hover, .icon-btn:focus {
+    transform: scale(1.1);
+}
+.chat-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 0 10px;
+}
+.chat-icons-right {
+    display: flex;
+    gap: 10px;
+}
+
+.send-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+.send-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.mis-grupos-mensajes {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0;
+}
+
+.mis-grupos-mensajes-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 0 20px;
+}
+
+.receptor {
+    justify-content: flex-start;
+}
+.emisor {
+    justify-content: flex-end;
+}
+
+.mis-grupos-mensaje-receptor, 
+.mis-grupos-mensaje-emisor {
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 70%;
+}
+.mis-grupos-mensaje-receptor p, 
+.mis-grupos-mensaje-emisor p {
+    margin: 0;
+}
+
+.mis-grupos-mensaje-receptor {
+    background-color: var(--amarillo);
+    color: black;
+}
+.mis-grupos-mensaje-emisor {
+    background-color: var(--azul);
+    color: white;
+}
+
+.mensaje-perfil img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.misgrupos-izq::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px; 
+    height: calc(100% - var(--height-header));
+    background-color: rgb(200, 200, 200);
+}
+
+.misgrupos-izq-header {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+
+    border-bottom: 2px solid #ccc;
+}
+.misgrupos-izq-header h1 {
+    font-size: 35px;
+    margin: 0;
+}
+.misgrupos-izq-header-escribir {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.btn-creargrupo {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.btn-creargrupo i {
+    font-size: 20px;
+}
+.btn-creargrupo:hover, .btn-creargrupo:focus {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.misgrupos-izq-header-buscar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.misgrupos-izq-header-buscar input {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+}
+.misgrupos-izq-header-buscar input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+.misgrupos-izq-header-buscar i {
+    font-size: 20px;
+    color: #007bff;
+}
+.misgrupos-izq-header-buscar i:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.misgrupos-izq-grupos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+.misgrupos-izq-grupos-grupo {
+    border: 1px solid #007bff;
+    border-right: none;
+    border-left: none;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.misgrupos-izq-grupos-grupo-foto {
+    width: 80px;
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+.misgrupos-izq-grupos-grupo-foto img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.misgrupos-izq-grupos-grupo-texto h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #007bff;
+}
+.misgrupos-izq-grupos-grupo-texto p {
+    margin: 0;
+}
+.misgrupos-izq-grupos-grupo-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 10px;
+}

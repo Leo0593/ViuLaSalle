@@ -2210,11 +2210,7 @@ textarea#publicacion-texto {
     object-fit: cover;
 }
 
-.misgrupos-izq-grupos-grupo-texto h1 {
-    font-size: 20px;
-    margin: 0;
-    color: #007bff;
-}
+
 .misgrupos-izq-grupos-grupo-texto p {
     margin: 0;
 }
@@ -2223,4 +2219,55 @@ textarea#publicacion-texto {
     flex-direction: column;
     gap: 5px;
     padding: 0 10px;
+}
+
+
+
+.misgrupos-body-2 {
+    margin-top: var(--height-header);
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px; 
+    padding: 20px;
+    box-sizing: border-box;
+}
+@media screen and (max-width: 1000px) {
+    .misgrupos-body-2 {
+        margin-top: var(--height-header-mobile);
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.misgrupos-izq-grupos-grupo2 {
+    width: 100%;
+    border: 1px solid #007bffe8;
+    box-shadow: 0 0 10px #007bff8c;
+
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.misgrupos-izq-grupos-grupo2 h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #007bff;
+}
+
+.misgrupos-izq-grupos-grupo2:hover {
+    background-color: #007bff;
+    color: white !important;
+    transform: scale(1.05);
+    text-decoration: none;
+}
+.misgrupos-izq-grupos-grupo2 h1 {
+    transition: all 0.3s ease-in-out;
+}
+.misgrupos-izq-grupos-grupo2:hover h1 {
+    color: white !important;
 }

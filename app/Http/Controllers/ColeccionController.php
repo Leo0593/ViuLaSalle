@@ -49,12 +49,41 @@ class ColeccionController extends Controller
     public function misgrupos()
     {
         $user = auth()->user();
+
+        if ($user->role == 'ADMIN') {
+            // ADMIN puede ver todas las colecciones sin restricciones
+            $colecciones = Coleccion::with('creador', 'usuarios')->get();
+
+        } elseif ($user->role == 'PROFESOR') {
+            // PROFESOR solo puede ver colecciones activas que ha creado o en las que ha sido agregado
+            $colecciones = Coleccion::with('creador', 'usuarios')
+                ->where('status', 1)
+                ->where(function ($query) use ($user) {
+                    $query->where('creador_id', $user->id)
+                        ->orWhereHas('usuarios', function ($q) use ($user) {
+                            $q->where('user_id', $user->id);
+                        });
+                })
+                ->get();
+
+        } else {
+            // USER solo puede ver colecciones activas donde ha sido agregado
+            $colecciones = Coleccion::with('creador', 'usuarios')
+                ->where('status', 1)
+                ->whereHas('usuarios', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->get();
+        }
+        
+        /*
+        $user = auth()->user();
         $colecciones = Coleccion::with('creador', 'usuarios')
             ->where('status', 1)
             ->whereHas('usuarios', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
-            ->get();
+            ->get();*/
 
         return view('coleccion.misgrupos', compact('colecciones'));
     }

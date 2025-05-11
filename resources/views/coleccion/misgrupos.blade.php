@@ -3,6 +3,33 @@
 <body>
     @include('layouts.navheader')
 
+        <!--
+
+    <div class="misgrupos-body-2">
+        @for ($i = 0; $i < 5; $i++)
+            <div class="misgrupos-izq-grupos-grupo2">
+                <div class="misgrupos-izq-grupos-grupo-foto">
+                    <img src="../../img/user-icon.png" alt="Grupo">
+                </div>
+                <div class="misgrupos-izq-grupos-grupo-texto">
+                    <h1>Nombre del Grupo</h1>
+                    <p>Descripción del grupo</p>
+                </div>  
+            </div>
+        @endfor
+
+        @foreach ($colecciones as $colleccion)
+            <a class="misgrupos-izq-grupos-grupo2">
+                <div class="misgrupos-izq-grupos-grupo-foto">
+                    <img src="../../img/user-icon.png" alt="Grupo">
+                </div>
+                <div class="misgrupos-izq-grupos-grupo-texto">
+                    <h1>{{ $colleccion->nombre }}</h1>
+                    <p>{{ $colleccion->descripcion }}</p>
+                </div>  
+            </a>
+        @endforeach
+    </div> -->
     <div class="misgrupos-body">
         <div class="misgrupos-izq">
             <div class="misgrupos-izq-header">
@@ -44,7 +71,7 @@
         </div>
         <div class="misgrupos-der">
             <div class="mis-grupos-mensajes">
-                <!-- Receptor -->
+                {-- Receptor --}
                 <div class="mis-grupos-mensajes-container receptor">
                     <div class="mensaje-perfil">
                         <img src="../../img/user-icon.png" alt="Perfil">
@@ -58,7 +85,7 @@
                     
                 </div>
                 
-                <!-- Emisor -->
+                {-- Emisor --}
                 <div class="mis-grupos-mensajes-container emisor">
                     <div class="mis-grupos-mensaje-emisor">
                         @for ($i = 0; $i < 15; $i++)
@@ -96,17 +123,17 @@
                         class="chat-input"
                     />
                     <div class="chat-icons-right">
-                        <!--
+                        {--
                         <button class="icon-btn" title="Audio">
                             <i class="fa-solid fa-microphone"></i>
-                        </button>-->
+                        </button>--}
                         <button class="icon-btn" title="Imagen">
                             <i class="fa-regular fa-image"></i>
                         </button>
-                        <!--
+                        {--
                         <button class="icon-btn" title="Reaccionar">
                             <i class="fa-regular fa-heart"></i>
-                        </button>-->
+                        </button>--}
                     </div>
 
                     <button class="send-btn" title="Enviar">
@@ -115,5 +142,5 @@
                 </div>
             
         </div>
-    </div>
+    </div> 
 </body>

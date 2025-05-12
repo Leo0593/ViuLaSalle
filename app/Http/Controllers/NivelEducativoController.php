@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\NivelEducativo;
 use Illuminate\Http\Request;
 
+use Carbon\Carbon; // Para obtener la fecha actual
+use App\Models\FotoPublicacion;
+use App\Models\VideoPublicacion;
+use App\Models\Categoria;
+use App\Models\User;
+use App\Models\Publicacion;
+
+
 class NivelEducativoController extends Controller
 {
     public function index()
@@ -77,6 +85,8 @@ class NivelEducativoController extends Controller
 
     public function show()
     {
-        return view('niveles.show');
+        $publicaciones = Publicacion::with('fotos', 'videos')->get(); // Carga todas las publicaciones con sus fotos y videos
+
+        return view('niveles.show', compact('publicaciones'));
     }
 }

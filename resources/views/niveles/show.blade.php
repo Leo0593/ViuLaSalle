@@ -216,15 +216,15 @@
                 </div>
                 <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
                     <div class="clase-posts">
-                    
+                        <!--
                         @for ($i = 0; $i < 5; $i++)
                             <div class="clase-posts-post">
                                 <img src="{{ asset('../../img/bp1.jpg') }}" alt="Portada">
                             </div>
-                        @endfor
+                        @endfor -->
 
+                        @include('layouts.publicacion-grid', ['publicaciones' => $publicaciones])
                     </div>
-                    
                 </div>
             </div>
         </div>

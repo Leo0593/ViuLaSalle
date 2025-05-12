@@ -43,27 +43,20 @@
             </div>
         </div>
         <div class="misgrupos-der">
+
+            <div class="misgrupos-der-carga">
+                <h1>Selecciona un grupo para ver el chat</h1>
+                <p>¡Comienza a chatear con tus amigos!</p>
+                <i class="fa-solid fa-comments"></i>
+            </div>
+
+            <!--
             <div class="misgrupos-der-header">
                 <img src="../../img/user-icon.png" alt="Grupo">
                 <h1>Nombre del Grupo</h1>
             </div>
 
             <div class="misgrupos-der-chat">
-                {{-- Mensaje Receptor --}}
-                <div class="mis-grupos-mensajes-container receptor">
-                    <div class="mensaje-perfil">
-                        <img src="../../img/user-icon.png" alt="Perfil">
-                    </div>
-                
-                    <div class="mis-grupos-mensaje-receptor">
-                        @for ($i = 0; $i < 15; $i++)
-                            <div class="mensaje-burbuja">
-                                <p>Hola, ¿cómo estás?</p>
-                                <span class="mensaje-hora">10:30</span>
-                            </div>
-                        @endfor
-                    </div>
-                </div>
                 
                 {{-- Mensaje Emisor --}}
                 <div class="mis-grupos-mensajes-container emisor">
@@ -80,6 +73,22 @@
                         <img src="../../img/user-icon.png" alt="Perfil">
                     </div>
                 </div>
+
+                {{-- Mensaje Receptor --}}
+                <div class="mis-grupos-mensajes-container receptor">
+                    <div class="mensaje-perfil">
+                        <img src="../../img/user-icon.png" alt="Perfil">
+                    </div>
+                
+                    <div class="mis-grupos-mensaje-receptor">
+                        @for ($i = 0; $i < 15; $i++)
+                            <div class="mensaje-burbuja">
+                                <p>Hola, ¿cómo estás?</p>
+                                <span class="mensaje-hora">10:30</span>
+                            </div>
+                        @endfor
+                    </div>
+                </div> 
             </div>
 
             <div style="padding: 10px;">
@@ -108,52 +117,6 @@
                     </button>
                 </div>
             </div>
-            <!--
-            <div class="mis-grupos-mensajes">
-                {-- Receptor --}
-                
-
-                <div class="mis-grupos-mensajes-container receptor">
-                    <div class="mensaje-perfil">
-                        <img src="../../img/user-icon.png" alt="Perfil">
-                    </div>
-                
-                    <div class="mis-grupos-mensaje-receptor">
-                        @for ($i = 0; $i < 15; $i++)
-                            <p>Hola, ¿cómo estás? a</p>
-                        @endfor
-                    </div>
-                    
-                </div>
-            </div>
-            
-                <div class="misgrupos-chat">
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-face-smile"></i>
-                    </button>
-                    <input
-                        type="text"
-                        placeholder="Enviar mensaje..."
-                        class="chat-input"
-                    />
-                    <div class="chat-icons-right">
-                        {--
-                        <button class="icon-btn" title="Audio">
-                            <i class="fa-solid fa-microphone"></i>
-                        </button>--}
-                        <button class="icon-btn" title="Imagen">
-                            <i class="fa-regular fa-image"></i>
-                        </button>
-                        {--
-                        <button class="icon-btn" title="Reaccionar">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>--}
-                    </div>
-
-                    <button class="send-btn" title="Enviar">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
             -->
         </div> 
     </div> 

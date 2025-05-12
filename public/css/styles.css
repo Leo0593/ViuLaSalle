@@ -1914,7 +1914,7 @@ textarea#publicacion-texto {
     background-color: transparent;
     width: 100%;
     padding: 30px;
-    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2198,7 +2198,7 @@ textarea#publicacion-texto {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding: 20px;
+    padding: 20px 30px;
 
     margin-top: auto;
     overflow-y: auto;

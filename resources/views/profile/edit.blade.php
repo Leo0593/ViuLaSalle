@@ -40,25 +40,31 @@
         @php
             $hayPublicaciones = false;
         @endphp
-        <div class="perfil-posts">
-            @if(isset($publicaciones) && $publicaciones->isNotEmpty())
-                @foreach ($publicaciones as $publicacion)
-                    @if($publicacion->id_user == Auth::user()->id)
-                        @php
-                            $hayPublicaciones = true;
-                        @endphp
-                        <div class="perfil-posts-post">
-                            @include('layouts.publicacion', ['publicacion' => $publicacion])     
-                        </div>
+        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; margin-top: 80px;">
+            <div class="clase-posts-separador">
+                <i class="fa fa-th" aria-hidden="true"></i>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                <div class="clase-posts">
+                    @if(isset($publicaciones) && $publicaciones->isNotEmpty())
+                        @foreach ($publicaciones as $publicacion)
+                                
+                            @if($publicacion->id_user == Auth::user()->id)
+                                @php
+                                        $hayPublicaciones = true;
+                                @endphp
+                                @include('layouts.publicacion-grid', ['publicacion' => $publicacion])
+                            @endif
+                        @endforeach
                     @endif
-                @endforeach
-            @endif
 
-            @if (!$hayPublicaciones)
-                <div class="alert alert-info text-center">
-                    <strong>No hay eventos disponibles.</strong>
+                    @if (!$hayPublicaciones)
+                            <div class="alert alert-info text-center">
+                                <strong>No hay eventos disponibles.</strong>
+                            </div>
+                    @endif
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 </body>

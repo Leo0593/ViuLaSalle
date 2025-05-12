@@ -3,33 +3,6 @@
 <body>
     @include('layouts.navheader')
 
-        <!--
-
-    <div class="misgrupos-body-2">
-        @for ($i = 0; $i < 5; $i++)
-            <div class="misgrupos-izq-grupos-grupo2">
-                <div class="misgrupos-izq-grupos-grupo-foto">
-                    <img src="../../img/user-icon.png" alt="Grupo">
-                </div>
-                <div class="misgrupos-izq-grupos-grupo-texto">
-                    <h1>Nombre del Grupo</h1>
-                    <p>Descripción del grupo</p>
-                </div>  
-            </div>
-        @endfor
-
-        @foreach ($colecciones as $colleccion)
-            <a class="misgrupos-izq-grupos-grupo2">
-                <div class="misgrupos-izq-grupos-grupo-foto">
-                    <img src="../../img/user-icon.png" alt="Grupo">
-                </div>
-                <div class="misgrupos-izq-grupos-grupo-texto">
-                    <h1>{{ $colleccion->nombre }}</h1>
-                    <p>{{ $colleccion->descripcion }}</p>
-                </div>  
-            </a>
-        @endforeach
-    </div> -->
     <div class="misgrupos-body">
         <div class="misgrupos-izq">
             <div class="misgrupos-izq-header">
@@ -70,8 +43,13 @@
             </div>
         </div>
         <div class="misgrupos-der">
-            <div class="mis-grupos-mensajes">
-                {-- Receptor --}
+            <div class="misgrupos-der-header">
+                <img src="../../img/user-icon.png" alt="Grupo">
+                <h1>Nombre del Grupo</h1>
+            </div>
+
+            <div class="misgrupos-der-chat">
+                {{-- Mensaje Receptor --}}
                 <div class="mis-grupos-mensajes-container receptor">
                     <div class="mensaje-perfil">
                         <img src="../../img/user-icon.png" alt="Perfil">
@@ -79,25 +57,61 @@
                 
                     <div class="mis-grupos-mensaje-receptor">
                         @for ($i = 0; $i < 15; $i++)
-                            <p>Hola, ¿cómo estás? a</p>
+                            <div class="mensaje-burbuja">
+                                <p>Hola, ¿cómo estás?</p>
+                                <span class="mensaje-hora">10:30</span>
+                            </div>
                         @endfor
                     </div>
-                    
                 </div>
                 
-                {-- Emisor --}
+                {{-- Mensaje Emisor --}}
                 <div class="mis-grupos-mensajes-container emisor">
                     <div class="mis-grupos-mensaje-emisor">
                         @for ($i = 0; $i < 15; $i++)
-                            <p>Hola, ¿cómo estás? a</p>
+                            <div class="mensaje-burbuja">
+                                <p>Todo bien, ¿y tú?</p>
+                                <span class="mensaje-hora mhe">10:32</span>
+                            </div>
                         @endfor
-                        <p>Hola, ¿cómo estás?</p>
                     </div>
                     
                     <div class="mensaje-perfil">
                         <img src="../../img/user-icon.png" alt="Perfil">
                     </div>
                 </div>
+            </div>
+
+            <div style="padding: 10px;">
+                <div class="misgrupos-der-footer">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-face-smile"></i>
+                    </button>
+                    <input
+                        type="text"
+                        placeholder="Enviar mensaje..."
+                        class="chat-input"
+                    />
+                    <div class="chat-icons-right">
+                        <button class="icon-btn" title="Audio">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                        <button class="icon-btn" title="Imagen">
+                            <i class="fa-regular fa-image"></i>
+                        </button>
+                        <button class="icon-btn" title="Reaccionar">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+                    <button class="send-btn" title="Enviar">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            <!--
+            <div class="mis-grupos-mensajes">
+                {-- Receptor --}
+                
 
                 <div class="mis-grupos-mensajes-container receptor">
                     <div class="mensaje-perfil">
@@ -140,7 +154,7 @@
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </div>
-            
-        </div>
+            -->
+        </div> 
     </div> 
 </body>

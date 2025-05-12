@@ -9,6 +9,7 @@ use Carbon\Carbon; // Para obtener la fecha actual
 use App\Models\FotoPublicacion;
 use App\Models\VideoPublicacion;
 use App\Models\Categoria;
+use App\Models\Publicacion;
 
 class EventoController extends Controller
 {

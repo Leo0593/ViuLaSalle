@@ -57,56 +57,66 @@
         </div>
 
         <!-- Filtros de búsqueda - Versión mejorada -->
-        <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border">
-            <h5 class="mb-3 text-primary">
-                <i class="fas fa-filter me-2"></i>Filtrar Notificaciones
-            </h5>
-
+        <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border border-light">
             <form method="GET" action="{{ route('notificaciones.index') }}" class="row g-3 align-items-end">
+                <!-- Título -->
+                <div class="col-12 mb-2">
+                    <h5 class="text-primary mb-0">
+                        <i class="fas fa-sliders-h me-2"></i>Filtrar Notificaciones
+                    </h5>
+                    <hr class="mt-2 mb-3">
+                </div>
+
                 <!-- Filtro por título -->
-                <div class="col-md-4 col-lg-3">
-                    <label for="titulo" class="form-label small text-muted">Título</label>
-                    <input type="text" name="titulo" id="titulo" class="form-control form-control-sm"
-                        placeholder="Buscar por título..." value="{{ request('titulo') }}">
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="text" name="titulo" id="titulo" class="form-control shadow-sm"
+                            placeholder="Buscar por título..." value="{{ request('titulo') }}">
+                        <label for="titulo">Título</label>
+                    </div>
                 </div>
 
                 <!-- Filtro por estado -->
-                <div class="col-md-3 col-lg-2">
-                    <label for="status" class="form-label small text-muted">Estado</label>
-                    <select name="status" id="status" class="form-select form-select-sm">
-                        <option value="">Todos</option>
-                        <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Activo</option>
-                        <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactivo</option>
-                    </select>
+                <div class="col-md-2">
+                    <div class="form-floating">
+                        <select name="status" id="status" class="form-select shadow-sm">
+                            <option value="">Todos</option>
+                            <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Activo</option>
+                            <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactivo</option>
+                        </select>
+                        <label for="status">Estado</label>
+                    </div>
                 </div>
 
                 <!-- Filtro por creador -->
-                <div class="col-md-4 col-lg-3">
-                    <label for="creador" class="form-label small text-muted">Creador</label>
-                    <input type="text" name="creador" id="creador" class="form-control form-control-sm"
-                        placeholder="Buscar por creador..." value="{{ request('creador') }}">
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="text" name="creador" id="creador" class="form-control shadow-sm"
+                            placeholder="Buscar por creador..." value="{{ request('creador') }}">
+                        <label for="creador">Creador</label>
+                    </div>
                 </div>
 
-                <!-- Filtro por rango de fechas -->
-                <div class="col-md-5 col-lg-4">
-                    <label class="form-label small text-muted d-block">Rango de fechas</label>
-                    <div class="input-group input-group-sm">
-                        <input type="date" name="fecha_inicio" class="form-control form-control-sm"
+                <!-- Rango de fechas -->
+                <div class="col-md-4">
+                    <label class="form-label small text-muted mb-1">Rango de fechas</label>
+                    <div class="input-group">
+                        <input type="date" name="fecha_inicio" class="form-control shadow-sm"
                             value="{{ request('fecha_inicio') }}" aria-label="Fecha inicio">
                         <span class="input-group-text bg-light">a</span>
-                        <input type="date" name="fecha_fin" class="form-control form-control-sm"
+                        <input type="date" name="fecha_fin" class="form-control shadow-sm"
                             value="{{ request('fecha_fin') }}" aria-label="Fecha fin">
                     </div>
                 </div>
 
-                <!-- Botones de acción -->
-                <div class="col-md-4 col-lg-2 d-flex gap-2">
-                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1">
+                <!-- Botones -->
+                <div class="col-md-4 d-flex gap-2 align-self-end">
+                    <a href="{{ route('notificaciones.index') }}" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-broom me-1"></i> Limpiar
+                    </a>
+                    <button type="submit" class="btn btn-primary shadow w-100">
                         <i class="fas fa-filter me-1"></i> Aplicar
                     </button>
-                    <a href="{{ route('notificaciones.index') }}" class="btn btn-outline-secondary btn-sm">
-                        <i class="fas fa-undo me-1"></i>
-                    </a>
                 </div>
             </form>
         </div>
@@ -273,7 +283,7 @@
                 </div>
             @endif
         </div>
-    
+
         <!-- Modal de creación -->
         <div class="modal fade" id="crearNotificacionModal" tabindex="-1" aria-labelledby="crearNotificacionModalLabel"
             aria-hidden="true">

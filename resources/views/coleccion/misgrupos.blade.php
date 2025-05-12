@@ -11,17 +11,14 @@
                         <h1>Mis Grupos</h1>
                     </div>
                     <div>
-                        <button class="btn-creargrupo" id="crearGrupoBtn">
-                            <i class="fa-solid fa-pen-to-square"></i>   
+                        <button class="btn-creargrupo" id="crearGrupoBtn" title="Crear nuevo grupo">
+                            <i class="fa-solid fa-pen-to-square"></i>
                         </button>
                     </div>
                 </div>
+
                 <div class="misgrupos-izq-header-buscar">
-                    <input
-                        type="text"
-                        placeholder="Buscar..."
-                        class="misgrupos-izq-header-buscar-input"
-                    />
+                    <input type="text" placeholder="Buscar..." class="misgrupos-izq-header-buscar-input" />
                     <button class="icon-btn" title="Buscar">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -29,26 +26,32 @@
             </div>
 
             <div class="misgrupos-izq-grupos">
-                @for ($i = 0; $i < 5; $i++)
-                    <div class="misgrupos-izq-grupos-grupo">
+                @forelse ($colecciones as $coleccion)
+                    <div class="misgrupos-izq-grupos-grupo grupo-item" data-id="{{ $coleccion->id }}">
                         <div class="misgrupos-izq-grupos-grupo-foto">
-                            <img src="../../img/user-icon.png" alt="Grupo">
+                            <img src="{{ asset('img/user-icon.png') }}" alt="Grupo {{ $coleccion->nombre }}">
                         </div>
                         <div class="misgrupos-izq-grupos-grupo-texto">
-                            <h1>Nombre del Grupo</h1>
-                            <p>Descripción del grupo</p>
-                        </div>  
+                            <h1>{{ $coleccion->nombre }}</h1>
+                            <p>{{ $coleccion->descripcion ?? 'Sin descripción' }}</p>
+                        </div>
                     </div>
-                @endfor                
+
+                @empty
+                    <p class="text-muted ms-2">No tienes grupos disponibles.</p>
+                @endforelse
             </div>
         </div>
-        <div class="misgrupos-der">
 
+        <div class="misgrupos-der" id="grupoDetalle">
             <div class="misgrupos-der-carga">
                 <h1>Selecciona un grupo para ver el chat</h1>
                 <p>¡Comienza a chatear con tus amigos!</p>
                 <i class="fa-solid fa-comments"></i>
             </div>
+
+
+
 
             <!--
             <div class="misgrupos-der-header">
@@ -118,6 +121,24 @@
                 </div>
             </div>
             -->
-        </div> 
-    </div> 
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on('click', '.grupo-item', function () {
+            const grupoId = $(this).data('id');
+
+            $.ajax({
+                url: `/colecciones/${grupoId}`, // Usa la ruta show con el ID
+                method: 'GET',
+                success: function (response) {
+                    $('#grupoDetalle').html(response); // Carga la vista completa en el div
+                },
+                error: function () {
+                    $('#grupoDetalle').html('<p class="text-danger">Error al cargar el grupo.</p>');
+                }
+            });
+        });
+    </script>
+
 </body>

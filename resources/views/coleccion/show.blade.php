@@ -43,7 +43,7 @@
 </head>
 
 <body>
-    <h1>Publicaciones del Anuario</h1>
+    <h1>Publicaciones del Anuario ASDASDASDSA</h1>
     <h1>Publicaciones de la colección: {{ $coleccion->nombre }}</h1>
 
     <a href="{{ route('publicacioncolecciones.create', ['coleccion_id' => $coleccion->id]) }}"

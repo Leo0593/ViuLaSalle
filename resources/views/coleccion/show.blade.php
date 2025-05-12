@@ -9,13 +9,12 @@
     {{-- Mensaje Emisor --}}
     <div class="mis-grupos-mensajes-container emisor">
         <div class="mis-grupos-mensaje-emisor">
-            <!--
             @for ($i = 0; $i < 15; $i++)
                 <div class="mensaje-burbuja">
                     <p>Todo bien, ¿y tú?</p>
                     <span class="mensaje-hora mhe">10:32</span>
                 </div>
-            @endfor-->
+            @endfor
         </div>
                     
         <div class="mensaje-perfil">

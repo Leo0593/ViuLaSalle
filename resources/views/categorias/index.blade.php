@@ -25,35 +25,49 @@
         </div>
 
         <!-- Filtros de búsqueda y estado -->
-        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
-
-            <form method="GET" action="{{ route('categorias.index') }}" class="row mb-4">
-                <div class="col-md-5 mb-2">
-                    <input type="text" name="nombre" class="form-control" placeholder="Buscar por nombre..."
-                        value="{{ request('nombre') }}">
+        <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border border-light">
+            <form method="GET" action="{{ route('categorias.index') }}" class="row g-3 align-items-end">
+                <!-- Título -->
+                <div class="col-12 mb-2">
+                    <h5 class="text-primary mb-0">
+                        <i class="fas fa-sliders-h me-2"></i>Filtrar Categorías
+                    </h5>
+                    <hr class="mt-2 mb-3">
                 </div>
 
-                <div class="col-md-3 mb-2">
-                    <select name="status" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Activo</option>
-                        <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactivo</option>
-                    </select>
+                <!-- Buscar por nombre -->
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="text" name="nombre" id="nombre" class="form-control shadow-sm"
+                            placeholder="Buscar por nombre..." value="{{ request('nombre') }}">
+                        <label for="nombre" class="form-label">Nombre de categoría</label>
+                    </div>
                 </div>
 
-                <div class="col-md-2 d-grid mb-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-filter me-1"></i> Filtrar
-                    </button>
+                <!-- Filtrar por estado -->
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select name="status" id="status" class="form-select shadow-sm">
+                            <option value="">Todos</option>
+                            <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Activo</option>
+                            <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactivo</option>
+                        </select>
+                        <label for="status" class="form-label">Estado</label>
+                    </div>
                 </div>
 
-                <div class="col-md-2 d-grid mb-2">
-                    <a href="{{ route('categorias.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-undo me-1"></i> Limpiar
+                <!-- Botones -->
+                <div class="col-md-5 d-flex gap-2 align-self-end">
+                    <a href="{{ route('categorias.index') }}" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-broom me-1"></i> Limpiar
                     </a>
+                    <button type="submit" class="btn btn-primary w-100 shadow">
+                        <i class="fas fa-filter me-1"></i> Aplicar Filtros
+                    </button>
                 </div>
             </form>
         </div>
+
 
 
 

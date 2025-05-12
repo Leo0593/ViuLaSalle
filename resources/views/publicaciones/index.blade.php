@@ -26,6 +26,69 @@
             </div>
         </div>
 
+        <!-- Buscador y filtros - Diseño mejorado -->
+        <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border border-light">
+            <form method="GET" action="{{ route('publicaciones.index') }}" class="row g-3 align-items-end">
+                <!-- Título de la sección -->
+                <div class="col-12 mb-2">
+                    <h5 class="text-primary mb-0">
+                        <i class="fas fa-sliders-h me-2"></i>Filtrar Publicaciones
+                    </h5>
+                    <hr class="mt-2 mb-3">
+                </div>
+
+                <!-- Buscar por evento -->
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="text" name="evento" id="evento" class="form-control shadow-sm"
+                            placeholder="Nombre del evento" value="{{ request('evento') }}">
+                        <label for="evento" class="form-label">Evento</label>
+                    </div>
+                </div>
+
+                <!-- Buscar por nombre de usuario -->
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="text" name="usuario" id="usuario" class="form-control shadow-sm"
+                            placeholder="Usuario creador" value="{{ request('usuario') }}">
+                        <label for="usuario" class="form-label">Usuario creador</label>
+                    </div>
+                </div>
+
+                <!-- Buscar por fecha -->
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="date" name="fecha" id="fecha" class="form-control shadow-sm" placeholder="Fecha"
+                            value="{{ request('fecha') }}">
+                        <label for="fecha" class="form-label">Fecha</label>
+                    </div>
+                </div>
+
+                <!-- Buscar por status -->
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select name="status" id="status" class="form-select shadow-sm">
+                            <option value="">-- Todos --</option>
+                            <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Activo</option>
+                            <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactivo</option>
+                        </select>
+                        <label for="status" class="form-label">Estado</label>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="col-12 mt-3 d-flex justify-content-end">
+                    <a href="{{ route('publicaciones.index') }}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-broom me-1"></i> Limpiar
+                    </a>
+                    <button type="submit" class="btn btn-primary shadow">
+                        <i class="fas fa-filter me-1"></i> Aplicar Filtros
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
         <!-- Publications Grid -->
         <div class="row">
             @foreach($publicaciones as $publicacion)
@@ -177,6 +240,10 @@
                 </div>
             @endforeach
         </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        {{ $publicaciones->links() }}
     </div>
 
     <!-- Modal para visualización de medios -->
@@ -488,4 +555,3 @@
     }
 </style>
 
-@include('layouts.footer')

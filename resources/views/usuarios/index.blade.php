@@ -80,25 +80,30 @@
 
 
         <!-- Buscador y filtros -->
-        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
+        <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border border-light">
+            <form action="{{ route('users.index') }}" method="GET" class="row g-3 align-items-end">
+                <!-- Título de la sección -->
+                <!-- Título -->
+                <div class="col-12 mb-2">
+                    <h5 class="text-primary mb-0">
+                        <i class="fas fa-sliders-h me-2"></i>Filtrar Usuarios
+                    </h5>
+                    <hr class="mt-2 mb-3">
+                </div>
 
-            <form action="{{ route('users.index') }}" method="GET" class="row mb-4 g-3 align-items-end">
-                <!-- Campo de búsqueda -->
-                <div class="col-md-4">
-                    <label for="search" class="form-label">Buscar</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-search"></i></span>
-                        <input type="text" name="search" class="form-control" placeholder="Nombre o email..."
-                            value="{{ request('search') }}">
+                <!-- Buscar por nombre o email -->
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="text" name="search" id="search" class="form-control shadow-sm"
+                            placeholder="Nombre o email" value="{{ request('search') }}">
+                        <label for="search" class="form-label">Nombre o email</label>
                     </div>
                 </div>
 
-                <!-- Filtro por Rol -->
+                <!-- Filtrar por Rol -->
                 <div class="col-md-3">
-                    <label for="role" class="form-label">Rol</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
-                        <select name="role" class="form-select">
+                    <div class="form-floating">
+                        <select name="role" id="role" class="form-select shadow-sm">
                             <option value="">Todos</option>
                             <option value="ADMIN" {{ request('role') == 'ADMIN' ? 'selected' : '' }}>Administrador
                             </option>
@@ -106,33 +111,35 @@
                             <option value="PROFESOR" {{ request('role') == 'PROFESOR' ? 'selected' : '' }}>Profesor
                             </option>
                         </select>
+                        <label for="role" class="form-label">Rol</label>
                     </div>
                 </div>
 
-                <!-- Filtro por Estado -->
-                <div class="col-md-2" style="min-width: 250px">
-                    <label for="status" class="form-label">Estado</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-circle-check"></i></span>
-                        <select name="status" class="form-select">
+                <!-- Filtrar por Estado -->
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select name="status" id="status" class="form-select shadow-sm">
                             <option value="">Todos</option>
                             <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Activo</option>
                             <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Inactivo</option>
                         </select>
+                        <label for="status" class="form-label">Estado</label>
                     </div>
                 </div>
 
-                <!-- Botón -->
-                <div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-filter me-1"></i> Filtrar
-                    </button>
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary">
-                        <i class="fa fa-times me-1"></i> Limpiar
+                <!-- Botones -->
+                <div class="col-md-3 d-flex gap-2 align-self-end">
+                    <a href="{{ route('users.index') }}" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-broom me-1"></i> Limpiar
                     </a>
+                    <button type="submit" class="btn btn-primary w-100 shadow">
+                        <i class="fas fa-filter me-1"></i> Aplicar
+                    </button>
                 </div>
+
             </form>
         </div>
+
 
 
         <!-- Lista de usuarios en tarjetas -->

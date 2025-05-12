@@ -675,48 +675,6 @@
         }
     </script>
 
-    <style>
-        .preview-wrapper {
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-        }
-
-        .preview-wrapper:hover .preview-image {
-            filter: brightness(0.7);
-        }
-
-        .delete-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 32px;
-            height: 32px;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .preview-wrapper:hover .delete-btn {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .delete-btn:hover {
-            background-color: #bb2d3b;
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-    </style>
 
     <!-- Ventana de notificaciones -->
     <script>

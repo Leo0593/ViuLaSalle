@@ -26,19 +26,41 @@ use App\Models\Reporte;
 class PublicacionController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
-        if ($user->role == 'ADMIN') {
-            $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->get();
-        } else {
-            $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias'])->where('status', 1)->get();
+        $query = Publicacion::with(['fotos', 'videos', 'categorias', 'usuario']);
+
+        if ($user->role !== 'ADMIN') {
+            $query->where('status', 1);
         }
 
-        // Retornar la vista con las publicaciones filtradas
+        if ($request->filled('evento')) {
+            $query->whereHas('evento', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->evento . '%');
+            });
+        }
+
+        if ($request->filled('usuario')) {
+            $query->whereHas('usuario', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->usuario . '%');
+            });
+        }
+
+        if ($request->filled('fecha')) {
+            $query->whereDate('created_at', $request->fecha);
+        }
+
+        if ($request->filled('status') && in_array($request->status, ['0', '1'])) {
+            $query->where('status', $request->status);
+        }
+
+        $publicaciones = $query->paginate(9)->appends($request->except('page'));
+
         return view('publicaciones.index', compact('publicaciones', 'user'));
     }
+
 
     public function create(Request $request)
     {

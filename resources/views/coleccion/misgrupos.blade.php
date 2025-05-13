@@ -27,18 +27,31 @@
 
             <div class="misgrupos-izq-grupos">
                 @forelse ($colecciones as $coleccion)
-                    <div class="misgrupos-izq-grupos-grupo grupo-item" data-id="{{ $coleccion->id }}">
-                        <div class="misgrupos-izq-grupos-grupo-foto">
-                            <img src="{{ asset('img/user-icon.png') }}" alt="Grupo {{ $coleccion->nombre }}">
-                        </div>
-                        <div class="misgrupos-izq-grupos-grupo-texto">
-                            <h1>{{ $coleccion->nombre }}</h1>
-                            <p>{{ $coleccion->descripcion ?? 'Sin descripción' }}</p>
+                    <div class="misgrupos-izq-grupos-desktop">
+                        <div class="misgrupos-izq-grupos-grupo grupo-item" data-id="{{ $coleccion->id }}">
+                            <div class="misgrupos-izq-grupos-grupo-foto">
+                                <img src="{{ asset('img/user-icon.png') }}" alt="Grupo {{ $coleccion->nombre }}">
+                            </div>
+                            <div class="misgrupos-izq-grupos-grupo-texto">
+                                <h1>{{ $coleccion->nombre }}</h1>
+                                <p>{{ $coleccion->descripcion ?? 'Sin descripción' }}</p>
+                            </div>
                         </div>
                     </div>
 
+                    <div class="misgrupos-izq-grupos-mobile">
+                        <a class="misgrupos-izq-grupos-grupo grupo-item" href="{{ route('colecciones.show', $coleccion->id) }}" data-id="{{ $coleccion->id }}">
+                            <div class="misgrupos-izq-grupos-grupo-foto">
+                                <img src="{{ asset('img/user-icon.png') }}" alt="Grupo {{ $coleccion->nombre }}">
+                            </div>
+                            <div class="misgrupos-izq-grupos-grupo-texto">
+                                <h1>{{ $coleccion->nombre }}</h1>
+                                <p>{{ $coleccion->descripcion ?? 'Sin descripción' }}</p>
+                            </div>
+                        </a>
+                    </div>
                 @empty
-                    <p class="text-muted ms-2">No tienes grupos disponibles.</p>
+                    <p class="text-muted ms-2 text-center">No tienes grupos disponibles.</p>
                 @endforelse
             </div>
         </div>
@@ -49,9 +62,6 @@
                 <p>¡Comienza a chatear con tus amigos!</p>
                 <i class="fa-solid fa-comments"></i>
             </div>
-
-
-
 
             <!--
             <div class="misgrupos-der-header">

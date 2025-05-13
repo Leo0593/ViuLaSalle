@@ -99,7 +99,7 @@
         </div>
     </div>
     <div class="detalles">
-        © 2022 La Salle Mollerussa · Avís legal · Política de privadesa · Política de cookies · <i class="fas fa-laptop"></i> Creaescola.com
+        © 2025 La Salle Mollerussa · Avís legal · Política de privadesa · Política de cookies · <i class="fas fa-laptop"></i> Creaescola.com
     </div>
 
     <style>

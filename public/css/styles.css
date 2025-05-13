@@ -2131,6 +2131,7 @@ textarea#publicacion-texto {
     grid-template-columns: 30% 70%;
     align-items: start;
 }
+
 @media screen and (max-width: 1000px) {
     .misgrupos-body {
         width: 100%;
@@ -2247,11 +2248,12 @@ textarea#publicacion-texto {
     width: 100%;
     justify-content: flex-end;
 }
+
 .alineacion-receptor {
     display: flex;
     width: 100%;
     justify-content: flex-start;
-}  
+}
 
 .mensaje-burbuja {
     background-color: var(--amarillo);
@@ -2500,6 +2502,7 @@ textarea#publicacion-texto {
     overflow: hidden;
     position: relative;
 }
+
 .misgrupos-der-header {
     flex-shrink: 0;
 
@@ -2530,10 +2533,12 @@ textarea#publicacion-texto {
     margin: 0;
     color: white;
 }
+
 @media screen and (max-width: 1000px) {
     .misgrupos-der-header img {
         width: 60px;
     }
+
     .misgrupos-der-header h1 {
         font-size: 30px;
     }
@@ -2699,4 +2704,158 @@ textarea#publicacion-texto {
 .misgrupos-der-carga p {
     font-size: 20px;
     color: #555;
+}
+
+.modal-imagen {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-imagen.mostrar {
+    opacity: 1;
+}
+
+.modal-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-contenido {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+    cursor: zoom-out;
+}
+
+.modal-imagen.mostrar .modal-contenido {
+    transform: scale(1);
+}
+
+.cerrar-modal {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: color 0.2s;
+    z-index: 10001;
+}
+
+.cerrar-modal:hover {
+    color: #f1f1f1;
+}
+
+/* Efecto de carga */
+.modal-contenido.cargando {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/* Estilos existentes... */
+
+/* Estilos existentes... */
+
+.modal-acciones {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    /* Espacio entre botones */
+    z-index: 10001;
+}
+
+/* Estilo para ambos botones (base común) */
+.btn-descargar,
+.btn-cancelar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Estilo específico para el botón de descarga */
+.btn-descargar {
+    background-color: rgba(40, 167, 69, 0.9);
+    color: white;
+}
+
+/* Estilo específico para el botón de cancelar */
+.btn-cancelar {
+    background-color: rgba(108, 117, 125, 0.9);
+    color: white;
+}
+
+/* Hover effects */
+.btn-descargar:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn-cancelar:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Active effects */
+.btn-descargar:active,
+.btn-cancelar:active {
+    transform: translateY(0);
+}
+
+/* Icono para cancelar */
+.icono-cancelar {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+    .modal-acciones {
+        bottom: 20px;
+        gap: 10px;
+    }
+
+    .btn-descargar,
+    .btn-cancelar {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }

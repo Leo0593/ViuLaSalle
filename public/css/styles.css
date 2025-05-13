@@ -2131,7 +2131,6 @@ textarea#publicacion-texto {
     grid-template-columns: 30% 70%;
     align-items: start;
 }
-
 @media screen and (max-width: 1000px) {
     .misgrupos-body {
         width: 100%;
@@ -2480,6 +2479,20 @@ textarea#publicacion-texto {
     color: white !important;
 }
 
+.misgrupos-izq-grupos-mobile {
+    display: none;
+}
+.misgrupos-izq-grupos-desktop {
+    display: block;
+}
+@media screen and (max-width: 1000px) {
+    .misgrupos-izq-grupos-desktop {
+        display: none;
+    }
+    .misgrupos-izq-grupos-mobile {
+        display: block;
+    }
+} 
 
 .misgrupos-izq,
 .misgrupos-der {
@@ -2501,6 +2514,12 @@ textarea#publicacion-texto {
     flex-direction: column;
     overflow: hidden;
     position: relative;
+}
+@media screen and (max-width: 1000px) {
+    .misgrupos-der {
+        display: none;
+    }
+    
 }
 
 .misgrupos-der-header {

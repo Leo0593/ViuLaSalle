@@ -2706,6 +2706,8 @@ textarea#publicacion-texto {
     color: #555;
 }
 
+/*Estilo del modal para ver las imagenes*/
+
 .modal-imagen {
     position: fixed;
     z-index: 10000;

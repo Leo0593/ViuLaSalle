@@ -2,34 +2,47 @@
 
 <div class="misgrupos-der-header">
     <img src="../../img/user-icon.png" alt="Grupo">
-    <h1>Nombre del Grupo</h1>
+    <h1>{{ $coleccion -> nombre }}</h1>
 </div>
 
 <div class="misgrupos-der-chat">        
     {{-- Mensaje Emisor --}}
     <div class="mis-grupos-mensajes-container emisor">
-        <div class="mis-grupos-mensaje-emisor">
-            <!--
-            @for ($i = 0; $i < 15; $i++)
+        @foreach($publicaciones as $publicacion)
+            @if ($publicacion->user_id == auth()->user()->id)
                 <div class="mensaje-burbuja">
-                    <p>Todo bien, ¿y tú?</p>
-                    <span class="mensaje-hora mhe">10:32</span>
+                    <div class="mis-grupos-mensaje-emisor">
+                        <p>{{ $publicacion->descripcion }}</p>
+
+                        @if($publicacion->fotos->count())
+                            <div class="mensaje-burbuja-fotos">
+                                @foreach($publicacion->fotos as $foto)
+                                    <img src="{{ asset('storage/' . $foto->ruta_foto) }}" alt="Foto de publicación">
+                                @endforeach
+                            </div>
+                        @endif
+                            
+                        <span class="mensaje-hora alineacion-emisor">{{ \Carbon\Carbon::parse($publicacion->fecha_publicacion)->format('H:i') }}</span>
+                    </div>
+                </div>  
+
+                <div class="mensaje-perfil alineacion-emisor">
+                    <img src="../../img/user-icon.png" alt="Perfil">
                 </div>
-            @endfor-->
-        </div>
-                    
-        <div class="mensaje-perfil">
-            <img src="../../img/user-icon.png" alt="Perfil">
-        </div>
+            @endif
+        @endforeach
+        
     </div>
 
     {{-- Mensaje Receptor --}}
     <div class="mis-grupos-mensajes-container receptor">
+        <!--
         <div class="mensaje-perfil">
             <img src="../../img/user-icon.png" alt="Perfil">
         </div>
                 
         <div class="mis-grupos-mensaje-receptor">
+            
             @foreach($publicaciones as $publicacion)
                 <div class="mensaje-burbuja">
                     <p>{{ $publicacion->descripcion }}</p>
@@ -48,10 +61,8 @@
 
                 
 
-                <!--
                 <a href="{{ route('publicacioncolecciones.edit', $publicacion->id) }}" class="btn btn-sm btn-info">Editar</a>
 
-                
                 @if ($publicacion->status)
                     <form method="POST" action="{{ route('publicacioncolecciones.destroy', $publicacion->id) }}">
                         @csrf
@@ -66,9 +77,10 @@
                         <button class="btn btn-sm btn-success"
                             onclick="return confirm('¿Activar esta publicación?')">Activar</button>
                     </form>
-                @endif -->
-        @endforeach
+                @endif 
+            @endforeach 
         </div>
+        -->
     </div> 
 </div>
 

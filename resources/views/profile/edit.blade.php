@@ -46,14 +46,26 @@
             </div>
             <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
                 <div class="clase-posts">
+                    @if (!empty($publicaciones) && $publicaciones->isNotEmpty() && $publicaciones->filter(fn($p) => $p->id_user == Auth::id())->isNotEmpty())
+                        @include('layouts.publicacion-grid', ['publicaciones' => $publicaciones])
+                    @else
+                        <div style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center;">
+                            <p class="text-muted ms-2 mt-3 text-center">No has publicado nada aún.</p>
+                        </div>
+                    @endif
+
+                    <!--
+
+&& $publicaciones->id_user == Auth::user()->id
+
                     @if(isset($publicaciones) && $publicaciones->isNotEmpty())
                         @foreach ($publicaciones as $publicacion)
                                 
+
                             @if($publicacion->id_user == Auth::user()->id)
                                 @php
                                         $hayPublicaciones = true;
                                 @endphp
-                                @include('layouts.publicacion-grid', ['publicacion' => $publicacion])
                             @endif
                         @endforeach
                     @endif
@@ -62,7 +74,7 @@
                             <div class="alert alert-info text-center">
                                 <strong>No hay eventos disponibles.</strong>
                             </div>
-                    @endif
+                    @endif -->
                 </div>
             </div>
         </div>

@@ -223,7 +223,11 @@
                             </div>
                         @endfor -->
 
-                        @include('layouts.publicacion-grid', ['publicaciones' => $publicaciones])
+                        @if (!empty($publicaciones) && $publicaciones->isNotEmpty())
+                            @include('layouts.publicacion-grid', ['publicaciones' => $publicaciones])
+                        @else
+                            <p>No hay publicaciones disponibles.</p>
+                        @endif
                     </div>
                 </div>
             </div>

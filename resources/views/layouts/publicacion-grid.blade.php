@@ -1,4 +1,3 @@
-@if (!empty($publicaciones) && $publicaciones->isNotEmpty())
                             @foreach ($publicaciones as $publicacion)
                                 @php
                                     $tieneFotos = $publicacion->fotos->count() > 0;
@@ -29,6 +28,4 @@
                                 @endif
                                 
                             @endforeach
-                        @else
-                            <p>No hay publicaciones disponibles.</p>
-                        @endif
+                        

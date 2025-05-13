@@ -2707,7 +2707,6 @@ textarea#publicacion-texto {
 }
 
 .modal-imagen {
-    display: none;
     position: fixed;
     z-index: 10000;
     left: 0;
@@ -2719,10 +2718,12 @@ textarea#publicacion-texto {
     text-align: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .modal-imagen.mostrar {
     opacity: 1;
+    pointer-events: auto;
 }
 
 .modal-contenedor {

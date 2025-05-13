@@ -91,6 +91,65 @@
                         <span>Show</span>
                     </a>
                 </li>
+
+
+                <div class="opciones-bar-separator">Niveles Educaticos</div>
+
+                @foreach ($niveles as $nivel)
+                    @if (is_null($nivel->id_nivel))
+                        @include('layouts.nivel-item', ['nivel' => $nivel, 'niveles' => $niveles])
+                    @endif
+                @endforeach
+
+                <!--
+                @foreach (($niveles ?? []) as $nivel)
+                    @if (is_null($nivel->id_nivel))
+                        <li class="opciones-bar-item">
+                            <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                                <span>{{ $nivel->nombre }}</span>
+                            </a>
+                        </li>
+
+                        @foreach (($niveles ?? []) as $subnivel)
+                            @if ($subnivel->id_nivel === $nivel->id)
+                                <li class="opciones-bar-item subnivel">
+                                    <a class="opciones-bar-link">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                        <span>{{ $subnivel->nombre }}</span>
+                                    </a>
+                                </li>
+
+                                @foreach ($subnivel->cursos as $curso)
+                                    <li class="opciones-bar-item subnivel">
+                                        <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
+                                            <i class="fa-solid fa-calendar-plus"></i>
+                                            <span>{{ $curso->nombre }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
+-->
+                <!--
+                @foreach ($niveles as $nivel)
+                    <li class="opciones-bar-item">
+                        <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
+                            <i class="fa-solid fa-calendar-plus"></i>
+                            <span>{{ $nivel->nombre }}</span>
+                        </a>
+                    </li>
+                        @foreach ($nivel->cursos as $curso)
+                            <li class="opciones-bar-item">
+                                <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
+                                    <i class="fa-solid fa-calendar-plus"></i>
+                                    <span>{{ $curso->nombre }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                @endforeach -->
             </div>
 
             <div class="contenido">
@@ -390,150 +449,29 @@
 
 
     <!-- Modal para imagen ampliada -->
-<div id="modalImagen" class="modal-imagen" style="display:none;">
-    <span class="cerrar-modal" title="Cerrar">&times;</span>
-    <div class="modal-contenedor">
-        <img class="modal-contenido" id="imgAmpliada">
+    <div id="modalImagen" class="modal-imagen" style="display:none;">
+        <span class="cerrar-modal" title="Cerrar">&times;</span>
+        <div class="modal-contenedor">
+            <img class="modal-contenido" id="imgAmpliada">
 
-        <div class="modal-acciones">
-            @auth
-                @if(auth()->user())
-                    <a id="btnDescargarImagen" class="btn-descargar" href="#" target="_blank" title="Descargar imagen">
-                        <i class="icono-descarga"></i> Descargar
-                    </a>
-                @endif
-            @endauth
+            <div class="modal-acciones">
+                @auth
+                    @if(auth()->user())
+                        <a id="btnDescargarImagen" class="btn-descargar" href="#" target="_blank" title="Descargar imagen">
+                            <i class="icono-descarga"></i> Descargar
+                        </a>
+                    @endif
+                @endauth
 
-            <button id="btnCancelar" class="btn-cancelar" title="Cerrar">
-                <i class="icono-cancelar"></i> Cancelar
-            </button>
+                <button id="btnCancelar" class="btn-cancelar" title="Cerrar">
+                    <i class="icono-cancelar"></i> Cancelar
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modal = document.getElementById("modalImagen");
-        const modalImg = document.getElementById("imgAmpliada");
-        const span = document.getElementsByClassName("cerrar-modal")[0];
-
-        document.querySelectorAll('.box-publicacion-img').forEach(div => {
-            div.addEventListener('click', function () {
-                const imageUrl = this.style.backgroundImage.slice(5, -2);
-                modalImg.classList.add('cargando');
-                modal.style.display = "block";
-
-                // Forzar reflow para que la animación funcione
-                void modal.offsetWidth;
-                modal.classList.add('mostrar');
-
-                modalImg.src = imageUrl;
-
-                // Cuando la imagen se carga
-                modalImg.onload = function () {
-                    modalImg.classList.remove('cargando');
-                };
-            });
-        });
-
-        // Cerrar modal
-        function cerrarModal() {
-            modal.classList.remove('mostrar');
-            setTimeout(() => {
-                modal.style.display = "none";
-            }, 300); // Tiempo igual a la duración de la transición
-        }
-
-        span.onclick = cerrarModal;
-
-        modalImg.onclick = function (e) {
-            e.stopPropagation(); // Evita que el click se propague al modal
-            cerrarModal();
-        };
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                cerrarModal();
-            }
-        };
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modal = document.getElementById("modalImagen");
-        const modalImg = document.getElementById("imgAmpliada");
-        const span = document.getElementsByClassName("cerrar-modal")[0];
-        const btnDescargar = document.getElementById("btnDescargarImagen"); // <-- puede ser null
-        const btnCancelar = document.getElementById("btnCancelar");
-
-        // Cerrar modal
-        function cerrarModal() {
-            modal.classList.remove('mostrar');
-            setTimeout(() => {
-                modal.style.display = "none";
-            }, 300);
-        }
-
-        document.querySelectorAll('.box-publicacion-img').forEach(div => {
-            div.addEventListener('click', function () {
-                const imageUrl = this.style.backgroundImage.slice(5, -2);
-                modalImg.classList.add('cargando');
-                modal.style.display = "block";
-
-                modalImg.src = imageUrl;
-
-                // ✅ Solo si el botón existe (usuario autenticado)
-                if (btnDescargar) {
-                    const fileName = obtenerNombreArchivo(imageUrl);
-                    btnDescargar.href = imageUrl;
-                    btnDescargar.download = fileName;
-                }
-
-                void modal.offsetWidth;
-                modal.classList.add('mostrar');
-
-                modalImg.onload = function () {
-                    modalImg.classList.remove('cargando');
-                };
-            });
-        });
-
-        if (btnCancelar) {
-            btnCancelar.addEventListener('click', cerrarModal);
-        }
-
-        if (span) {
-            span.onclick = cerrarModal;
-        }
-
-        if (modalImg) {
-            modalImg.onclick = function (e) {
-                e.stopPropagation();
-                cerrarModal();
-            };
-        }
-
-        window.onclick = function (event) {
-            if (event.target === modal) {
-                cerrarModal();
-            }
-        };
-
-        function obtenerNombreArchivo(url) {
-            try {
-                const urlObj = new URL(url);
-                const pathname = urlObj.pathname;
-                const filename = pathname.split('/').pop() || 'imagen_descargada';
-                return filename.includes('.') ? filename : `${filename}.jpg`;
-            } catch {
-                return 'imagen_descargada.jpg';
-            }
-        }
-    });
-
-</script>
+    <script src="{{ asset('/js/desglosable-niveles-curso.js') }}"></script>
+    <script src="{{ asset('/js/publicacion-modal.js') }}"></script>
 
     <!-- Script -->
 

@@ -1,0 +1,24 @@
+
+<li class="opciones-bar-item {{ $nivel->id_nivel ? 'subnivel' : '' }}">
+    <a class="opciones-bar-link"">
+        1
+        <span>{{ $nivel->nombre }}</span>
+    </a>
+</li>
+
+{{-- Mostrar cursos del nivel --}}
+@foreach ($nivel->cursos as $curso)
+    <li class="opciones-bar-item subnivel">
+        <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
+            2
+            <span>{{ $curso->nombre }}</span>
+        </a>
+    </li>
+@endforeach
+
+{{-- Mostrar subniveles recursivamente --}}
+@foreach ($niveles as $subnivel)
+    @if ($subnivel->id_nivel === $nivel->id)
+        @include('layouts.nivel-item', ['nivel' => $subnivel, 'niveles' => $niveles])
+    @endif
+@endforeach

@@ -1227,6 +1227,7 @@ a.sidebar-link:hover {
 .opciones-bar-item {
     display: flex;
     align-items: center;
+    flex-direction: column;
     padding: 5px 0;
 
     padding-right: 90px;
@@ -1273,6 +1274,15 @@ a.opciones-bar-link:hover {
     border-radius: 15px;
     scale: 1.05;
 }
+
+.fa-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+.fa-chevron-down.rotated {
+    transform: rotate(180deg);
+}
+
 
 /* Modal */
 .modal-content {

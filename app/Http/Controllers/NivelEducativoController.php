@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\NivelEducativo;
+use App\Models\Curso;
+
 use Illuminate\Http\Request;
 
 use Carbon\Carbon; // Para obtener la fecha actual

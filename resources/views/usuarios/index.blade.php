@@ -5,29 +5,35 @@
     @include('layouts.navheader')
 
     <!-- Hero o Bienvenida -->
-    <div class="body-container container mt-header pt-3">
-        <div class="bg-light p-4 rounded-4 mb-4 shadow-sm">
+    <div class="container py-4">
 
-            <div class="text-center my-5">
-                <h1 class="display-5 fw-bold">Gestión de Usuarios</h1>
-                <p class="lead text-muted">Aquí puedes ver, crear y editar usuarios registrados en el sistema.</p>
-            </div>
 
-            <!-- Botones de acción -->
-            <div class="d-flex justify-content-center gap-3 mb-4">
-                <div class="col-md-2">
-                    <a href="{{ route('users.create') }}" class="btn btn-success">
-                        <i class="fa fa-user-plus me-1"></i> Crear Usuario
-                    </a>
-                </div>
 
-                <div class="col-md-3">
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
-                        <i class="fa fa-arrow-left me-1"></i> Volver a Dashboard
-                    </a>
-                </div>
+        <div class="body-container hero-section p-4 mb-4 rounded-4 shadow-sm"
+            style="background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);">
+            <div class="container text-center">
+                <h1 class="display-5 fw-bold text-dark mb-3">Gestión de Usuarios</h1>
+                <p class="lead text-muted mb-4">Aquí puedes ver, crear y editar usuarios registrados en el sistema.
+                </p>
             </div>
         </div>
+
+        <!-- Botones de acción -->
+
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 p-3 bg-white rounded-3 shadow-sm">
+            <h2 class="mb-3 mb-md-0 fw-semibold">Listado de Usuarios</h2>
+            <div class="d-flex gap-2">
+                <a href="{{ route('users.create') }}" class="btn btn-primary create-btn">
+                    <i class="fas fa-plus me-2"></i>Crear Usuario
+                </a>
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Dashboard
+                </a>
+            </div>
+        </div>
+
+
 
 
         <!-- Contadores de usuarios -->

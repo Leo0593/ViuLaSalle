@@ -3,26 +3,35 @@
 <body>
     @include('layouts.navheader')
 
-    <div class="container mt-header pt-3">
-        <div class="bg-white p-4 rounded-4 mb-4 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h1 class="mb-1"><i class="fas fa-tags me-3 text-primary"></i> Lista de Etiquetas</h1>
-                    <p class="text-muted mb-0">Administra todas las Etiquetas de tu sistema</p>
-                </div>
-                <div>
-                    <!-- Botón para Crear Categoria -->
-                    <a href="javascript:void(0);" class="btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#createModal">
-                        <i class="fas fa-plus-circle me-2"></i> Crear Categoria
-                    </a>
 
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-2"></i> Volver
-                    </a>
-                </div>
+
+    <div class="container py-4">
+        <!-- Hero Section -->
+        <div class="body-container hero-section p-4 mb-4 rounded-4 shadow-sm"
+            style="background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);">
+            <div class="container text-center">
+                <h1 class="display-5 fw-bold text-dark mb-3">Gestión de Etiquetas</h1>
+                <p class="lead text-muted mb-4">Administra todas las Etiquetas de tu sistema
+                </p>
             </div>
         </div>
+
+        <!-- Header with Actions -->
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 p-3 bg-white rounded-3 shadow-sm">
+            <h2 class="mb-3 mb-md-0 fw-semibold">Lista de Etiquetas</h2>
+            <div class="d-flex gap-2">
+                <a href="javascript:void(0);" class="btn btn-primary create-btn" data-bs-toggle="modal"
+                    data-bs-target="#createModal">
+                    <i class="fas fa-plus-circle me-2"></i> Crear Categoria
+                </a>
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Dashboard
+                </a>
+            </div>
+        </div>
+
+
 
         <!-- Filtros de búsqueda y estado -->
         <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border border-light">
@@ -186,22 +195,20 @@
             </div>
         </div>
 
-    </div>
 
-    <script>
-        function loadCategoryData(id) {
-            // Usamos Ajax para obtener los datos de la categoría
-            fetch(`/categorias/${id}/edit`)
-                .then(response => response.json())
-                .then(data => {
-                    // Llenamos el formulario con los datos de la categoría
-                    document.getElementById('nombre').value = data.nombre;
-                    document.getElementById('editForm').action = `/categorias/${id}`;
-                })
-                .catch(error => console.log(error));
-        }
-    </script>
+        <script>
+            function loadCategoryData(id) {
+                // Usamos Ajax para obtener los datos de la categoría
+                fetch(`/categorias/${id}/edit`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Llenamos el formulario con los datos de la categoría
+                        document.getElementById('nombre').value = data.nombre;
+                        document.getElementById('editForm').action = `/categorias/${id}`;
+                    })
+                    .catch(error => console.log(error));
+            }
+        </script>
 
 </body>
 
-</html>

@@ -10,48 +10,29 @@
         @endif
 
 
-        <div class="bg-white p-3 p-md-4 rounded-3 mb-3 mb-md-4 shadow-sm border">
-            <div
-                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 gap-md-0">
-                <!-- Texto del título -->
-                <div class="w-100">
-                    <h1 class="h4 h3-md mb-1">
-                        <i class="fas fa-bell me-2 me-md-3 text-primary"></i>
-                        <span class="d-inline-block">Panel de Notificaciones</span>
-                    </h1>
-                    <p class="text-muted mb-0 small d-none d-sm-block">
-                        Administra todas las notificaciones de tu sistema
-                    </p>
-                    <p class="text-muted mb-0 small d-block d-sm-none">
-                        Administrar notificaciones
+        <div class="container py-4">
+            <!-- Hero Section -->
+            <div class="body-container hero-section p-4 mb-4 rounded-4 shadow-sm"
+                style="background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);">
+                <div class="container text-center">
+                    <h1 class="display-5 fw-bold text-dark mb-3">Gestión de Notificaciones</h1>
+                    <p class="lead text-muted mb-4"> Administra todas las notificaciones de tu sistema
                     </p>
                 </div>
+            </div>
 
-                <!-- Botones - versión desktop (derecha) -->
-                <div class="d-none d-md-flex align-items-center ms-auto">
+            <!-- Header with Actions -->
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 p-3 bg-white rounded-3 shadow-sm">
+                <h2 class="mb-3 mb-md-0 fw-semibold">Listado de Notificaciones</h2>
+                <div class="d-flex gap-2">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#crearNotificacionModal">
                         <i class="fas fa-plus me-2"></i>Crear Notificación
                     </button>
-
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary ms-2">
-                        <i class="fas fa-arrow-left me-2"></i> Volver
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Dashboard
                     </a>
-                </div>
-
-                <!-- Botón crear - versión móvil (debajo del texto) -->
-                <div class="d-block d-md-none w-100 mt-2">
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="button" class="btn btn-primary btn-sm flex-grow-1 flex-md-grow-0"
-                            data-bs-toggle="modal" data-bs-target="#crearNotificacionModal">
-                            <i class="fas fa-plus me-1"></i> Crear
-                        </button>
-
-                        <a href="{{ route('dashboard') }}"
-                            class="btn btn-outline-secondary btn-sm flex-grow-1 flex-md-grow-0">
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -329,7 +310,8 @@
                                 <select name="es_global" id="es_global" class="form-select" required
                                     onchange="toggleUsuarios(this.value)">
                                     <option value="" disabled selected>Seleccione el tipo</option>
-                                    <option value="1" {{ old('es_global') == 1 ? 'selected' : '' }}>Notificación global
+                                    <option value="1" {{ old('es_global') == 1 ? 'selected' : '' }}>Notificación
+                                        global
                                         (para todos los usuarios)</option>
                                     <option value="0" {{ old('es_global') == 0 ? 'selected' : '' }}>Notificación
                                         personalizada (seleccionar usuarios)</option>
@@ -395,10 +377,6 @@
                 </div>
             </div>
         </div>
-
-
-
-    </div>
 
 
 </body>

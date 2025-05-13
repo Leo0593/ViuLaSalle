@@ -6,10 +6,11 @@
 
     <div class="container py-4">
         <!-- Hero Section -->
-        <div class="body-container hero-section p-4">
+        <div class="body-container hero-section p-4 mb-4 rounded-4 shadow-sm"
+                style="background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);">
             <div class="container text-center">
-                <h1 class="display-5 fw-bold">Gestión de Publicaciones</h1>
-                <p class="lead">Aquí puedes ver, crear y editar eventos registrados en el sistema.</p>
+                <h1 class="display-5 fw-bold text-dark mb-3">Gestión de Publicaciones</h1>
+                <p class="lead text-muted mb-4">Aquí puedes ver, crear y editar eventos registrados en el sistema.</p>
             </div>
         </div>
 

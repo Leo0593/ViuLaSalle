@@ -44,12 +44,12 @@
                     <i class="fab fa-facebook-f"></i>
                 </div>
             </a>
-            <a href="https://www.instagram.com/lasallemollerussa/" target="_blank">
+            <a href="https://www.instagram.com/sallemollerussa/" target="_blank">
                 <div class="redes-circle">
                     <i class="fab fa-instagram"></i>
                 </div>
             </a>
-            <a href="https://twitter.com/LaSalleMolleru" target="_blank">
+            <a href="https://twitter.com/SalleMollerussa" target="_blank">
                 <div class="redes-circle">
                     <i class="fab fa-twitter"></i>
                 </div>
@@ -61,7 +61,7 @@
                 </div>
             </a>
 
-            <a href="https://www.linkedin.com/company/lasallemollerussa/" target="_blank">
+            <a href="https://www.linkedin.com/company/la-salle-mollerussa/" target="_blank">
                 <div class="redes-circle">
                     <i class="fab fa-linkedin-in"></i>
                 </div>

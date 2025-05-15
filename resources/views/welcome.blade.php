@@ -44,8 +44,9 @@
         <div class="main">
             <div class="opciones">
                 <div class="opciones-bar-separator">Home</div>
+
                 <li class="opciones-bar-item">
-                    <a class="opciones-bar-link">
+                    <a class="opciones-bar-link" href="/">
                         <i class="fa-solid fa-house"></i>
                         <span>Inicio</span>
                     </a>

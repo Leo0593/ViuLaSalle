@@ -9,6 +9,7 @@
             {{ $publicacion->usuario->name }}
         </div>
 
+        @if(Auth::check()) 
         <div class="box-publicacion-header-options">
             <button type="button" class="ellipsis-btn">
                 <i class="fa-solid fa-ellipsis"></i>
@@ -40,6 +41,7 @@
                 @endif
             </ul>
         </div>
+        @endif
     </div>
 
     <!-- Mostrar fotos y videos -->

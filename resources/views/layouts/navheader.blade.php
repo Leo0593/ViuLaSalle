@@ -19,5 +19,8 @@
 </header>
 
 <aside id="sidebar">
+    @include('layouts.welcome-perfil')
+
+    <br><br>
     @include('layouts.redirecciones', ['niveles' => $niveles])
 </aside>

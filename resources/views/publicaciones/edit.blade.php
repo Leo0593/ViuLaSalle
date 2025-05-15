@@ -2,9 +2,10 @@
 
 <body class="bg-light">
     @include('layouts.navheader')
-    
+
     @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show mx-auto mt-3" style="max-width: 800px; border-left: 4px solid #dc3545;">
+        <div class="alert alert-danger alert-dismissible fade show mx-auto mt-3"
+            style="max-width: 800px; border-left: 4px solid #dc3545;">
             <div class="d-flex align-items-center">
                 <i class="fas fa-exclamation-circle me-2"></i>
                 <div>{{ session('error') }}</div>
@@ -35,9 +36,11 @@
 
             <!-- Cuerpo del formulario -->
             <div class="card-body p-4">
-                <form action="{{ route('publicaciones.update', $publicacion->id) }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <form action="{{ route('publicaciones.update', $publicacion->id) }}" method="POST"
+                    enctype="multipart/form-data" class="needs-validation" novalidate>
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="id_user" value="{{ Auth::id() }}">
 
                     <!-- Sección Evento -->
                     <div class="mb-4">
@@ -48,10 +51,11 @@
                             <span class="input-group-text bg-white border-end-0">
                                 <i class="fas fa-search text-muted"></i>
                             </span>
-                            <input type="text" id="evento-search" class="form-control border-start-0 shadow-none" 
-                                   placeholder="Buscar eventos..." value="{{ $publicacion->evento ? $publicacion->evento->nombre : '' }}">
+                            <input type="text" id="evento-search" class="form-control border-start-0 shadow-none"
+                                placeholder="Buscar eventos..."
+                                value="{{ $publicacion->evento ? $publicacion->evento->nombre : '' }}">
                         </div>
-                        
+
                         <!-- Input oculto para el evento seleccionado -->
                         <select name="id_evento" id="id_evento" class="form-control" style="display: none;">
                             <option value="0" {{ !$publicacion->id_evento ? 'selected' : '' }}>Sin evento</option>
@@ -76,12 +80,14 @@
                         <div id="evento-seleccionado" class="mt-2" {{ !$publicacion->id_evento ? 'style="display:none;"' : '' }}>
                             <div class="d-flex align-items-center">
                                 <span class="text-muted me-2">Evento seleccionado:</span>
-                                <span id="evento-nombre" class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">
+                                <span id="evento-nombre"
+                                    class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">
                                     @if($publicacion->evento)
                                         {{ $publicacion->evento->nombre }}
                                     @endif
                                 </span>
-                                <button type="button" id="remove-evento" class="btn-close btn-close-white btn-sm ms-2"></button>
+                                <button type="button" id="remove-evento"
+                                    class="btn-close btn-close-white btn-sm ms-2"></button>
                             </div>
                         </div>
                     </div>
@@ -91,8 +97,9 @@
                         <label for="descripcion" class="form-label fw-bold text-dark mb-2">
                             <i class="fas fa-edit me-2 text-primary"></i>Descripción
                         </label>
-                        <textarea name="descripcion" id="descripcion" class="form-control shadow-sm" rows="4" 
-                                  placeholder="¿Qué quieres compartir hoy?" required>{{ $publicacion->descripcion }}</textarea>
+                        <textarea name="descripcion" id="descripcion" class="form-control shadow-sm" rows="4"
+                            placeholder="¿Qué quieres compartir hoy?"
+                            required>{{ $publicacion->descripcion }}</textarea>
                         <div class="invalid-feedback">Por favor escribe una descripción</div>
                     </div>
 
@@ -101,15 +108,15 @@
                         <label class="form-label fw-bold text-dark mb-2">
                             <i class="fas fa-tags me-2 text-primary"></i>Etiquetas
                         </label>
-                        
+
                         <div class="input-group mb-3">
                             <span class="input-group-text bg-white border-end-0">
                                 <i class="fas fa-search text-muted"></i>
                             </span>
-                            <input type="text" id="tags-search" class="form-control border-start-0 shadow-none" 
-                                   placeholder="Buscar etiquetas...">
+                            <input type="text" id="tags-search" class="form-control border-start-0 shadow-none"
+                                placeholder="Buscar etiquetas...">
                         </div>
-                        
+
                         <!-- Etiquetas sugeridas -->
                         <div id="categorias-list" class="d-flex flex-wrap gap-2 mb-3">
                             @foreach($categoriasSugeridas as $categoria)
@@ -119,25 +126,28 @@
                                 </button>
                             @endforeach
                         </div>
-                        
+
                         <!-- Input oculto para categorías seleccionadas -->
-                        <select name="categorias[]" id="categorias" class="form-control" multiple style="display: none;">
+                        <select name="categorias[]" id="categorias" class="form-control" multiple
+                            style="display: none;">
                             @foreach($categorias as $categoria)
                                 <option value="{{ $categoria->id }}" {{ in_array($categoria->id, $publicacion->categorias->pluck('id')->toArray()) ? 'selected' : '' }}>
                                     {{ $categoria->nombre }}
                                 </option>
                             @endforeach
                         </select>
-                        
+
                         <!-- Etiquetas seleccionadas -->
                         <div id="selected-tags" class="mt-3">
                             <div class="d-flex align-items-center flex-wrap gap-2">
                                 <span class="text-muted">Seleccionadas:</span>
                                 <div id="selected-tags-list" class="d-flex flex-wrap gap-2">
                                     @foreach($publicacion->categorias as $categoria)
-                                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill p-2" data-id="{{ $categoria->id }}">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill p-2"
+                                            data-id="{{ $categoria->id }}">
                                             {{ $categoria->nombre }}
-                                            <button type="button" class="btn-close btn-close-white btn-sm ms-2 remove-tag"></button>
+                                            <button type="button"
+                                                class="btn-close btn-close-white btn-sm ms-2 remove-tag"></button>
                                         </span>
                                     @endforeach
                                 </div>
@@ -150,25 +160,28 @@
                         <label class="form-label fw-bold text-dark mb-2">
                             <i class="fas fa-images me-2 text-primary"></i>Multimedia
                         </label>
-                        
+
                         <!-- Fotos actuales -->
                         <div class="mb-3">
                             <label class="form-label">Fotos Actuales</label>
                             <div class="d-flex flex-wrap gap-3" id="current-photos-container">
                                 @foreach($publicacion->fotos as $foto)
                                     <div class="preview-wrapper position-relative">
-                                        <img src="{{ Storage::url('publicaciones/' . $foto->ruta_foto) }}" class="preview-image">
+                                        <img src="{{ Storage::url('publicaciones/' . $foto->ruta_foto) }}"
+                                            class="preview-image">
                                         <div class="position-absolute bottom-0 start-0 p-2 bg-dark bg-opacity-50 w-100">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="delete_photos[]" value="{{ $foto->id }}" id="delete-photo-{{ $foto->id }}">
-                                                <label class="form-check-label text-white" for="delete-photo-{{ $foto->id }}">Eliminar</label>
+                                                <input class="form-check-input" type="checkbox" name="delete_photos[]"
+                                                    value="{{ $foto->id }}" id="delete-photo-{{ $foto->id }}">
+                                                <label class="form-check-label text-white"
+                                                    for="delete-photo-{{ $foto->id }}">Eliminar</label>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
-                        
+
                         <!-- Nuevas fotos -->
                         <div class="mb-3">
                             <label for="fotos" class="btn btn-outline-primary rounded-pill px-4 py-2">
@@ -176,11 +189,11 @@
                                 <input type="file" name="fotos[]" id="fotos" class="d-none" multiple accept="image/*">
                             </label>
                             <small class="text-muted ms-2">Máx. 10 fotos en total</small>
-                            
+
                             <!-- Previsualización nuevas fotos -->
                             <div class="d-flex flex-wrap gap-3 mt-3" id="preview-container"></div>
                         </div>
-                        
+
                         <!-- Videos (solo para profesores/admin) -->
                         @if ($user && ($user->role == 'PROFESOR' || $user->role == 'ADMIN'))
                             <!-- Videos actuales -->
@@ -190,19 +203,22 @@
                                     @foreach($publicacion->videos as $video)
                                         <div class="preview-wrapper position-relative" style="width: 200px; height: auto;">
                                             <video controls class="w-100">
-                                                <source src="{{ Storage::url('publicvideos/' . $video->ruta_video) }}" type="video/mp4">
+                                                <source src="{{ Storage::url('publicvideos/' . $video->ruta_video) }}"
+                                                    type="video/mp4">
                                             </video>
                                             <div class="position-absolute bottom-0 start-0 p-2 bg-dark bg-opacity-50 w-100">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="delete_videos[]" value="{{ $video->id }}" id="delete-video-{{ $video->id }}">
-                                                    <label class="form-check-label text-white" for="delete-video-{{ $video->id }}">Eliminar</label>
+                                                    <input class="form-check-input" type="checkbox" name="delete_videos[]"
+                                                        value="{{ $video->id }}" id="delete-video-{{ $video->id }}">
+                                                    <label class="form-check-label text-white"
+                                                        for="delete-video-{{ $video->id }}">Eliminar</label>
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
-                            
+
                             <!-- Nuevos videos -->
                             <div class="mb-3">
                                 <label for="videos" class="btn btn-outline-primary rounded-pill px-4 py-2">
@@ -210,7 +226,7 @@
                                     <input type="file" name="videos[]" id="videos" class="d-none" multiple accept="video/*">
                                 </label>
                                 <small class="text-muted ms-2">Máx. 2 videos en total</small>
-                                
+
                                 <!-- Previsualización nuevos videos -->
                                 <div class="d-flex flex-wrap gap-3 mt-3" id="video-preview-container"></div>
                             </div>
@@ -220,8 +236,8 @@
                     <!-- Configuración -->
                     <div class="mb-4">
                         <div class="form-check form-switch ps-0">
-                            <input class="form-check-input ms-0 me-2" type="checkbox" role="switch" 
-                                   name="activar_comentarios" id="activar_comentarios" value="1" {{ $publicacion->activar_comentarios ? 'checked' : '' }}>
+                            <input class="form-check-input ms-0 me-2" type="checkbox" role="switch"
+                                name="activar_comentarios" id="activar_comentarios" value="1" {{ $publicacion->activar_comentarios ? 'checked' : '' }}>
                             <label class="form-check-label fw-bold text-dark" for="activar_comentarios">
                                 <i class="fas fa-comments me-2 text-primary"></i> Permitir comentarios
                             </label>
@@ -230,7 +246,8 @@
 
                     <!-- Botones -->
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('publicaciones.index') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                        <a href="{{ route('publicaciones.index') }}"
+                            class="btn btn-outline-secondary rounded-pill px-4 py-2">
                             <i class="fas fa-arrow-left me-2"></i> Cancelar
                         </a>
                         <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm">
@@ -242,7 +259,7 @@
         </div>
     </div>
 
-    
+
     <!-- Scripts -->
     <script>
         $(document).ready(function () {
@@ -250,7 +267,7 @@
             (function () {
                 'use strict'
                 const forms = document.querySelectorAll('.needs-validation')
-                
+
                 Array.from(forms).forEach(form => {
                     form.addEventListener('submit', event => {
                         if (!form.checkValidity()) {
@@ -303,8 +320,8 @@
                 if (searchText === '') {
                     renderCategoryButtons(defaultCategories);
                 } else {
-                    const filtered = allCategories.filter(cat => 
-                        cat.nombre.toLowerCase().includes(searchText) && 
+                    const filtered = allCategories.filter(cat =>
+                        cat.nombre.toLowerCase().includes(searchText) &&
                         (!$('#categorias').val() || !$('#categorias').val().includes(cat.id.toString()))
                     );
                     renderCategoryButtons(filtered);
@@ -317,8 +334,8 @@
                 if (searchText === '') {
                     renderEventoButtons(sugeridos);
                 } else {
-                    const filtrados = allEventos.filter(evt => 
-                        evt.nombre.toLowerCase().includes(searchText) && 
+                    const filtrados = allEventos.filter(evt =>
+                        evt.nombre.toLowerCase().includes(searchText) &&
                         evt.id.toString() !== $('#id_evento').val()
                     );
                     renderEventoButtons(filtrados);
@@ -374,7 +391,7 @@
             });
 
             // Eliminar evento seleccionado
-            $('#remove-evento').on('click', function() {
+            $('#remove-evento').on('click', function () {
                 $('#id_evento').val('0');
                 $('#evento-seleccionado').hide();
                 $('#evento-search').val('');
@@ -401,14 +418,14 @@
         let selectedFiles = [];
         document.getElementById('fotos').addEventListener('change', function (e) {
             const newFiles = Array.from(this.files);
-            
+
             // Verificar límite de fotos (10 en total)
             const currentPhotosCount = document.querySelectorAll('#current-photos-container .preview-wrapper').length;
             if (currentPhotosCount + selectedFiles.length + newFiles.length > 10) {
                 alert('No puedes subir más de 10 fotos en total.');
                 return;
             }
-            
+
             selectedFiles = [...selectedFiles, ...newFiles];
             renderPreviews();
         });
@@ -421,11 +438,11 @@
                 if (file.type.startsWith('image/')) {
                     const previewWrapper = document.createElement('div');
                     previewWrapper.className = 'preview-wrapper';
-                    
+
                     const img = document.createElement('img');
                     img.src = URL.createObjectURL(file);
                     img.className = 'preview-image';
-                    
+
                     const deleteBtn = document.createElement('button');
                     deleteBtn.innerHTML = '×';
                     deleteBtn.className = 'delete-btn';
@@ -459,14 +476,14 @@
             let selectedVideos = [];
             document.getElementById('videos').addEventListener('change', function (e) {
                 const newVideos = Array.from(this.files);
-                
+
                 // Verificar límite de videos (2 en total)
                 const currentVideosCount = document.querySelectorAll('#current-videos-container .preview-wrapper').length;
                 if (currentVideosCount + selectedVideos.length + newVideos.length > 2) {
                     alert('No puedes subir más de 2 videos en total.');
                     return;
                 }
-                
+
                 selectedVideos = [...selectedVideos, ...newVideos];
                 renderVideoPreviews();
             });
@@ -481,12 +498,12 @@
                         previewWrapper.className = 'preview-wrapper position-relative';
                         previewWrapper.style.width = '200px';
                         previewWrapper.style.height = 'auto';
-                        
+
                         const video = document.createElement('video');
                         video.src = URL.createObjectURL(file);
                         video.className = 'w-100';
                         video.controls = true;
-                        
+
                         const deleteBtn = document.createElement('button');
                         deleteBtn.innerHTML = '×';
                         deleteBtn.className = 'delete-btn';
@@ -517,4 +534,5 @@
         @endif
     </script>
 </body>
+
 </html>

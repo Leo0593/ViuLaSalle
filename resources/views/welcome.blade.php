@@ -230,7 +230,8 @@
 
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
-                            <input type="text" name="descripcion" id="descripcion" class="form-control" required>
+                            <textarea name="descripcion" id="descripcion" class="form-control" rows="4"
+                                required></textarea>
                         </div>
 
                         <!-- Buscar Etiquetas -->

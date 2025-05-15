@@ -16,56 +16,6 @@
         <div class="main">
             <div class="opciones">
                 @include('layouts.redirecciones', ['niveles' => $niveles])
-
-                <!--
-                @foreach (($niveles ?? []) as $nivel)
-                    @if (is_null($nivel->id_nivel))
-                        <li class="opciones-bar-item">
-                            <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
-                                <i class="fa-solid fa-calendar-plus"></i>
-                                <span>{{ $nivel->nombre }}</span>
-                            </a>
-                        </li>
-
-                        @foreach (($niveles ?? []) as $subnivel)
-                            @if ($subnivel->id_nivel === $nivel->id)
-                                <li class="opciones-bar-item subnivel">
-                                    <a class="opciones-bar-link">
-                                        <i class="fa-solid fa-angle-right"></i>
-                                        <span>{{ $subnivel->nombre }}</span>
-                                    </a>
-                                </li>
-
-                                @foreach ($subnivel->cursos as $curso)
-                                    <li class="opciones-bar-item subnivel">
-                                        <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
-                                            <i class="fa-solid fa-calendar-plus"></i>
-                                            <span>{{ $curso->nombre }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            @endif
-                        @endforeach
-                    @endif
-                @endforeach
--->
-                <!--
-                @foreach ($niveles as $nivel)
-                    <li class="opciones-bar-item">
-                        <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
-                            <i class="fa-solid fa-calendar-plus"></i>
-                            <span>{{ $nivel->nombre }}</span>
-                        </a>
-                    </li>
-                        @foreach ($nivel->cursos as $curso)
-                            <li class="opciones-bar-item">
-                                <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
-                                    <i class="fa-solid fa-calendar-plus"></i>
-                                    <span>{{ $curso->nombre }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                @endforeach -->
             </div>
 
             <div class="contenido">

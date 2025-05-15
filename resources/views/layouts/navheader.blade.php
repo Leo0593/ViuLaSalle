@@ -20,49 +20,4 @@
 
 <aside id="sidebar">
     @include('layouts.redirecciones', ['niveles' => $niveles])
-
-
-    <!--
-    <ul class="sidebar-nav">
-
-        <div class="sidebar-separator">Home</div>
-
-        <li class="sidebar-item">
-            <a class="sidebar-link" >
-                <i class="fa-solid fa-house"></i>
-                <span>Inicio</span>
-            </a>
-        </li>
-
-        <div class="sidebar-separator">Intefaces</div>
-
-        <li class="sidebar-item">
-            <a class="sidebar-link" href="{{ route('info.index') }}">
-                <i class="fa-solid fa-info-circle"></i>
-                <span>Evento</span>
-            </a>
-        </li>
-
-
-        <div class="sidebar-separator">Ciclos</div>
-        <li class="sidebar-item">
-            <a class="sidebar-link">
-                <i class="fa-solid fa-info-circle"></i>
-                <span>CFGM</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
-            <a class="sidebar-link">
-                <i class="fa-solid fa-info-circle"></i>
-                <span>CFGS</span>
-            </a>
-        </li>
-
-        <div class="sidebar-footer">
-            <a class="sidebar-link">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Salir</span>
-            </a>
-        </div>
-    </ul> -->
 </aside>

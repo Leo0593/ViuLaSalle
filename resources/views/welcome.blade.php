@@ -1,35 +1,5 @@
 @include('layouts.head')
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.like-btn').click(function () {
-            let button = $(this);
-            let icon = button.find('i');
-            let publicacionId = button.data('id');
-
-            $.ajax({
-                url: '/publicaciones/' + publicacionId + '/like',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                    // Actualizar contador
-                    button.siblings('.like-count').text(response.likes);
-
-                    // Cambiar clase del ícono
-                    if (response.liked) {
-                        icon.removeClass('fa-regular').addClass('fa-solid').css('color', 'red');
-                    } else {
-                        icon.removeClass('fa-solid').addClass('fa-regular').css('color', 'black');
-                    }
-                }
-            });
-        });
-    });
-</script>
-
 <body>
 
     @include('layouts.navheader', ['niveles' => $niveles])
@@ -46,6 +16,114 @@
         <div class="main">
             <div class="opciones">
                 @include('layouts.redirecciones', ['niveles' => $niveles])
+                <div class="opciones-bar-separator">Home</div>
+
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="/">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('profile.edit') }}">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+
+                @auth
+                    @if (auth()->user()->role == 'ADMIN')
+                        <li class="opciones-bar-item">
+                            <a class="opciones-bar-link" href="{{ route('dashboard') }}">
+                                <i class="fa-solid fa-tachometer-alt"></i> <!-- Icono de dashboard -->
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    @endif
+                @endauth
+
+
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('niveles.index') }}">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Niveles Educativos</span>
+                    </a>
+                </li>
+
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('eventos.todos') }}">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span>Eventos</span>
+                    </a>
+                </li>
+
+
+
+                <li class="opciones-bar-item">
+                    <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        <span>Show</span>
+                    </a>
+                </li>
+
+
+                <div class="opciones-bar-separator">Niveles Educaticos</div>
+
+                @foreach ($niveles as $nivel)
+                    @if (is_null($nivel->id_nivel))
+                        @include('layouts.nivel-item', ['nivel' => $nivel, 'niveles' => $niveles])
+                    @endif
+                @endforeach
+
+                <!--
+                @foreach (($niveles ?? []) as $nivel)
+                    @if (is_null($nivel->id_nivel))
+                        <li class="opciones-bar-item">
+                            <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                                <span>{{ $nivel->nombre }}</span>
+                            </a>
+                        </li>
+
+                        @foreach (($niveles ?? []) as $subnivel)
+                            @if ($subnivel->id_nivel === $nivel->id)
+                                <li class="opciones-bar-item subnivel">
+                                    <a class="opciones-bar-link">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                        <span>{{ $subnivel->nombre }}</span>
+                                    </a>
+                                </li>
+
+                                @foreach ($subnivel->cursos as $curso)
+                                    <li class="opciones-bar-item subnivel">
+                                        <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
+                                            <i class="fa-solid fa-calendar-plus"></i>
+                                            <span>{{ $curso->nombre }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
+-->
+                <!--
+                @foreach ($niveles as $nivel)
+                    <li class="opciones-bar-item">
+                        <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
+                            <i class="fa-solid fa-calendar-plus"></i>
+                            <span>{{ $nivel->nombre }}</span>
+                        </a>
+                    </li>
+                        @foreach ($nivel->cursos as $curso)
+                            <li class="opciones-bar-item">
+                                <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
+                                    <i class="fa-solid fa-calendar-plus"></i>
+                                    <span>{{ $curso->nombre }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                @endforeach -->
             </div>
 
             <div class="contenido">
@@ -175,7 +253,8 @@
                         <div class="center-text" style="margin-bottom: 10px;">
                             <h3>{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</h3>
                         </div>
-                        <p><strong>Correo: </strong> <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
+                        <p><strong>Correo: </strong>
+                            <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
                         <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
                         <p><strong>Fecha de nacimiento: </strong>
                             {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
@@ -520,16 +599,6 @@
 
     </script>
 
-    <!-- Script para mostrar/ocultar comentarios -->
-    <script>
-        $(document).ready(function () {
-            $('.btn-comentarios').click(function () {
-                const id = $(this).data('id');
-                $('#comentarios-' + id).slideToggle(); // cambia display entre none y block con animación
-            });
-        });
-    </script>
-
     <script>
         let selectedFiles = [];
 
@@ -670,30 +739,32 @@
     </script>
 
     <!-- Opciones/Reportar -->
+    <script src="{{ asset('/js/reportes.js') }}"></script>
+    <script src="{{ asset('/js/mostrar-comentarios.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleMenus = document.querySelectorAll('.ellipsis-btn');
+        $(document).ready(function () {
+            $('.like-btn').click(function () {
+                let button = $(this);
+                let icon = button.find('i');
+                let publicacionId = button.data('id');
 
-            toggleMenus.forEach(btn => {
-                btn.addEventListener('click', function (e) {
-                    e.stopPropagation(); // ¡evita que se cierre justo después!
+                $.ajax({
+                    url: '/publicaciones/' + publicacionId + '/like',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        // Actualizar contador
+                        button.siblings('.like-count').text(response.likes);
 
-                    const menu = this.nextElementSibling;
-
-                    // Cerrar todos menos el actual
-                    document.querySelectorAll('.menu-opciones').forEach(m => {
-                        if (m !== menu) m.style.display = 'none';
-                    });
-
-                    // Mostrar u ocultar este menú
-                    menu.style.display = (getComputedStyle(menu).display === 'none') ? 'flex' : 'none';
-                });
-            });
-
-            // Cierra todos los menús si haces clic fuera
-            document.addEventListener('click', function () {
-                document.querySelectorAll('.menu-opciones').forEach(menu => {
-                    menu.style.display = 'none';
+                        // Cambiar clase del ícono
+                        if (response.liked) {
+                            icon.removeClass('fa-regular').addClass('fa-solid').css('color', 'red');
+                        } else {
+                            icon.removeClass('fa-solid').addClass('fa-regular').css('color', 'black');
+                        }
+                    }
                 });
             });
         });

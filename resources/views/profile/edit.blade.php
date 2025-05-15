@@ -5,7 +5,7 @@
 
     <div class="perfil-body">
 
-        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">    
+        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
             <!-- Banner -->
             <div class="perfil-banner-container">
                 <div class="perfil-banner">
@@ -27,16 +27,16 @@
 
             <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <div class="info-perfil">
-                <h1 class="perfil-nombre">{{ Auth::check() ? Auth::user()->name : '' }}</h1>
-                <p class="perfil-descripcion">{{ Auth::check() ? Auth::user()->descripcion : '' }}</p>
-                <p class="perfil-email">{{ Auth::check() ? Auth::user()->email : '' }}</p>
-                <p class="perfil-telefono">{{ Auth::check() ? Auth::user()->telefono : '' }}</p>
-                <p class="perfil-fecha-nacimiento">{{ Auth::check() ? Auth::user()->fecha_nacimiento : '' }}</p>
-                <p class="perfil-rol">{{ Auth::check() ? Auth::user()->rol : '' }}</p>
+                    <h1 class="perfil-nombre">{{ Auth::check() ? Auth::user()->name : '' }}</h1>
+                    <p class="perfil-descripcion">{{ Auth::check() ? Auth::user()->descripcion : '' }}</p>
+                    <p class="perfil-email">{{ Auth::check() ? Auth::user()->email : '' }}</p>
+                    <p class="perfil-telefono">{{ Auth::check() ? Auth::user()->telefono : '' }}</p>
+                    <p class="perfil-fecha-nacimiento">{{ Auth::check() ? Auth::user()->fecha_nacimiento : '' }}</p>
+                    <p class="perfil-rol">{{ Auth::check() ? Auth::user()->rol : '' }}</p>
                 </div>
             </div>
         </div>
-        
+
         @php
             $hayPublicaciones = false;
         @endphp
@@ -54,9 +54,7 @@
                         </div>
                     @endif
 
-                    <!--
-
-&& $publicaciones->id_user == Auth::user()->id
+                    <!--&& $publicaciones->id_user == Auth::user()->id
 
                     @if(isset($publicaciones) && $publicaciones->isNotEmpty())
                         @foreach ($publicaciones as $publicacion)
@@ -79,4 +77,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal para imagen ampliada -->
+    <div id="modalImagen" class="modal-imagen" style="display:none;">
+        <span class="cerrar-modal" title="Cerrar">&times;</span>
+        <div class="modal-contenedor">
+            <img class="modal-contenido" id="imgAmpliada">
+
+            <div class="modal-acciones">
+                @auth
+                    @if(auth()->user())
+                        <a id="btnDescargarImagen" class="btn-descargar" href="#" target="_blank" title="Descargar imagen">
+                            <i class="icono-descarga"></i> Descargar
+                        </a>
+                    @endif
+                @endauth
+
+                <button id="btnCancelar" class="btn-cancelar" title="Cerrar">
+                    <i class="icono-cancelar"></i> Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('/js/publicacion-modal.js') }}"></script>
+
 </body>

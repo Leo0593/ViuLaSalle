@@ -16,64 +16,6 @@
         <div class="main">
             <div class="opciones">
                 @include('layouts.redirecciones', ['niveles' => $niveles])
-                <div class="opciones-bar-separator">Home</div>
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="/">
-                        <i class="fa-solid fa-house"></i>
-                        <span>Inicio</span>
-                    </a>
-                </li>
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('profile.edit') }}">
-                        <i class="fa-solid fa-user"></i>
-                        <span>Perfil</span>
-                    </a>
-                </li>
-
-                @auth
-                    @if (auth()->user()->role == 'ADMIN')
-                        <li class="opciones-bar-item">
-                            <a class="opciones-bar-link" href="{{ route('dashboard') }}">
-                                <i class="fa-solid fa-tachometer-alt"></i> <!-- Icono de dashboard -->
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                    @endif
-                @endauth
-
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('niveles.index') }}">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                        <span>Niveles Educativos</span>
-                    </a>
-                </li>
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('eventos.todos') }}">
-                        <i class="fa-solid fa-calendar"></i>
-                        <span>Eventos</span>
-                    </a>
-                </li>
-
-
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
-                        <i class="fa-solid fa-calendar-plus"></i>
-                        <span>Show</span>
-                    </a>
-                </li>
-
-
-                <div class="opciones-bar-separator">Niveles Educaticos</div>
-
-                @foreach ($niveles as $nivel)
-                    @if (is_null($nivel->id_nivel))
-                        @include('layouts.nivel-item', ['nivel' => $nivel, 'niveles' => $niveles])
-                    @endif
-                @endforeach
 
                 <!--
                 @foreach (($niveles ?? []) as $nivel)

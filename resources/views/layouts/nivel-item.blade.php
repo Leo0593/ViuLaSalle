@@ -4,7 +4,7 @@
         <span>{{ $nivel->nombre }}</span>
     </a>
 
-    <ul class="nivel-hijos" id="nivel-{{ $nivel->id }}" style="padding-left: 20px; margin-bottom: 0px; display: none;">
+    <ul class="nivel-hijos" id="nivel-{{ $nivel->id }}" style="padding-left: 20px; margin-bottom: 0px;">
         {{-- Mostrar cursos del nivel --}}
         @foreach ($nivel->cursos as $curso)
             <li class="opciones-bar-item subnivel" style="padding-left: 0px; margin-bottom: 0px;">

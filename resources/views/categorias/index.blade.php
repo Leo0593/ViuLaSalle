@@ -47,9 +47,10 @@
                 <!-- Buscar por nombre -->
                 <div class="col-md-4">
                     <div class="form-floating">
-                        <input type="text" name="nombre" id="nombre" class="form-control shadow-sm"
+                        <input type="text" name="nombre" id="filtro_nombre" class="form-control shadow-sm"
                             placeholder="Buscar por nombre..." value="{{ request('nombre') }}">
-                        <label for="nombre" class="form-label">Nombre de categoría</label>
+                        <label for="filtro_nombre" class="form-label">Nombre de categoría</label>
+
                     </div>
                 </div>
 
@@ -163,8 +164,8 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre">
+                                <label for="edit_nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="edit_nombre" name="nombre">
                             </div>
                             <button type="submit" class="btn btn-primary">Editar Categoria</button>
                         </form>
@@ -203,7 +204,7 @@
                     .then(response => response.json())
                     .then(data => {
                         // Llenamos el formulario con los datos de la categoría
-                        document.getElementById('nombre').value = data.nombre;
+                        document.getElementById('edit_nombre').value = data.nombre;
                         document.getElementById('editForm').action = `/categorias/${id}`;
                     })
                     .catch(error => console.log(error));
@@ -211,4 +212,3 @@
         </script>
 
 </body>
-

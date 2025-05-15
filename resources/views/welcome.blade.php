@@ -1,35 +1,5 @@
 @include('layouts.head')
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.like-btn').click(function () {
-            let button = $(this);
-            let icon = button.find('i');
-            let publicacionId = button.data('id');
-
-            $.ajax({
-                url: '/publicaciones/' + publicacionId + '/like',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                    // Actualizar contador
-                    button.siblings('.like-count').text(response.likes);
-
-                    // Cambiar clase del ícono
-                    if (response.liked) {
-                        icon.removeClass('fa-regular').addClass('fa-solid').css('color', 'red');
-                    } else {
-                        icon.removeClass('fa-solid').addClass('fa-regular').css('color', 'black');
-                    }
-                }
-            });
-        });
-    });
-</script>
-
 <body>
 
     @include('layouts.navheader')
@@ -84,7 +54,7 @@
                     </a>
                 </li>
 
-                
+
 
                 <li class="opciones-bar-item">
                     <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
@@ -280,7 +250,8 @@
                         <div class="center-text" style="margin-bottom: 10px;">
                             <h3>{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</h3>
                         </div>
-                        <p><strong>Correo: </strong> <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
+                        <p><strong>Correo: </strong>
+                            <!-- {{ Auth::check() ? Auth::user()->email : 'No disponible' }} --></p>
                         <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
                         <p><strong>Fecha de nacimiento: </strong>
                             {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
@@ -625,16 +596,6 @@
 
     </script>
 
-    <!-- Script para mostrar/ocultar comentarios -->
-    <script>
-        $(document).ready(function () {
-            $('.btn-comentarios').click(function () {
-                const id = $(this).data('id');
-                $('#comentarios-' + id).slideToggle(); // cambia display entre none y block con animación
-            });
-        });
-    </script>
-
     <script>
         let selectedFiles = [];
 
@@ -775,30 +736,32 @@
     </script>
 
     <!-- Opciones/Reportar -->
+    <script src="{{ asset('/js/reportes.js') }}"></script>
+    <script src="{{ asset('/js/mostrar-comentarios.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleMenus = document.querySelectorAll('.ellipsis-btn');
+        $(document).ready(function () {
+            $('.like-btn').click(function () {
+                let button = $(this);
+                let icon = button.find('i');
+                let publicacionId = button.data('id');
 
-            toggleMenus.forEach(btn => {
-                btn.addEventListener('click', function (e) {
-                    e.stopPropagation(); // ¡evita que se cierre justo después!
+                $.ajax({
+                    url: '/publicaciones/' + publicacionId + '/like',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        // Actualizar contador
+                        button.siblings('.like-count').text(response.likes);
 
-                    const menu = this.nextElementSibling;
-
-                    // Cerrar todos menos el actual
-                    document.querySelectorAll('.menu-opciones').forEach(m => {
-                        if (m !== menu) m.style.display = 'none';
-                    });
-
-                    // Mostrar u ocultar este menú
-                    menu.style.display = (getComputedStyle(menu).display === 'none') ? 'flex' : 'none';
-                });
-            });
-
-            // Cierra todos los menús si haces clic fuera
-            document.addEventListener('click', function () {
-                document.querySelectorAll('.menu-opciones').forEach(menu => {
-                    menu.style.display = 'none';
+                        // Cambiar clase del ícono
+                        if (response.liked) {
+                            icon.removeClass('fa-regular').addClass('fa-solid').css('color', 'red');
+                        } else {
+                            icon.removeClass('fa-solid').addClass('fa-regular').css('color', 'black');
+                        }
+                    }
                 });
             });
         });

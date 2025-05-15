@@ -3,14 +3,14 @@
 <body>
     @include('layouts.navheader')
 
-    <div class="container mt-header pt-3">
+    <div class="container pt-3">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
 
-        <div class="container py-4">
+        <div class="container">
             <!-- Hero Section -->
             <div class="body-container hero-section p-4 mb-4 rounded-4 shadow-sm"
                 style="background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);">
@@ -377,6 +377,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
 </body>

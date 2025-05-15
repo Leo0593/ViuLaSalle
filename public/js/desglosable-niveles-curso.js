@@ -8,13 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const hijos = document.getElementById(`nivel-${nivelId}`);
             const icon = this.querySelector('.toggle-icon');
 
-            if (hijos.style.display === 'none') {
-                hijos.style.display = 'block';
-                icon.textContent = '▼';
-            } else {
-                hijos.style.display = 'none';
-                icon.textContent = '▶';
-            }
+            const isVisible = hijos.style.display !== 'none';
+            hijos.style.display = isVisible ? 'none' : 'block';
+
+            icon.classList.toggle('rotated', !isVisible);
         });
     });
 });

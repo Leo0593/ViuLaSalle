@@ -1,3 +1,7 @@
+@php 
+    $niveles = $niveles ?? [];
+@endphp
+
 <header>
     <div class="header-content">
         <button class="btn-header back scale-btn" onclick="history.back()">
@@ -15,6 +19,10 @@
 </header>
 
 <aside id="sidebar">
+    @include('layouts.redirecciones', ['niveles' => $niveles])
+
+
+    <!--
     <ul class="sidebar-nav">
 
         <div class="sidebar-separator">Home</div>
@@ -56,5 +64,5 @@
                 <span>Salir</span>
             </a>
         </div>
-    </ul>
+    </ul> -->
 </aside>

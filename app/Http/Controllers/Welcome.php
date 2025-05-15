@@ -41,8 +41,6 @@ class Welcome extends Controller
 
         return view('welcome', compact('user', 'publicaciones', 'nopublicaciones', 'eventos', 'categorias', 'categoriasSugeridas', 'notificaciones', 'niveles', 'cursos'));
     }
-
-    
     
     /**
      * Show the form for creating a new resource.

@@ -32,7 +32,9 @@
 
 <body>
 
-    @include('layouts.navheader')
+    @include('layouts.navheader', ['niveles' => $niveles])
+
+
     <!-- Mostrar la alerta si hay un mensaje de error en la sesión -->
     @if (session('error'))
         <script>
@@ -43,114 +45,7 @@
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
             <div class="opciones">
-                <div class="opciones-bar-separator">Home</div>
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="/">
-                        <i class="fa-solid fa-house"></i>
-                        <span>Inicio</span>
-                    </a>
-                </li>
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('profile.edit') }}">
-                        <i class="fa-solid fa-user"></i>
-                        <span>Perfil</span>
-                    </a>
-                </li>
-
-                @auth
-                    @if (auth()->user()->role == 'ADMIN')
-                        <li class="opciones-bar-item">
-                            <a class="opciones-bar-link" href="{{ route('dashboard') }}">
-                                <i class="fa-solid fa-tachometer-alt"></i> <!-- Icono de dashboard -->
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                    @endif
-                @endauth
-
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('niveles.index') }}">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                        <span>Niveles Educativos</span>
-                    </a>
-                </li>
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('eventos.todos') }}">
-                        <i class="fa-solid fa-calendar"></i>
-                        <span>Eventos</span>
-                    </a>
-                </li>
-
-                
-
-                <li class="opciones-bar-item">
-                    <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
-                        <i class="fa-solid fa-calendar-plus"></i>
-                        <span>Show</span>
-                    </a>
-                </li>
-
-
-                <div class="opciones-bar-separator">Niveles Educaticos</div>
-
-                @foreach ($niveles as $nivel)
-                    @if (is_null($nivel->id_nivel))
-                        @include('layouts.nivel-item', ['nivel' => $nivel, 'niveles' => $niveles])
-                    @endif
-                @endforeach
-
-                <!--
-                @foreach (($niveles ?? []) as $nivel)
-                    @if (is_null($nivel->id_nivel))
-                        <li class="opciones-bar-item">
-                            <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
-                                <i class="fa-solid fa-calendar-plus"></i>
-                                <span>{{ $nivel->nombre }}</span>
-                            </a>
-                        </li>
-
-                        @foreach (($niveles ?? []) as $subnivel)
-                            @if ($subnivel->id_nivel === $nivel->id)
-                                <li class="opciones-bar-item subnivel">
-                                    <a class="opciones-bar-link">
-                                        <i class="fa-solid fa-angle-right"></i>
-                                        <span>{{ $subnivel->nombre }}</span>
-                                    </a>
-                                </li>
-
-                                @foreach ($subnivel->cursos as $curso)
-                                    <li class="opciones-bar-item subnivel">
-                                        <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
-                                            <i class="fa-solid fa-calendar-plus"></i>
-                                            <span>{{ $curso->nombre }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            @endif
-                        @endforeach
-                    @endif
-                @endforeach
--->
-                <!--
-                @foreach ($niveles as $nivel)
-                    <li class="opciones-bar-item">
-                        <a class="opciones-bar-link" href="{{ route('niveles.show', $nivel->id) }}">
-                            <i class="fa-solid fa-calendar-plus"></i>
-                            <span>{{ $nivel->nombre }}</span>
-                        </a>
-                    </li>
-                        @foreach ($nivel->cursos as $curso)
-                            <li class="opciones-bar-item">
-                                <a class="opciones-bar-link" href="{{ route('cursos.show', $curso->id) }}">
-                                    <i class="fa-solid fa-calendar-plus"></i>
-                                    <span>{{ $curso->nombre }}</span>
-                                </a>
-                            </li>
-                        @endforeach
-                @endforeach -->
+                @include('layouts.redirecciones', ['niveles' => $niveles])
             </div>
 
             <div class="contenido">

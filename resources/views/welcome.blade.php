@@ -1,8 +1,8 @@
 @include('layouts.head')
 
 <body>
-    {{-- Vista Mobil --}}
-    @include('layouts.navheader', ['niveles' => $niveles])
+    {{-- Vista Movil --}}
+    @include('layouts.navheader', ['niveles' => $niveles, 'notificaciones' => $notificaciones])
 
     <!-- Mostrar la alerta si hay un mensaje de error en la sesión -->
     @if (session('error'))
@@ -518,19 +518,50 @@
     <!-- Ventana de notificaciones -->
     <script>
         function toggleNotificaciones() {
-            const ventana = document.getElementById("ventanaNotificaciones");
-            ventana.style.display = ventana.style.display === "block" ? "none" : "block";
+            const ventanas = document.querySelectorAll("#ventanaNotificaciones");
+
+            let algunaVisible = false;
+            ventanas.forEach(ventana => {
+                if (ventana.classList.contains("show")) {
+                    algunaVisible = true;
+                }
+            });
+
+            ventanas.forEach(ventana => {
+                if (algunaVisible) {
+                    ventana.classList.remove("show");
+                } else {
+                    ventana.classList.add("show");
+                }
+            });
         }
 
-        // Cerrar si haces clic fuera
         document.addEventListener("click", function (event) {
-            const ventana = document.getElementById("ventanaNotificaciones");
-            const boton = document.querySelector(".notif-btn");
-            if (!ventana.contains(event.target) && !boton.contains(event.target)) {
-                ventana.style.display = "none";
+            const ventanas = document.querySelectorAll("#ventanaNotificaciones");
+            const botones = document.querySelectorAll(".notif-btn");
+
+            let dentroDeVentanaOBoton = false;
+
+            ventanas.forEach(ventana => {
+                if (ventana.contains(event.target)) {
+                    dentroDeVentanaOBoton = true;
+                }
+            });
+
+            botones.forEach(boton => {
+                if (boton.contains(event.target)) {
+                    dentroDeVentanaOBoton = true;
+                }
+            });
+
+            if (!dentroDeVentanaOBoton) {
+                ventanas.forEach(ventana => {
+                    ventana.classList.remove("show");
+                });
             }
         });
     </script>
+
 
     <!-- Opciones/Reportar -->
     <script src="{{ asset('/js/reportes.js') }}"></script>

@@ -1,5 +1,8 @@
 @php 
+    use Illuminate\Support\Collection;
+
     $niveles = $niveles ?? [];
+    $notificaciones = collect($notificaciones ?? []);
 @endphp
 
 <header>
@@ -19,7 +22,7 @@
 </header>
 
 <aside id="sidebar">
-    @include('layouts.welcome-perfil')
+    @include('layouts.welcome-perfil', ['notificaciones' => $notificaciones])
 
     <br><br>
     @include('layouts.redirecciones', ['niveles' => $niveles])

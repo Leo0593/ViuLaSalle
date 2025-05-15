@@ -1,7 +1,7 @@
 @if (Auth::check())
-    <div style="width: 100%; display: flex; gap: 10px; flex-direction: column; margin-bottom:20px;">
+    <div style="width: 100%; display: flex; gap: 20px; flex-direction: column; margin-bottom:30px;">
                         <div class="notif-container">
-                            <a class="botones-new-1  notif-btn" style="color:white !important;"
+                            <a class="botones-new-1 perfil-botones  notif-btn" style="color:white !important;"
                                 onclick="toggleNotificaciones()">
                                 <i class="fa-solid fa-bell" style="margin-right: 5px;"></i>
                                 Notificaciones
@@ -9,7 +9,7 @@
 
                             <div class="notif-window" id="ventanaNotificaciones">
                                 <ul>
-                                    @if ($notificaciones->isEmpty())
+                                    @if (empty($notificaciones))
                                         <li>
                                             <i class="fa fa-exclamation" aria-hidden="true"></i>
                                             <div class="notif-content">
@@ -34,13 +34,13 @@
                         </div>
 
                         <!-- Botón Editar Perfil -->
-                        <a class="botones-new-1" href="{{ route('profile.edit') }}"
-                            style="background-color: #0d6efd; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+                        <a class="botones-new-1 perfil-botones" href="{{ route('profile.edit') }}"
+                            style="background-color: #0d6efd;">
                             <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
                         </a>
 
-                        <a class="botones-new-1" href="{{ route('colecciones.misgrupos') }}"
-                            style="background-color: #ffb706; color: white; padding: 8px 16px; border: none; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+                        <a class="botones-new-1 perfil-botones" href="{{ route('colecciones.misgrupos') }}"
+                            style="background-color: #ffb706;">
                             <i class="fa fa-users" style="margin-right: 5px;">
                             </i> Mis Grupos
                         </a>
@@ -48,8 +48,8 @@
                         <!-- Botón Cerrar Sesión -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button class="botones-new-1" type="submit"
-                                style="background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                            <button class="botones-new-1 perfil-botones" type="submit"
+                                style="background-color: #dc3545;">
                                 <i class="fa fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión
                             </button>
                         </form>

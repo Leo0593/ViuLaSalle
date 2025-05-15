@@ -1639,7 +1639,7 @@ textarea#publicacion-texto {
 
 .clase-banner {
     width: 90%;
-    aspect-ratio: 16 / 6;
+    aspect-ratio: 16 / 9;
 
     background-image: linear-gradient(to top, rgba(2, 77, 223, 1), rgba(0, 0, 0, 0) 65%), url("../../img/dam2.jpg");
 

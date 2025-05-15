@@ -253,7 +253,7 @@
                 setTimeout(() => { body.style.maxHeight = null; }, 400);
                 }
             });
-            }); 
+        }); 
     </script>
     
     @include('layouts.footer')

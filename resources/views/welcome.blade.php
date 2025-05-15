@@ -1,9 +1,8 @@
 @include('layouts.head')
 
 <body>
-
+    {{-- Vista Mobil --}}
     @include('layouts.navheader', ['niveles' => $niveles])
-
 
     <!-- Mostrar la alerta si hay un mensaje de error en la sesión -->
     @if (session('error'))
@@ -15,6 +14,7 @@
     <div style="display: flex; align-items: center; justify-content: center;">
         <div class="main">
             <div class="opciones">
+                {{-- Vista Desktop --}}
                 @include('layouts.redirecciones', ['niveles' => $niveles])
             </div>
 

@@ -449,6 +449,7 @@ a.sidebar-link:hover {
 .opciones::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+/*
 .opciones::after {
     content: "";
     position: absolute;
@@ -457,7 +458,7 @@ a.sidebar-link:hover {
     width: 1px;
     height: 100%;
     background-color: rgb(200, 200, 200);
-}
+}*/
 
 .contenido {
     background-color: white;

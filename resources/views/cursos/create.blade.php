@@ -32,41 +32,36 @@
         </select>
         <br><br>
 
-        <!-- Nombre del curso -->
+        <!-- Nombre -->
         <label for="nombre">Nombre del curso:</label>
-        <input type="text" name="nombre" id="nombre" required>
+        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" maxlength="255" required>
         <br><br>
 
-        <!-- Duración -->
-        <label for="duracion">Duración:</label>
-        <input type="text" name="duracion" id="duracion" placeholder="Ej: 2 años">
+        <!-- Título -->
+        <label for="titulo">Título:</label>
+        <input type="text" name="titulo" id="titulo" value="{{ old('titulo') }}" required>
         <br><br>
 
-        <!-- Posibilidades de continuidad -->
-        <label for="posibilidades_continuidad">Posibilidades de continuidad:</label>
-        <textarea name="posibilidades_continuidad" id="posibilidades_continuidad" rows="4" cols="50"
-            placeholder="Describe las posibilidades"></textarea>
+        <!-- Descripción -->
+        <label for="descripcion">Descripción:</label><br>
+        <textarea name="descripcion" id="descripcion" rows="5" required>{{ old('descripcion') }}</textarea>
         <br><br>
 
-        <!-- Sector Profesional -->
-        <label for="sector_profesional">Sector profesional:</label>
-        <input type="text" name="sector_profesional" id="sector_profesional">
+        <!-- PDF -->
+        <label for="pdf">PDF del curso:</label>
+        <input type="file" name="pdf" id="pdf" accept=".pdf">
+        <br><br>
+        
+        <!-- Imagen -->
+        <label for="img">Imagen del curso:</label>
+        <input type="file" name="img" id="img" accept="image/*">
+        <br><br> 
+
+        <!-- Video -->
+        <label for="video">Video (URL o código embebido):</label>
+        <input type="text" name="video" id="video" value="{{ old('video') }}" maxlength="255">
         <br><br>
 
-        <!-- Salidas Profesionales -->
-        <label for="salidas_profesionales">Salidas profesionales:</label>
-        <textarea name="salidas_profesionales" id="salidas_profesionales" rows="4" cols="50"></textarea>
-        <br><br>
-
-        <!-- Asignaturas (PDF) -->
-        <label for="asignaturas_pdf">Asignaturas principales (PDF):</label>
-        <input type="file" name="asignaturas_pdf" id="asignaturas_pdf" accept="application/pdf">
-        <br><br>
-
-        <!-- Subida de imágenes -->
-        <label for="fotos">Subir imágenes:</label>
-        <input type="file" name="fotos[]" id="fotos" multiple accept="image/*">
-        <br><br>
 
         <!-- Botón de envío -->
         <button type="submit">Guardar curso</button>

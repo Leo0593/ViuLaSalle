@@ -27,9 +27,13 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Nivel educativo</th>
                 <th>Estado</th>
-                <th>Imágenes</th>
+                <th>Imagen</th>
+                <th>Video</th>
+                <th>PDF</th>
+                <th>Titulo</th>
+                <th>Descripción</th>
+                
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -38,9 +42,15 @@
                 <tr>
                     <td>{{ $curso->id }}</td>
                     <td>{{ $curso->nombre }}</td>
-                    <td>{{ $curso->nivelEducativo->nombre ?? 'N/A' }}</td>
                     <td>{{ $curso->status ? 'Activo' : 'Inactivo' }}</td>
                     <td>
+                        @if($curso->img)
+                            <img src="{{ asset('storage/' . $curso->img) }}" alt="imagen curso" width="80"
+                                style="margin: 5px;">
+                        @else
+                            <span>Sin imagen</span>
+                        @endif
+                        <!--
                         @if($curso->fotos->count())
                             @foreach($curso->fotos as $foto)
                                 <img src="{{ asset('storage/' . $foto->ruta_imagen) }}" alt="foto curso" width="80"
@@ -48,8 +58,32 @@
                             @endforeach
                         @else
                             <span>Sin imágenes</span>
+                        @endif -->
+                    </td>
+                    <td>
+                        @if($curso->video)
+                            <video width="80" controls>
+                                <source src="{{ asset('storage/' . $curso->video) }}" type="video/mp4">
+                                Tu navegador no soporta el elemento de video.
+                            </video>
+                        @else
+                            <span>Sin video</span>
                         @endif
                     </td>
+                    <td>
+                        @if($curso->pdf)
+                            <a href="{{ asset('storage/' . $curso->pdf) }}" target="_blank">Ver PDF</a>
+                        @else
+                            <span>Sin PDF</span>
+                        @endif
+                    </td>
+                    <td>
+                        {{ $curso->titulo }}
+                    </td> 
+                    <td>
+                        {{ $curso->descripcion }}
+                    </td>
+                    
                     <td>
                         <!-- Botón de ver más -->
                         <a href="{{ route('cursos.show', $curso->id) }}">

@@ -12,7 +12,6 @@ use App\Models\FotoCurso;
 
 class CursoController extends Controller
 {
-
     public function index(Request $request)
     {
         $user = auth()->user();
@@ -36,19 +35,6 @@ class CursoController extends Controller
         return view('cursos.index', compact('cursos', 'user'));
     }
 
-    /*public function index()
-    {
-        $user = auth()->user();
-
-        if ($user->role === 'ADMIN') {
-            $cursos = Curso::with('nivelEducativo', 'fotos')->get();
-        } else {
-            $cursos = Curso::with('nivelEducativo', 'fotos')->where('status', 1)->get();
-        }
-
-        return view('cursos.index', compact('cursos', 'user'));
-    }*/
-
     public function create()
     {
         $niveles = NivelEducativo::all();
@@ -57,51 +43,81 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        // Validar datos y archivo PDF
+        $validated = $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
             'nombre' => 'required|string|max:255',
-            'duracion' => 'nullable|string|max:100',
-            'posibilidades_continuidad' => 'nullable|string',
-            'sector_profesional' => 'nullable|string|max:255',
-            'salidas_profesionales' => 'nullable|string',
-            'asignaturas_pdf' => 'nullable|mimes:pdf|max:2048',
-            'fotos' => 'nullable|array',
-            'fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'titulo' => 'required|string',
+            'descripcion' => 'required|string',
+            'video' => 'nullable|string|max:255',
+            'pdf' => 'nullable|file|mimes:pdf|max:10000',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Subida del PDF (si se envió)
-        $pdfPath = null;
-        if ($request->hasFile('asignaturas_pdf')) {
-            $pdfPath = $request->file('asignaturas_pdf')->store('asignaturas_pdfs', 'public');
+        // Si llega la imagen, subir y guardar la ruta
+        $imgPath = null;
+        if ($request->hasFile('img')) {
+            $imgPath = $request->file('img')->store('imagenes_cursos', 'public');
         }
 
         // Crear el curso
         $curso = Curso::create([
             'id_nivel' => $request->id_nivel,
             'nombre' => $request->nombre,
-            'duracion' => $request->duracion,
-            'posibilidades_continuidad' => $request->posibilidades_continuidad,
-            'sector_profesional' => $request->sector_profesional,
-            'salidas_profesionales' => $request->salidas_profesionales,
-            'asignaturas_pdf' => $pdfPath,
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'video' => $request->video,
+            'img' => $imgPath,
+            
             'status' => 1,
         ]);
 
-        // Subir y guardar las fotos (si se enviaron)
-        if ($request->hasFile('fotos')) {
-            foreach ($request->file('fotos') as $foto) {
-                $path = $foto->store('fotos_cursos', 'public');
+        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
+    }
 
-                FotoCurso::create([
-                    'curso_id' => $curso->id,
-                    'ruta_imagen' => $path,
-                ]);
-            }
+
+
+    /*
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_nivel' => 'required|exists:nivel_educativo,id',
+            'nombre' => 'required|string|max:255',
+            'titulo' => 'required|string',
+            'descripcion' => 'required|string',
+            'img' => 'nullable|string|max:255',
+            'video' => 'nullable|string|max:255',
+            'pdf' => 'nullable|file|mimes:pdf|max:10000',
+        ]); 
+
+     
+        if ($request->hasFile('img')) {
+            $imgPath = $request->file('img')->store('imagenes_cursos', 'public');
+        } else {
+            $imgPath = null;
         }
 
-        return redirect()->route('cursos.index')->with('success', 'Publicación creada correctamente.');
+        
+        $pdfPath = null;
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store('pdf_cursos', 'public');
+        }
 
+        // Crear el curso
+        $curso = Curso::create([
+            'id_nivel' => $request->id_nivel,
+            'nombre' => $request->nombre,
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'img' => $request->img,
+            'video' => $request->video,
+            'pdf' => $pdfPath,
+            'status' => 1,
+        ]);
+
+        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
     }
+    */
 
     public function edit(string $id)
     {
@@ -115,72 +131,66 @@ class CursoController extends Controller
     {
         $curso = Curso::findOrFail($id);
 
+        try {
+            $validated = $request->validate([
+                'id_nivel' => 'required|exists:nivel_educativo,id',
+                'nombre' => 'required|string|max:255',
+                'titulo' => 'required|string|max:255',
+                'descripcion' => 'required|string',
+                'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'pdf' => 'nullable|file|mimes:pdf|max:10000',
+                'video' => 'nullable|string|max:255',
+                'delete_pdf' => 'nullable|boolean',
+            ]);
+        } catch (\Exception $e) {
+            dd('Error en validación: ', $e->getMessage());
+        }
+
+        /*
         $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
             'nombre' => 'required|string|max:255',
-            'duracion' => 'nullable|string|max:100',
-            'posibilidades_continuidad' => 'nullable|string',
-            'sector_profesional' => 'nullable|string|max:255',
-            'salidas_profesionales' => 'nullable|string',
-            'fotos' => 'nullable|array',
-            'fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'delete_fotos' => 'nullable|array',
-            'asignaturas_pdf' => 'nullable|file|mimes:pdf|max:2048',
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'pdf' => 'nullable|file|mimes:pdf|max:10000',
+            'video' => 'nullable|string|max:255',
             'delete_pdf' => 'nullable|boolean',
-        ]);
+        ]); */
 
-        // Actualizar curso
-        $curso->update([
-            'id_nivel' => $request->id_nivel,
-            'nombre' => $request->nombre,
-            'duracion' => $request->duracion,
-            'posibilidades_continuidad' => $request->posibilidades_continuidad,
-            'sector_profesional' => $request->sector_profesional,
-            'salidas_profesionales' => $request->salidas_profesionales,
-        ]);
-
-        // Eliminar fotos seleccionadas
-        if ($request->has('delete_fotos')) {
-            foreach ($request->delete_fotos as $fotoId) {
-                $foto = FotoCurso::find($fotoId);
-                if ($foto) {
-                    Storage::disk('public')->delete($foto->ruta_imagen);
-                    $foto->delete();
-                }
+        // Subir nueva imagen si se cargó
+        if ($request->hasFile('img')) {
+            if ($curso->img) {
+                Storage::disk('public')->delete($curso->img);
             }
+            $imgPath = $request->file('img')->store('imagenes_cursos', 'public');
+            $curso->img = $imgPath;
         }
 
-        // Agregar nuevas fotos
-        if ($request->hasFile('fotos')) {
-            foreach ($request->file('fotos') as $foto) {
-                $path = $foto->store('fotos_cursos', 'public');
-                FotoCurso::create([
-                    'curso_id' => $curso->id,
-                    'ruta_imagen' => $path,
-                ]);
+        // Eliminar PDF existente si se solicitó
+        if ($request->boolean('delete_pdf') && $curso->pdf) {
+            Storage::disk('public')->delete($curso->pdf);
+            $curso->pdf = null;
+        }
+
+        // Subir nuevo PDF si se cargó
+        if ($request->hasFile('pdf')) {
+            if ($curso->pdf) {
+                Storage::disk('public')->delete($curso->pdf);
             }
+            $pdfPath = $request->file('pdf')->store('pdf_cursos', 'public');
+            $curso->pdf = $pdfPath;
         }
 
-        // Eliminar PDF existente si se marcó
-        if ($request->has('delete_pdf') && $curso->asignaturas_pdf) {
-            Storage::disk('public')->delete($curso->asignaturas_pdf);
-            $curso->asignaturas_pdf = null;
-            $curso->save();
-        }
+        // Actualizar campos
+        $curso->id_nivel = $request->id_nivel;
+        $curso->nombre = $request->nombre;
+        $curso->titulo = $request->titulo;
+        $curso->descripcion = $request->descripcion;
+        $curso->video = $request->video;
+        $curso->save();
 
-        // Subir nuevo PDF
-        if ($request->hasFile('asignaturas_pdf')) {
-            // Borrar anterior si existe
-            if ($curso->asignaturas_pdf) {
-                Storage::disk('public')->delete($curso->asignaturas_pdf);
-            }
-
-            $pdfPath = $request->file('asignaturas_pdf')->store('pdf_asignaturas', 'public');
-            $curso->asignaturas_pdf = $pdfPath;
-            $curso->save();
-        }
-
-        return redirect()->route('cursos.index')->with('success', 'Curso actualizado correctamente.');
+        //return redirect()->route('cursos.index')->with('success', 'Curso actualizado correctamente.');
     }
 
 

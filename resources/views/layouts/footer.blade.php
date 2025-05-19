@@ -5,31 +5,35 @@
         AOS.init();
     </script>
 
-    <div class="cookies">
-        <div class="cookies-i">
-            <i class="fas fa-cookie-bite"></i>
-        </div>
-        <div class="cookies-separetor">
-            <div class="cookies-texto">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-cookie-bite"></i>
-                    <h1>Cookies</h1>
+    @guest
+        <div class="cookies" id="cookie-banner" style="display: none;">
+            <div class="cookies-i">
+                <i class="fas fa-cookie-bite"></i>
+            </div>
+            <div class="cookies-separetor">
+                <div class="cookies-texto">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-cookie-bite"></i>
+                        <h1>Cookies</h1>
+                    </div>
+                    <p>Utilizamos cookies para mejorar tu experiencia en nuestro sitio web. Al continuar navegando, aceptas
+                        nuestra política de cookies.</p>
                 </div>
-                <p>Utilizamos cookies para mejorar tu experiencia en nuestro sitio web. Al continuar navegando, aceptas nuestra política de cookies.</p>
-            </div>
-            <div class="cookies-btns">
-                <button class="btn-cookies">Aceptar</button>
-                <button class="btn-cookies">Rechazar</button>
-                <button class="btn-cookies">Configurar</button>
+                <div class="cookies-btns">
+                    <button class="btn-cookies" id="accept-cookies">Aceptar</button>
+                    <button class="btn-cookies" id="reject-cookies">Rechazar</button>
+                    <button class="btn-cookies" id="config-cookies">Configurar</button>
+                </div>
             </div>
         </div>
-    </div>
+    @endguest
 
     <div class="contactanos">
         <div class="contactanos-texto">
             <div style="text-align: left;">
                 <h1>Contacta con nosotros</h1>
-                <p>Nos gustaría saber de ti. Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto con nosotros.</p>
+                <p>Nos gustaría saber de ti. Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto con
+                    nosotros.</p>
             </div>
             <div>
                 <button class="btn-contactanos">
@@ -66,7 +70,7 @@
                     <i class="fab fa-linkedin-in"></i>
                 </div>
             </a>
-            
+
         </div>
     </div>
 
@@ -86,21 +90,48 @@
             <a href="https://qualitat.creaescola.com" class="dataobject"></a>
         </div>
         <div class="mapa">
-            <iframe
-                tittle="Colegio La Salle Mollerussa" 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2982.177880707791!2d0.8922258913168474!3d41.63028636755688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a6eadb0ad18831%3A0x1b5c60471a879bde!2sColegio%20La%20Salle!5e0!3m2!1ses!2ses!4v1746696852924!5m2!1ses!2ses" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
+            <iframe tittle="Colegio La Salle Mollerussa"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2982.177880707791!2d0.8922258913168474!3d41.63028636755688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a6eadb0ad18831%3A0x1b5c60471a879bde!2sColegio%20La%20Salle!5e0!3m2!1ses!2ses!4v1746696852924!5m2!1ses!2ses"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
         </div>
     </div>
     <div class="detalles">
-        © 2025 La Salle Mollerussa · Avís legal · Política de privadesa · Política de cookies · <i class="fas fa-laptop"></i> Creaescola.com
+        © 2025 La Salle Mollerussa · Avís legal · Política de privadesa · Política de cookies · <i
+            class="fas fa-laptop"></i> Creaescola.com
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const banner = document.getElementById("cookie-banner");
+            const btnAccept = document.getElementById("accept-cookies");
+            const btnReject = document.getElementById("reject-cookies");
+            const btnConfig = document.getElementById("config-cookies");
+
+            // Mostrar banner solo si no hay consentimiento guardado
+            if (!localStorage.getItem("cookieConsent")) {
+                banner.style.display = "flex"; // según tu diseño el container es flex
+            }
+
+            btnAccept.addEventListener("click", () => {
+                localStorage.setItem("cookieConsent", "accepted");
+                banner.style.display = "none";
+                // Aquí podrías agregar lógica extra, por ej. enviar evento a analytics
+            });
+
+            btnReject.addEventListener("click", () => {
+                localStorage.setItem("cookieConsent", "rejected");
+                banner.style.display = "none";
+                // También podrías bloquear cookies no esenciales aquí
+            });
+
+            btnConfig.addEventListener("click", () => {
+                alert("Aquí podrías abrir un modal para configuración avanzada de cookies.");
+                // Si querés te ayudo a crear ese modal también
+            });
+        });
+    </script>
 
     <style>
         .cookies {
@@ -115,6 +146,7 @@
             bottom: 0;
             left: 0;
         }
+
         .cookies-i {
             width: 167px;
             height: 167px;
@@ -123,9 +155,11 @@
             align-items: center;
             margin-right: 20px;
         }
+
         .cookies-i i {
             font-size: 167px;
         }
+
         .cookies-texto {
             width: 100%;
             padding: 0px 20px;
@@ -135,16 +169,19 @@
             gap: 5px;
             text-align: left;
         }
+
         .cookies-texto h1 {
             font-size: 45px;
             font-weight: 700;
             margin-bottom: 10px;
         }
+
         .cookies-texto p {
             font-size: 20px;
             font-weight: 500;
             margin-bottom: 10px;
         }
+
         .cookies-texto i {
             display: none;
         }
@@ -156,6 +193,7 @@
             align-items: center;
             gap: 20px;
         }
+
         .btn-cookies {
             width: 100%;
             background-color: #0053aa;
@@ -168,12 +206,15 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .btn-cookies:hover, .btn-cookies:focus {
+
+        .btn-cookies:hover,
+        .btn-cookies:focus {
             transform: scale(1.05);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             background-color: white;
             color: #0053aa;
         }
+
         .cookies-separetor {
             width: 100%;
             display: flex;
@@ -181,21 +222,25 @@
             align-items: center;
             gap: 20px;
         }
+
         @media screen and (max-width: 1000px) {
             .cookies {
                 padding: 20px 20px;
                 gap: 10px;
             }
+
             .cookies-texto {
                 width: 100%;
                 padding: 0px;
             }
+
             .cookies-btns {
                 width: 100%;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
             }
+
             .cookies-separetor {
                 width: 100%;
                 display: flex;
@@ -208,13 +253,15 @@
                 font-size: 35px;
                 margin-bottom: 5px;
             }
+
             .cookies-texto p {
                 font-size: 15px;
             }
-            
+
             .cookies-i {
                 display: none;
             }
+
             .cookies-texto i {
                 display: block;
                 font-size: 35px;
@@ -231,6 +278,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .redes {
             background-color: white;
             padding: 30px 70px 20px 70px;
@@ -242,6 +290,7 @@
             border: 5px solid #ffc107;
             border-bottom: none;
         }
+
         .contactanos-texto {
             width: 100%;
             padding: 50px 90px;
@@ -250,23 +299,28 @@
             align-items: center;
             gap: 20px;
         }
+
         @media screen and (max-width: 1000px) {
             .redes {
                 max-width: 90%;
                 height: 100px;
             }
+
             .contactanos-texto {
                 width: 100%;
                 padding: 40px 20px;
             }
+
             .contactanos-texto p {
                 font-size: 1rem !important;
             }
         }
+
         .redes a {
             text-decoration: none;
         }
-        .redes-circle{
+
+        .redes-circle {
             color: white;
             background-color: #0053aa;
 
@@ -282,7 +336,9 @@
             border-radius: 50%;
             transition: all 0.3s ease;
         }
-        .redes-circle:hover, .redes-circle:focus {
+
+        .redes-circle:hover,
+        .redes-circle:focus {
             transform: scale(1.1);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             background-color: #ffc107;
@@ -294,6 +350,7 @@
             font-weight: 700;
             margin-bottom: 18px;
         }
+
         .contactanos-texto p {
             font-size: 1.2rem;
             margin-bottom: 0;
@@ -309,28 +366,33 @@
             border-radius: 35px;
             cursor: pointer;
             transition: all 0.3s ease;
-            
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 10px;
         }
+
         .btn-contactanos i {
             font-size: 40px;
         }
-        .btn-contactanos:hover, .btn-contactanos:focus {
+
+        .btn-contactanos:hover,
+        .btn-contactanos:focus {
             transform: scale(1.05);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             background-color: #ffc107;
             color: #0053aa;
         }
+
         @media screen and (max-width: 1000px) {
             .btn-contactanos {
                 padding: 15px 20px;
                 font-size: 16px;
                 border-radius: 25px;
             }
+
             .btn-contactanos i {
                 font-size: 30px;
             }
@@ -346,6 +408,7 @@
             font-weight: 300;
             padding: 25px 0;
         }
+
         @media (max-width: 1000px) {
             .detalles {
                 font-size: 12px;
@@ -365,30 +428,38 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
-        .datos, .mapa {
+
+        .datos,
+        .mapa {
             box-sizing: border-box;
         }
+
         .datos {
             font-size: 17px;
             padding: 0px 40px;
             display: flex;
             justify-content: space-between;
-            align-items: center; 
+            align-items: center;
         }
+
         .mapa {
             border-radius: 15px;
             overflow: hidden;
             height: 300px;
         }
+
         @media (max-width: 1000px) {
             .informacion {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            .datos, .mapa {
+
+            .datos,
+            .mapa {
                 width: 100%;
             }
-            .datos{
+
+            .datos {
                 padding: 0px;
             }
         }
@@ -397,22 +468,25 @@
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 25px;
-            text-align: left; 
+            text-align: left;
         }
+
         .datos ul {
-            list-style: none; 
-            padding: 0;       
+            list-style: none;
+            padding: 0;
             margin: 0;
         }
+
         .datos li {
             display: flex;
-            align-items: center;  
-            gap: 8px;             
-            margin-bottom: 8px;  
-            text-align: left; 
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            text-align: left;
         }
+
         .datos li i {
-            min-width: 25px;      
+            min-width: 25px;
             color: #ffc107;
         }
 
@@ -426,6 +500,7 @@
             background-position: center center !important;
             margin-left: 10px !important;
         }
+
         @media screen and (max-width: 1000px) {
             .dataobject {
                 width: 80px !important;
@@ -442,6 +517,7 @@
             margin-top: 50px;
             margin-bottom: 10px;
         }
+
         .logo img {
             width: auto;
             height: 100%;

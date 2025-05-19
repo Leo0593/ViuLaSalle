@@ -2,7 +2,7 @@
 
 <body>
     @include('layouts.navheader')
-   
+
     <div class="eventos-main">
         <div style="display: flex; flex-direction: column; width: 100%; align-items: center; gap: 40px;">
 
@@ -52,25 +52,27 @@
                     <h2>Vols estudiar el CFGM en Electromecànica de Vehicles Automòbils?
                     </h2>
                     <p>
-                    Si t’agrada el món de l’automòbil i vols saber com funciona un motor de combustió, manipular un sistema de suspensió, desmuntar els engranatges i, en definitiva, aprendre tots els secrets de la mecànica, el CFGM en Electromecànica de Vehicles Automòbils és per a tu. Prepara’t per ser un mecànic de nivell capaç de reparar tot tipus d’avaries electromecàniques i treballar en qualsevol taller o concessionari oficial.
+                        Si t’agrada el món de l’automòbil i vols saber com funciona un motor de combustió, manipular un
+                        sistema de suspensió, desmuntar els engranatges i, en definitiva, aprendre tots els secrets de
+                        la mecànica, el CFGM en Electromecànica de Vehicles Automòbils és per a tu. Prepara’t per ser un
+                        mecànic de nivell capaç de reparar tot tipus d’avaries electromecàniques i treballar en
+                        qualsevol taller o concessionari oficial.
                     </p>
                     <p>
-                    Cicle LOE
+                        Cicle LOE
                     </p>
                     <p>
-                    Durada: 2000 hores. (2 cursos acadèmics). Horari de tarda.
+                        Durada: 2000 hores. (2 cursos acadèmics). Horari de tarda.
                     </p>
                     <p>
-                    Família professional: Transport i manteniment de vehicles
+                        Família professional: Transport i manteniment de vehicles
                     </p>
                 </div>
                 <div class="clase-descripcion-video">
-                    <iframe 
-                        src="https://www.youtube.com/embed/jep61AQL2mY?modestbranding=1&rel=0" 
-                        frameborder="0"
+                    <iframe src="https://www.youtube.com/embed/jep61AQL2mY?modestbranding=1&rel=0" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
-                    </iframe> 
+                    </iframe>
                 </div>
             </div>
 
@@ -79,8 +81,8 @@
                     <div class="clase-infos-info-header">
                         <i class="fa-solid fa-book"></i>
                         <h2>Què aprendràs?</h2>
-                    </div> 
-                    
+                    </div>
+
                     <div class="clase-infos-info-body">
                         <div class="clase-infos-info-content">
                             <ul>
@@ -98,8 +100,8 @@
                     <div class="clase-infos-info-header">
                         <i class="fa fa-th-list" aria-hidden="true"></i>
                         <h2>Plà d'estudis</h2>
-                    </div> 
-                    
+                    </div>
+
                     <div class="clase-infos-info-body">
                         <div class="clase-infos-info-content">
                             <table class="moduls-table">
@@ -110,23 +112,75 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr><td>Desenvolupament d’aplicacions multiplataforma</td><td>121h</td></tr>
-                                    <tr><td>Desenvolupament d’aplicacions web</td><td>110h</td></tr>
-                                    <tr><td>Desenvolupament d’aplicacions mòbils</td><td>187h</td></tr>
-                                    <tr><td>Desenvolupament d’interfícies</td><td>77h</td></tr>
-                                    <tr><td>Entorns de desenvolupament</td><td>55h</td></tr>
-                                    <tr><td>Accés a dades</td><td>88h</td></tr>
-                                    <tr><td>Desenvolupament d’interfícies</td><td>88h</td></tr>
-                                    <tr><td>Programació multimèdia i dispositius mòbils</td><td>77h</td></tr>
-                                    <tr><td>Programació de serveis i processos</td><td>55h</td></tr>
-                                    <tr><td>Sistemes de gestió empresarial</td><td>55h</td></tr>
-                                    <tr><td>Formació i orientació laboral</td><td>66h</td></tr>
-                                    <tr><td>Empresa i iniciativa emprenedora</td><td>66h</td></tr>
-                                    <tr><td>Projecte de desenvolupament d’aplicacions multiplataforma, perfil videojocs i oci digital</td><td>297h</td></tr>
-                                    <tr><td>Formació en centres de treball</td><td>383h</td></tr>
-                                    <tr><td>Game design</td><td>33h</td></tr>
-                                    <tr><td>Disseny 2D i 3D</td><td>88h</td></tr>
-                                    <tr><td>Programació de videojocs 2D i 3D</td><td>154h</td></tr>
+                                    <tr>
+                                        <td>Desenvolupament d’aplicacions multiplataforma</td>
+                                        <td>121h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desenvolupament d’aplicacions web</td>
+                                        <td>110h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desenvolupament d’aplicacions mòbils</td>
+                                        <td>187h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desenvolupament d’interfícies</td>
+                                        <td>77h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Entorns de desenvolupament</td>
+                                        <td>55h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Accés a dades</td>
+                                        <td>88h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desenvolupament d’interfícies</td>
+                                        <td>88h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Programació multimèdia i dispositius mòbils</td>
+                                        <td>77h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Programació de serveis i processos</td>
+                                        <td>55h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sistemes de gestió empresarial</td>
+                                        <td>55h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Formació i orientació laboral</td>
+                                        <td>66h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Empresa i iniciativa emprenedora</td>
+                                        <td>66h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Projecte de desenvolupament d’aplicacions multiplataforma, perfil videojocs
+                                            i oci digital</td>
+                                        <td>297h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Formació en centres de treball</td>
+                                        <td>383h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Game design</td>
+                                        <td>33h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Disseny 2D i 3D</td>
+                                        <td>88h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Programació de videojocs 2D i 3D</td>
+                                        <td>154h</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -137,8 +191,8 @@
                     <div class="clase-infos-info-header">
                         <i class="fa-solid fa-book"></i>
                         <h2>Què aprendràs?</h2>
-                    </div> 
-                    
+                    </div>
+
                     <div class="clase-infos-info-body">
                         <div class="clase-infos-info-content">
                             <ul>
@@ -156,8 +210,8 @@
                     <div class="clase-infos-info-header">
                         <i class="fa-solid fa-book"></i>
                         <h2>Què aprendràs?</h2>
-                    </div> 
-                    
+                    </div>
+
                     <div class="clase-infos-info-body">
                         <div class="clase-infos-info-content">
                             <ul>
@@ -175,8 +229,8 @@
                     <div class="clase-infos-info-header">
                         <i class="fa-solid fa-book"></i>
                         <h2>Què aprendràs?</h2>
-                    </div> 
-                    
+                    </div>
+
                     <div class="clase-infos-info-body">
                         <div class="clase-infos-info-content">
                             <ul>
@@ -194,8 +248,8 @@
                     <div class="clase-infos-info-header">
                         <i class="fa-solid fa-book"></i>
                         <h2>Què aprendràs?</h2>
-                    </div> 
-                    
+                    </div>
+
                     <div class="clase-infos-info-body">
                         <div class="clase-infos-info-content">
                             <ul>
@@ -236,25 +290,47 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 
+    <!-- Modal para imagen ampliada -->
+    <div id="modalImagen" class="modal-imagen" style="display:none;">
+        <span class="cerrar-modal" title="Cerrar">&times;</span>
+        <div class="modal-contenedor">
+            <img class="modal-contenido" id="imgAmpliada">
 
-    <script>    
+            <div class="modal-acciones">
+                @auth
+                    @if(auth()->user())
+                        <a id="btnDescargarImagen" class="btn-descargar" href="#" target="_blank" title="Descargar imagen">
+                            <i class="icono-descarga"></i> Descargar
+                        </a>
+                    @endif
+                @endauth
+
+                <button id="btnCancelar" class="btn-cancelar" title="Cerrar">
+                    <i class="icono-cancelar"></i> Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('/js/publicacion-modal.js') }}"></script>
+    <script>
         document.querySelectorAll('.clase-infos-info-header').forEach(header => {
             header.addEventListener('click', () => {
                 const parent = header.parentElement;
                 parent.classList.toggle('active');
-                
+
                 // Opcional: Ajustar altura dinámicamente si el contenido es variable
                 const body = parent.querySelector('.clase-infos-info-body');
                 if (parent.classList.contains('active')) {
-                body.style.maxHeight = body.scrollHeight + "px";
+                    body.style.maxHeight = body.scrollHeight + "px";
                 } else {
-                body.style.maxHeight = "0";
-                // Resetear después de la animación
-                setTimeout(() => { body.style.maxHeight = null; }, 400);
+                    body.style.maxHeight = "0";
+                    // Resetear después de la animación
+                    setTimeout(() => { body.style.maxHeight = null; }, 400);
                 }
             });
         }); 
     </script>
-    
+
     @include('layouts.footer')
 </body>

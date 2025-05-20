@@ -15,9 +15,11 @@
                 <img src="../../img/ViuSalle.png" alt="Viu LaSalle">
             </a>
         </div>  
+        @if(Route::currentRouteName() === 'welcome')
         <button class="btn-header menu scale-btn toggle-btn">
             <i class="fa-solid fa-bars"></i>
         </button>
+        @endif
     </div>
 </header>
 

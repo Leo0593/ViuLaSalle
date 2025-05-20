@@ -1,7 +1,14 @@
+@php 
+    use Illuminate\Support\Collection;
+
+    $niveles = $niveles ?? [];
+    $notificaciones = collect($notificaciones ?? []);
+@endphp
+
 @include('layouts.head')
 
 <body>
-    @include('layouts.navheader')
+    @include('layouts.navheader', ['niveles' => $niveles, 'notificaciones' => $notificaciones])
 
     <div class="container pt-3">
 

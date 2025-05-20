@@ -51,7 +51,7 @@ class ColeccionController extends Controller
     public function misgrupos()
     {
         $user = auth()->user();
-
+        $users = User::all(); // Obtener todos los usuarios
         if ($user->role == 'ADMIN') {
             // ADMIN puede ver todas las colecciones sin restricciones
             $colecciones = Coleccion::with('creador', 'usuarios')->get();
@@ -87,7 +87,7 @@ class ColeccionController extends Controller
             })
             ->get();*/
 
-        return view('coleccion.misgrupos', compact('colecciones'));
+        return view('coleccion.misgrupos', compact('colecciones', 'users'));
     }
 
     public function create()

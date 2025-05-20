@@ -113,7 +113,7 @@ class PublicacionColeccionController extends Controller
             }
         }
 
-        return redirect()->route('colecciones.show', $publicacion->coleccion_id)->with('success', 'Publicación actualizada correctamente.');
+        return redirect()->route('colecciones.index', $publicacion->coleccion_id)->with('success', 'Publicación actualizada correctamente.');
     }
 
 

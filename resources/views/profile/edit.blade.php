@@ -40,7 +40,7 @@
         @php
             $hayPublicaciones = false;
         @endphp
-        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; margin-top: 80px;">
+        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; margin-top: 80px; margin-bottom: 50px;">
             <div class="clase-posts-separador">
                 <i class="fa fa-th" aria-hidden="true"></i>
             </div>
@@ -53,30 +53,12 @@
                             <p class="text-muted ms-2 mt-3 text-center">No has publicado nada aún.</p>
                         </div>
                     @endif
-
-                    <!--&& $publicaciones->id_user == Auth::user()->id
-
-                    @if(isset($publicaciones) && $publicaciones->isNotEmpty())
-                        @foreach ($publicaciones as $publicacion)
-                                
-
-                            @if($publicacion->id_user == Auth::user()->id)
-                                @php
-                                        $hayPublicaciones = true;
-                                @endphp
-                            @endif
-                        @endforeach
-                    @endif
-
-                    @if (!$hayPublicaciones)
-                            <div class="alert alert-info text-center">
-                                <strong>No hay eventos disponibles.</strong>
-                            </div>
-                    @endif -->
                 </div>
             </div>
         </div>
     </div>
+
+    @include('layouts.footer')
 
     <!-- Modal para imagen ampliada -->
     <div id="modalImagen" class="modal-imagen" style="display:none;">

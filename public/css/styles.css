@@ -815,6 +815,18 @@ a.sidebar-link:hover {
     }
 }
 
+.icon-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 6px;
+    color: white;
+    z-index: 10;
+    font-size: 16px;
+}
+
 .box-publicacion-video-container {
     width: 100%;
     display: flex;
@@ -2217,11 +2229,10 @@ textarea#publicacion-texto {
 
     display: grid;
     place-items: center;
-    /*
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;*/
+    cursor: pointer ;
+
+    position: relative;
+    overflow: hidden;
 }
 
 .clase-posts-post img,
@@ -2236,9 +2247,8 @@ textarea#publicacion-texto {
 .clase-posts-post:focus img,
 .clase-posts-post:hover video,
 .clase-posts-post:focus video {
-    transform: scale(1.08);
-    filter: brightness(0.6);
-    cursor: pointer;
+    transform: scale(1.08) !important;
+    filter: brightness(0.6) !important;
 }
 
 .misgrupos-body {
@@ -2998,3 +3008,4 @@ textarea#publicacion-texto {
         font-size: 14px;
     }
 }
+

@@ -99,7 +99,7 @@
                         <!-- Buscar Evento -->
                         <div class="form-group">
                             <label for="evento-search">Buscar Evento</label>
-                            <input type="text" id="evento-search" class="form-control" placeholder="Buscar eventos...">
+                            <input type="text" id="evento-search" class="form-control" placeholder="🔎 Buscar eventos...">
 
                             <!-- Input oculto para el evento seleccionado -->
                             <select name="id_evento" id="id_evento" class="form-control" style="display: none;">
@@ -137,8 +137,8 @@
 
                         <!-- Buscar Etiquetas -->
                         <div class="form-group">
-                            <label for="tags">Buscar Etiquetas</label>
-                            <input type="text" id="tags-search" class="form-control" placeholder="Buscar etiquetas...">
+                            <label for="tags">Buscar Ciclos</label>
+                            <input type="text" id="tags-search" class="form-control" placeholder="🔎 Buscar etiquetas...">
 
                             <div class="form-group mt-2">
                                 <!-- Input oculto para enviar las categorías seleccionadas -->
@@ -163,7 +163,7 @@
 
                             <!-- Mostrar las etiquetas seleccionadas -->
                             <div id="selected-tags" class="mt-3">
-                                <strong>Etiquetas seleccionadas:</strong>
+                                <strong>Ciclos seleccionadas:</strong>
                                 <div id="selected-tags-list">
                                     <!-- Aquí se mostrarán las etiquetas seleccionadas -->
                                 </div>

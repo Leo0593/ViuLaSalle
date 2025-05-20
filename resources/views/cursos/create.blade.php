@@ -37,33 +37,29 @@
         <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" maxlength="255" required>
         <br><br>
 
-        <!-- Título -->
+        <!--
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" id="titulo" value="{{ old('titulo') }}" required>
         <br><br>
 
-        <!-- Descripción -->
         <label for="descripcion">Descripción:</label><br>
         <textarea name="descripcion" id="descripcion" rows="5" required>{{ old('descripcion') }}</textarea>
         <br><br>
 
-        <!-- PDF -->
         <label for="pdf">PDF del curso:</label>
         <input type="file" name="pdf" id="pdf" accept=".pdf">
         <br><br>
         
-        <!-- Imagen -->
         <label for="img">Imagen del curso:</label>
         <input type="file" name="img" id="img" accept="image/*">
         <br><br> 
 
-        <!-- Video -->
         <label for="video">Video (URL o código embebido):</label>
         <input type="text" name="video" id="video" value="{{ old('video') }}" maxlength="255">
         <br><br>
+        -->
 
 
-        <!-- Botón de envío -->
         <button type="submit">Guardar curso</button>
     </form>
 </body>

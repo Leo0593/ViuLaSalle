@@ -43,6 +43,18 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
+        // Validar los datos del formulario
+        $validated = $request->validate([
+            'id_nivel' => 'required|exists:nivel_educativo,id',
+            'nombre' => 'required|string|max:255',
+        ]);
+
+        // Crear el curso
+        Curso::create($validated);
+
+        // Redirigir con mensaje de éxito
+        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
+        /*
         // Validar datos y archivo PDF
         $validated = $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
@@ -73,6 +85,7 @@ class CursoController extends Controller
         ]);
 
         return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
+        */    
     }
 
 
@@ -129,23 +142,18 @@ class CursoController extends Controller
 
     public function update(Request $request, string $id)
     {
+        // Validación
+        $validated = $request->validate([
+            'id_nivel' => 'required|exists:nivel_educativo,id',
+            'nombre' => 'required|string|max:255',
+        ]);
+
+        // Buscar y actualizar curso
         $curso = Curso::findOrFail($id);
+        $curso->update($validated);
 
-        try {
-            $validated = $request->validate([
-                'id_nivel' => 'required|exists:nivel_educativo,id',
-                'nombre' => 'required|string|max:255',
-                'titulo' => 'required|string|max:255',
-                'descripcion' => 'required|string',
-                'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'pdf' => 'nullable|file|mimes:pdf|max:10000',
-                'video' => 'nullable|string|max:255',
-                'delete_pdf' => 'nullable|boolean',
-            ]);
-        } catch (\Exception $e) {
-            dd('Error en validación: ', $e->getMessage());
-        }
-
+        return redirect()->route('cursos.index')->with('success', 'Curso actualizado correctamente.');
+    
         /*
         $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
@@ -156,9 +164,8 @@ class CursoController extends Controller
             'pdf' => 'nullable|file|mimes:pdf|max:10000',
             'video' => 'nullable|string|max:255',
             'delete_pdf' => 'nullable|boolean',
-        ]); */
+        ]); 
 
-        // Subir nueva imagen si se cargó
         if ($request->hasFile('img')) {
             if ($curso->img) {
                 Storage::disk('public')->delete($curso->img);
@@ -167,30 +174,24 @@ class CursoController extends Controller
             $curso->img = $imgPath;
         }
 
-        // Eliminar PDF existente si se solicitó
         if ($request->boolean('delete_pdf') && $curso->pdf) {
             Storage::disk('public')->delete($curso->pdf);
             $curso->pdf = null;
         }
 
-        // Subir nuevo PDF si se cargó
         if ($request->hasFile('pdf')) {
             if ($curso->pdf) {
                 Storage::disk('public')->delete($curso->pdf);
             }
             $pdfPath = $request->file('pdf')->store('pdf_cursos', 'public');
             $curso->pdf = $pdfPath;
-        }
+        }*/
 
-        // Actualizar campos
-        $curso->id_nivel = $request->id_nivel;
-        $curso->nombre = $request->nombre;
+        
+        /*
         $curso->titulo = $request->titulo;
         $curso->descripcion = $request->descripcion;
-        $curso->video = $request->video;
-        $curso->save();
-
-        //return redirect()->route('cursos.index')->with('success', 'Curso actualizado correctamente.');
+        $curso->video = $request->video;*/
     }
 
 

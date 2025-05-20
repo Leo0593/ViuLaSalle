@@ -28,11 +28,12 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Estado</th>
+                <!--
                 <th>Imagen</th>
                 <th>Video</th>
                 <th>PDF</th>
                 <th>Titulo</th>
-                <th>Descripción</th>
+                <th>Descripción</th> -->
                 
                 <th>Acciones</th>
             </tr>
@@ -43,6 +44,8 @@
                     <td>{{ $curso->id }}</td>
                     <td>{{ $curso->nombre }}</td>
                     <td>{{ $curso->status ? 'Activo' : 'Inactivo' }}</td>
+
+                    <!--
                     <td>
                         @if($curso->img)
                             <img src="{{ asset('storage/' . $curso->img) }}" alt="imagen curso" width="80"
@@ -50,7 +53,7 @@
                         @else
                             <span>Sin imagen</span>
                         @endif
-                        <!--
+                        <--
                         @if($curso->fotos->count())
                             @foreach($curso->fotos as $foto)
                                 <img src="{{ asset('storage/' . $foto->ruta_imagen) }}" alt="foto curso" width="80"
@@ -58,7 +61,7 @@
                             @endforeach
                         @else
                             <span>Sin imágenes</span>
-                        @endif -->
+                        @endif --
                     </td>
                     <td>
                         @if($curso->video)
@@ -83,7 +86,7 @@
                     <td>
                         {{ $curso->descripcion }}
                     </td>
-                    
+                    -->
                     <td>
                         <!-- Botón de ver más -->
                         <a href="{{ route('cursos.show', $curso->id) }}">

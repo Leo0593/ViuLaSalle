@@ -77,6 +77,7 @@ class ContenidoController extends Controller
         $contenido->tipo = $request->tipo;
         $contenido->titulo = $request->titulo;
         $contenido->descripcion = $request->descripcion;
+        
         $contenido->video = $request->video;
         $contenido->opcion = $request->opcion;
 

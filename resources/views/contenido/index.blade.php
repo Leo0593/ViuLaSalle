@@ -57,25 +57,25 @@
             </div>
         @elseif($contenido->opcion == 1)
             <div class="contenido-box-opc-1">
-                <div class="contenido-box-opc-1-der">
+                <div class="contenido-box-opc-1-text">
                     <td>{{ $contenido->titulo }}</td>
                     <td>{{ $contenido->descripcion }}</td>
                 </div>
-                <div class="contenido-box-opc-1-izq">
-                    <img src="{{ $contenido->imagen }}" alt="Imagen" style="width: 100%; height: auto;">
+                <div class="contenido-box-opc-1-img">
+                    <img src="{{ asset('storage/' . $contenido->imagen) }}" alt="Imagen actual">
                 </div>
             </div>
         @elseif($contenido->opcion == 2)
             <div class="contenido-box-opc-1">
-                <div class="contenido-box-opc-1-izq">
-                    <img src="{{ $contenido->imagen }}" alt="Imagen" style="width: 100%; height: auto;">
+                <div class="contenido-box-opc-1-img">
+                    <img src="{{ asset('storage/' . $contenido->imagen) }}" alt="Imagen actual">
                 </div>
-                <div class="contenido-box-opc-1-der">
+                <div class="contenido-box-opc-1-text">
                     <td>{{ $contenido->titulo }}</td>
                     <td>{{ $contenido->descripcion }}</td>
                 </div>
             </div>
         @endif
-        
+
     </div>
 @endforeach

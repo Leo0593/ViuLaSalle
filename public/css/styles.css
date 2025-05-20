@@ -3013,7 +3013,7 @@ textarea#publicacion-texto {
     width: 100%;
     height: auto;
     display: flex;
-    padding: 20px;
+    padding: 0 20px;
 }
 
 .contenido-box-opc-0 {
@@ -3034,23 +3034,29 @@ textarea#publicacion-texto {
     height: auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    align-items: stretch;
     gap: 20px;
 }
-.contenido-box-opc-1-der {
+.contenido-box-opc-1-text {
     background-color: green;
 
     width: 100%;
-    display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.contenido-box-opc-1-izq {
+.contenido-box-opc-1-img {
     background-color: purple;
 
     width: 100%;
-    height: auto;
+    min-height: 300px;
+
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.contenido-box-opc-1-izq img {
-    width: 100%;
-    height: auto;
+.contenido-box-opc-1-img img {
     object-fit: cover;
 }
 

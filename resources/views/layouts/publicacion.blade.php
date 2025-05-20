@@ -56,7 +56,7 @@
                 <!-- Mostrar videos -->
                 @foreach($publicacion->videos as $video)
                     <div class="box-publicacion-media-item box-publicacion-video">
-                        <video autoplay controls loop>
+                        <video controls loop>
                             <source src="{{ asset('storage/publicvideos/' . $video->ruta_video) }}" type="video/mp4">
                         </video>
                     </div>

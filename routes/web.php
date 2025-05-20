@@ -15,6 +15,7 @@ use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ColeccionController;
 use App\Http\Controllers\PublicacionColeccionController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\ContenidoController;
 
 
 
@@ -134,6 +135,16 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
     Route::post('/{id}/like', [PublicacionController::class, 'toggleLike'])->name('toggleLike');
     Route::post('/{id}/reportar', [PublicacionController::class, 'reportar'])->name('reportar');
 
+});
+
+Route::prefix('contenido')->name('contenido.')->group(function () {
+    Route::get('/', [ContenidoController::class, 'index'])->name('index') ->middleware('role:ADMIN,PROFESOR');
+    Route::get('/create', [ContenidoController::class, 'create'])->name('create') ->middleware('role:ADMIN,PROFESOR');
+    Route::post('/', [ContenidoController::class, 'store'])->name('store') ->middleware('role:ADMIN,PROFESOR');
+    Route::get('/{id}/edit', [ContenidoController::class, 'edit'])->name('edit') ->middleware('role:ADMIN,PROFESOR');
+    Route::put('/{id}', [ContenidoController::class, 'update'])->name('update') ->middleware('role:ADMIN,PROFESOR');
+    Route::delete('/{id}', [ContenidoController::class, 'destroy'])->name('destroy') ->middleware('role:ADMIN,PROFESOR');
+    Route::put('/{id}/activar', [ContenidoController::class, 'activate'])->name('activate') ->middleware('role:ADMIN,PROFESOR');
 });
 
 Route::get('/publicacion/{id}/comentarios', [ComentarioController::class, 'verComentarios'])->name('comentarios.ver');

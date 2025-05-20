@@ -159,6 +159,23 @@
                     </div>
                 </div>
 
+                <!-- Tarjeta Contenido -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
+                        <div class="card-img-top d-flex align-items-center justify-content-center p-4"
+                            style="background-color: #f0f0f0; border-top-left-radius: 20px !important; border-top-right-radius: 20px !important;">
+                            <i class="fa-solid fa-book" style="font-size: 80px; color: #6c757d;"></i>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <h5 class="card-title mb-3" style="font-size: 1.25rem; font-weight: 600;">Contenido</h5>
+                            <a href="{{ route('contenido.index') }}" class="btn btn-primary px-4 py-2"
+                                style="border-radius: 50px; font-size: 1rem;">
+                                Gestionar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Tarjeta Retornar -->
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">

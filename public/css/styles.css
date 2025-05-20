@@ -3009,3 +3009,48 @@ textarea#publicacion-texto {
     }
 }
 
+.contenido-box {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 20px;
+}
+
+.contenido-box-opc-0 {
+    background-color: red;
+
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+} 
+
+.contenido-box-opc-1 {
+    background-color: blue;
+
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.contenido-box-opc-1-der {
+    background-color: green;
+
+    width: 100%;
+    display: grid;
+}
+.contenido-box-opc-1-izq {
+    background-color: purple;
+
+    width: 100%;
+    height: auto;
+}
+.contenido-box-opc-1-izq img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+

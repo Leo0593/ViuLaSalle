@@ -11,7 +11,7 @@
                         <h1>Mis Grupos</h1>
                     </div>
                     <div>
-                        @if(auth()->user()->role === 'ADMIN')
+                        @if(auth()->user()->role === 'ADMIN' || auth()->user()->role === 'PROFESOR')
 
                             <button class="btn btn-primary" id="crearGrupoBtn" title="Crear nuevo grupo">
                                 <i class="fa-solid fa-pen-to-square"></i> Crear Grupo
@@ -35,7 +35,7 @@
                         <div class="misgrupos-izq-grupos-grupo grupo-item position-relative" data-id="{{ $coleccion->id }}">
 
                             {{-- Mostrar botones solo si el usuario es admin o el creador --}}
-                            @if(auth()->user()->role === 'ADMIN' || auth()->user()->id === $coleccion->user_id)
+                            @if(auth()->user()->role === 'ADMIN' || auth()->user()->id === $coleccion->creador_id)
                                 <div class="grupo-acciones position-absolute top-0 end-0 m-2 d-flex gap-2">
                                     <!-- Botón de Editar -->
                                     <a href="{{ route('colecciones.edit', $coleccion->id) }}" class="btn btn-sm btn-warning"

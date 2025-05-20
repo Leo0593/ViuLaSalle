@@ -11,9 +11,12 @@
                         <h1>Mis Grupos</h1>
                     </div>
                     <div>
-                        <button class="btn btn-primary" id="crearGrupoBtn" title="Crear nuevo grupo">
-                            <i class="fa-solid fa-pen-to-square"></i> Crear Grupo
-                        </button>
+                        @if(auth()->user()->role === 'ADMIN')
+
+                            <button class="btn btn-primary" id="crearGrupoBtn" title="Crear nuevo grupo">
+                                <i class="fa-solid fa-pen-to-square"></i> Crear Grupo
+                            </button>
+                        @endif
 
                     </div>
                 </div>
@@ -30,35 +33,38 @@
                 @forelse ($colecciones as $coleccion)
                     <div class="misgrupos-izq-grupos-desktop">
                         <div class="misgrupos-izq-grupos-grupo grupo-item position-relative" data-id="{{ $coleccion->id }}">
-                            <!-- Contenedor de acciones en la esquina superior derecha -->
-                            <div class="grupo-acciones position-absolute top-0 end-0 m-2 d-flex gap-2">
-                                <!-- Botón de Editar -->
-                                <a href="{{ route('colecciones.edit', $coleccion->id) }}" class="btn btn-sm btn-warning"
-                                    title="Editar">
-                                    <i class="fa-solid fa-edit"></i>
-                                </a>
 
-                                <!-- Activar/Desactivar -->
-                                @if ($coleccion->status)
-                                    <form method="POST" action="{{ route('colecciones.destroy', $coleccion->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" title="Desactivar"
-                                            onclick="return confirm('¿Desactivar esta colección?')">
-                                            <i class="fa-solid fa-ban"></i>
-                                        </button>
-                                    </form>
-                                @else
-                                    <form method="POST" action="{{ route('colecciones.activate', $coleccion->id) }}">
-                                        @csrf
-                                        @method('PUT')
-                                        <button class="btn btn-sm btn-success" title="Activar"
-                                            onclick="return confirm('¿Activar esta colección?')">
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                    </form>
-                                @endif
-                            </div>
+                            {{-- Mostrar botones solo si el usuario es admin o el creador --}}
+                            @if(auth()->user()->role === 'ADMIN' || auth()->user()->id === $coleccion->user_id)
+                                <div class="grupo-acciones position-absolute top-0 end-0 m-2 d-flex gap-2">
+                                    <!-- Botón de Editar -->
+                                    <a href="{{ route('colecciones.edit', $coleccion->id) }}" class="btn btn-sm btn-warning"
+                                        title="Editar">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </a>
+
+                                    <!-- Activar/Desactivar -->
+                                    @if ($coleccion->status)
+                                        <form method="POST" action="{{ route('colecciones.destroy', $coleccion->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger" title="Desactivar"
+                                                onclick="return confirm('¿Desactivar esta colección?')">
+                                                <i class="fa-solid fa-ban"></i>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form method="POST" action="{{ route('colecciones.activate', $coleccion->id) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <button class="btn btn-sm btn-success" title="Activar"
+                                                onclick="return confirm('¿Activar esta colección?')">
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endif
 
                             <!-- Contenido del grupo -->
                             <div class="misgrupos-izq-grupos-grupo-foto">
@@ -69,6 +75,7 @@
                                 <p>{{ $coleccion->descripcion ?? 'Sin descripción' }}</p>
                             </div>
                         </div>
+
 
                     </div>
 

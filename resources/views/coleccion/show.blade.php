@@ -31,6 +31,9 @@
 
                     <!-- Contenedor para botones -->
                     <div class="mensaje-burbuja-acciones alineacion-emisor">
+                        <a href="{{ route('colecciones.show', $coleccion->id) }}" class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-edit"></i> Ver Mas
+                        </a>
                         <a href="{{ route('publicacioncolecciones.edit', $publicacion->id) }}"
                             class="btn btn-sm btn-info">Editar</a>
 
@@ -85,7 +88,7 @@
         </div>
     </div>
     <script src="{{ asset(path: '/js/publicacion-modal.js') }}">
-        
+
     </script>
 </div>
 

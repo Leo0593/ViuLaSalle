@@ -7,25 +7,33 @@
 
 <header>
     <div class="header-content">
-        <button class="btn-header back scale-btn" onclick="history.back()">
-            <i class="fa fa-reply-all" aria-hidden="true"></i>
-        </button>
+        <div class="left-slot">
+            <button class="btn-header back scale-btn" onclick="history.back()">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </button>
+        </div>
+
         <div class="logo-container">
             <a  href="/">
                 <img src="../../img/ViuSalle.png" alt="Viu LaSalle">
             </a>
         </div>  
-        @if(Route::currentRouteName() === 'welcome')
-        <button class="btn-header menu scale-btn toggle-btn">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        @endif
+        
+        <div class="right-slot">
+            @if(Route::currentRouteName() === 'welcome')
+                <button class="btn-header menu scale-btn toggle-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            @endif
+        </div>
     </div>
 </header>
 
-<aside id="sidebar">
-    @include('layouts.welcome-perfil', ['notificaciones' => $notificaciones])
+@if(Route::currentRouteName() === 'welcome')
+    <aside id="sidebar">
+        @include('layouts.welcome-perfil', ['notificaciones' => $notificaciones])
 
-    <br><br>
-    @include('layouts.redirecciones', ['niveles' => $niveles])
-</aside>
+        <br><br>
+        @include('layouts.redirecciones', ['niveles' => $niveles])
+    </aside>
+@endif

@@ -81,17 +81,27 @@ header {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     height: 100%;
     width: 100%;
     padding: 0 1rem;
     box-sizing: border-box;
+    position: relative;
+}
+
+.left-slot,
+.right-slot {
+    width: 50px; /* mismo tamaño para equilibrar visualmente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* LOGO */
 .logo-container {
     text-align: center;
     flex: 1;
+    max-height: var(--height-header);
 }
 .logo-container img {
     padding: 15px 0px;
@@ -99,6 +109,9 @@ header {
     object-fit: contain;
 }
 @media (max-width: 1000px) {
+    .logo-container {
+        max-height: var(--height-header-mobile);
+    }
     .logo-container img {
         max-height: var(--height-header-mobile);
     }
@@ -111,7 +124,6 @@ header {
     border: none;
     padding: 5px;
     font-size: 35px;
-
     cursor: pointer;
 }
 @media (max-width: 1000px) {
@@ -131,12 +143,10 @@ header {
 }
 
 .back {
-    position: absolute;
     font-size: 40px;
 }
 @media screen and (max-width: 1000px) {
     .back {
-        position: relative;
         font-size: 30px;
     }
 }

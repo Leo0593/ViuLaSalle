@@ -52,6 +52,7 @@ class ColeccionController extends Controller
     {
         $user = auth()->user();
         $users = User::all(); // Obtener todos los usuarios
+        
         if ($user->role == 'ADMIN') {
             // ADMIN puede ver todas las colecciones sin restricciones
             $colecciones = Coleccion::with('creador', 'usuarios')->get();

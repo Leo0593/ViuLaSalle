@@ -57,7 +57,7 @@ class PublicacionColeccionController extends Controller
                     $publicacion->delete();
                     Storage::disk('public')->delete($ruta);
 
-                    return redirect()->route('colecciones.show', $request->coleccion_id)->with('error', 'La imagen contiene contenido inapropiado.');
+                    return redirect()->route('colecciones.misgrupos', $request->coleccion_id)->with('error', 'La imagen contiene contenido inapropiado.');
                 }
 
                 FotoColeccion::create([
@@ -67,7 +67,7 @@ class PublicacionColeccionController extends Controller
             }
         }
 
-        return redirect()->route('colecciones.show', $request->coleccion_id)->with('success', 'Publicación creada exitosamente.');
+        return redirect()->route('colecciones.misgrupos', $request->coleccion_id)->with('success', 'Publicación creada exitosamente.');
     }
 
     public function edit(string $id)
@@ -113,7 +113,7 @@ class PublicacionColeccionController extends Controller
             }
         }
 
-        return redirect()->route('colecciones.index', $publicacion->coleccion_id)->with('success', 'Publicación actualizada correctamente.');
+        return redirect()->route('colecciones.misgrupos', $publicacion->coleccion_id)->with('success', 'Publicación actualizada correctamente.');
     }
 
 
@@ -122,14 +122,14 @@ class PublicacionColeccionController extends Controller
     {
         $publicacion = PublicacionColeccion::findOrFail($id);
         $publicacion->update(['status' => 0]);
-        return redirect()->route('colecciones.show', $publicacion->coleccion_id)->with('success', 'Publicación desactivada correctamente.');
+        return redirect()->route('colecciones.misgrupos', $publicacion->coleccion_id)->with('success', 'Publicación desactivada correctamente.');
     }
 
     public function activate(string $id)
     {
         $publicacion = PublicacionColeccion::findOrFail($id);
         $publicacion->update(['status' => 1]);
-        return redirect()->route('colecciones.show', $publicacion->coleccion_id)->with('success', 'Publicación activada correctamente.');
+        return redirect()->route('colecciones.misgrupos', $publicacion->coleccion_id)->with('success', 'Publicación activada correctamente.');
     }
 
 

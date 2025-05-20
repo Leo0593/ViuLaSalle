@@ -21,12 +21,20 @@
                     </div>
                 </div>
 
-                <div class="misgrupos-izq-header-buscar">
-                    <input type="text" placeholder="Buscar..." class="misgrupos-izq-header-buscar-input" />
-                    <button class="icon-btn" title="Buscar">
+                <form method="GET" action="{{ route('colecciones.misgrupos') }}"
+                    class="misgrupos-izq-header-buscar d-flex align-items-center gap-2">
+                    <input type="text" name="search" placeholder="Buscar..." class="misgrupos-izq-header-buscar-input"
+                        value="{{ request('search') }}" />
+                    <button type="submit" class="icon-btn" title="Buscar">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
-                </div>
+
+                    @if(request('search'))
+                        <a href="{{ route('colecciones.misgrupos') }}" class="btn btn-sm btn-secondary" title="Eliminar filtro">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    @endif
+                </form>
             </div>
 
             <div class="misgrupos-izq-grupos">

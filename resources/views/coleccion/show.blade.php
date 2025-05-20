@@ -291,7 +291,6 @@
         gap: 5px;
         z-index: 5;
         gap: 8px;
-
     }
 
 

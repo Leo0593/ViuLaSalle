@@ -13,82 +13,77 @@ use Illuminate\Support\Facades\Auth;
 class ColeccionController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all(); // Obtener todos los usuarios
-
+        $users = User::all();
         $user = auth()->user();
 
-        if ($user->role == 'ADMIN') {
-            // ADMIN puede ver todas las colecciones sin restricciones
-            $colecciones = Coleccion::with('creador', 'usuarios')->get();
+        $search = $request->input('search');  // Obtener el término de búsqueda
 
+        if ($user->role == 'ADMIN') {
+            $query = Coleccion::with('creador', 'usuarios');
         } elseif ($user->role == 'PROFESOR') {
-            // PROFESOR solo puede ver colecciones activas que ha creado o en las que ha sido agregado
-            $colecciones = Coleccion::with('creador', 'usuarios')
+            $query = Coleccion::with('creador', 'usuarios')
                 ->where('status', 1)
                 ->where(function ($query) use ($user) {
                     $query->where('creador_id', $user->id)
                         ->orWhereHas('usuarios', function ($q) use ($user) {
                             $q->where('user_id', $user->id);
                         });
-                })
-                ->get();
-
+                });
         } else {
-            // USER solo puede ver colecciones activas donde ha sido agregado
-            $colecciones = Coleccion::with('creador', 'usuarios')
+            $query = Coleccion::with('creador', 'usuarios')
                 ->where('status', 1)
                 ->whereHas('usuarios', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
-                })
-                ->get();
+                });
         }
 
-        return view('coleccion.index', compact('colecciones', 'users'));
+        // Aplicar filtro de búsqueda si hay texto
+        if ($search) {
+            $query->where('nombre', 'LIKE', '%' . $search . '%');
+        }
+
+        $colecciones = $query->get();
+
+        return view('coleccion.index', compact('colecciones', 'users', 'search'));
     }
 
-    public function misgrupos()
-    {
-        $user = auth()->user();
-        $users = User::all(); // Obtener todos los usuarios
-        
-        if ($user->role == 'ADMIN') {
-            // ADMIN puede ver todas las colecciones sin restricciones
-            $colecciones = Coleccion::with('creador', 'usuarios')->get();
 
+    public function misgrupos(Request $request)
+    {
+       $users = User::all();
+        $user = auth()->user();
+
+        $search = $request->input('search');  // Obtener el término de búsqueda
+
+        if ($user->role == 'ADMIN') {
+            $query = Coleccion::with('creador', 'usuarios');
         } elseif ($user->role == 'PROFESOR') {
-            // PROFESOR solo puede ver colecciones activas que ha creado o en las que ha sido agregado
-            $colecciones = Coleccion::with('creador', 'usuarios')
+            $query = Coleccion::with('creador', 'usuarios')
                 ->where('status', 1)
                 ->where(function ($query) use ($user) {
                     $query->where('creador_id', $user->id)
                         ->orWhereHas('usuarios', function ($q) use ($user) {
                             $q->where('user_id', $user->id);
                         });
-                })
-                ->get();
-
+                });
         } else {
-            // USER solo puede ver colecciones activas donde ha sido agregado
-            $colecciones = Coleccion::with('creador', 'usuarios')
+            $query = Coleccion::with('creador', 'usuarios')
                 ->where('status', 1)
                 ->whereHas('usuarios', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
-                })
-                ->get();
+                });
         }
 
-        /*
-        $user = auth()->user();
-        $colecciones = Coleccion::with('creador', 'usuarios')
-            ->where('status', 1)
-            ->whereHas('usuarios', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })
-            ->get();*/
+        // Aplicar filtro de búsqueda si hay texto
+        if ($search) {
+            $query->where('nombre', 'LIKE', '%' . $search . '%');
+        }
 
-        return view('coleccion.misgrupos', compact('colecciones', 'users'));
+        $colecciones = $query->get();
+        
+        return view('coleccion.misgrupos', compact('colecciones', 'users', 'search'));
     }
 
     public function create()

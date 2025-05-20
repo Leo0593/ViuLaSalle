@@ -64,33 +64,67 @@
     </form>
 
     <div id="privacy-modal"
-        class="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center pt-12 overflow-y-auto hidden">
-        <div
-            class="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl shadow-2xl w-full max-w-3xl mx-4 p-6 relative border border-gray-200 dark:border-gray-700">
+        class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4 overflow-y-auto hidden"
+        aria-modal="true" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
 
+        <div
+            class="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-y-auto p-6 relative border border-gray-200 dark:border-gray-700">
             <!-- Botón de cerrar -->
-            <button id="close-modal"
-                class="absolute top-3 right-4 text-gray-400 hover:text-gray-800 dark:hover:text-white text-2xl font-bold focus:outline-none">
+            <button id="close-modal" aria-label="Cerrar aviso de privacidad"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 dark:hover:text-white text-3xl font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded">
                 &times;
             </button>
 
             <!-- Título -->
-            <h2 class="text-2xl font-bold mb-4 text-center text-indigo-600 dark:text-indigo-400">Aviso de Privacidad
+            <h2 id="modal-title" class="text-3xl font-extrabold mb-6 text-center text-indigo-600 dark:text-indigo-400">
+                Aviso de Privacidad
             </h2>
 
             <!-- Contenido -->
-            <div class="text-sm leading-relaxed whitespace-pre-line max-h-[70vh] overflow-y-auto pr-2">
-                Aviso de Privacidad de ViuLaSalle
-
-                En Nombre de “ViuLaSalle”, nos comprometemos a proteger la privacidad de los datos personales de
-                nuestros usuarios. Este Aviso de Privacidad detalla cómo recopilamos, utilizamos, almacenamos y
-                protegemos tu información, en cumplimiento con las leyes aplicables...
-
-                [pega aquí todo el contenido completo]
+            <div id="modal-description" class="text-sm leading-relaxed whitespace-pre-line pr-2 text-center">
+                En Nombre de “ViuLaSalle”, nos comprometemos a proteger la privacidad de
+                los datos personales de nuestros usuarios. Este Aviso de Privacidad detalla
+                cómo recopilamos, utilizamos, almacenamos y protegemos tu información, en
+                cumplimiento con las leyes aplicables en materia de protección de datos
+                personales.
+                Para garantizar el buen funcionamiento de nuestra plataforma y ofrecerte una
+                experiencia optimizada, recopilamos los siguientes tipos de información: datos
+                personales, como tu nombre, correo electrónico y material fotográfico.
+                Utilizamos esta información con los siguientes fines: proveer servicios
+                relacionados con la plataforma y mejorar tu experiencia de usuario; compartir
+                proyectos, experiencias y actividades académicas en un entorno seguro;
+                ayudar a otros usuarios a conocer opciones disponibles, como el Bachillerato o
+                Ciclos Formativos, basándonos en tus vivencias y logros académicos; y
+                personalizar las recomendaciones y el contenido de la plataforma según tus
+                intereses.
+                En “ViuLaSalle”, valoramos tu privacidad y no compartimos tu información
+                personal con terceros, excepto en los siguientes casos: cuando sea necesario
+                para cumplir con la legislación aplicable o un proceso legal; o bajo tu
+                consentimiento explícito para compartir datos con terceros, como instituciones
+                educativas o colaboradores del proyecto.
+                Adoptamos medidas técnicas y organizativas para proteger tu información
+                personal contra accesos no autorizados, pérdidas, usos indebidos o
+                alteraciones. Usamos tecnologías de cifrado y almacenamiento seguro para
+                garantizar la integridad de los datos.
+                Como usuario, tienes derecho a acceder a tus datos personales para revisarlos;
+                solicitar la corrección de información incorrecta o incompleta; pedir la
+                eliminación de tus datos personales cuando ya no sean necesarios para los
+                fines del proyecto; y oponerte al uso de tus datos para fines específicos. 
+                Para ejercer tus derechos, contáctanos a través de eliteleaguecompeticiones@gmail.com.
+                Nos reservamos el derecho de actualizar este Aviso de Privacidad en cualquier
+                momento. Cualquier modificación será notificada a través de nuestra
+                plataforma o por correo electrónico. Te recomendamos revisarlo
+                periódicamente.
+                Si tienes preguntas sobre este Aviso de Privacidad o necesitas más información,
+                no dudes en contactarnos:
+                Correo electrónico: eliteleaguecompeticiones@gmail.com
+                Teléfono: 641991359
+                Dirección: Ferrer i Busquets, 81 25230 Mollerussa, Lleida, ESP.
             </div>
         </div>
     </div>
-    
+
+
 
 
     <Style>

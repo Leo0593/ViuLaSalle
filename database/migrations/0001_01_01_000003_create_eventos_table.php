@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null'); // FK para el usuario, nullable y con comportamiento en borrado
             $table->boolean('status')->default(1); // 1 = Activo, 0 = Inactivo
             $table->string('nombre'); // nombre del evento
-            $table->string('descripcion'); // descripción del evento
+            $table->text('descripcion'); // descripción del evento
             $table->dateTime('fecha_publicacion'); // fecha con hora
             $table->string('foto'); // ruta de la foto
             $table->timestamps(); // created_at y updated_at

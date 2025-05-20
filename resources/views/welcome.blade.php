@@ -240,7 +240,7 @@
     </div>
 
     <script src="{{ asset('/js/desglosable-niveles-curso.js') }}"></script>
-    <script src="{{ asset('/js/publicacion-modal.js') }}"></script>
+    <script src="{{ asset(path: '/js/publicacion-modal.js') }}"></script>
 
     <!-- Script -->
 

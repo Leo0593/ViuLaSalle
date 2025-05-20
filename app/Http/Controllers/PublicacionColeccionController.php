@@ -88,6 +88,20 @@ class PublicacionColeccionController extends Controller
             'descripcion' => $request->descripcion,
         ]);
 
+        // Eliminar fotos seleccionadas
+        if ($request->has('fotos_eliminar')) {
+            foreach ($request->fotos_eliminar as $fotoId) {
+                $foto = FotoColeccion::find($fotoId);
+                if ($foto && $foto->publicacion_coleccion_id == $publicacion->id) {
+                    // Eliminar archivo físico
+                    Storage::disk('public')->delete($foto->ruta_foto);
+                    // Eliminar de la base de datos
+                    $foto->delete();
+                }
+            }
+        }
+
+
         // Manejo de las fotos, si es necesario actualizarlas.
         if ($request->hasFile('fotos')) {
             foreach ($request->file('fotos') as $foto) {

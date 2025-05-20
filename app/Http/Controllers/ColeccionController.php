@@ -15,6 +15,8 @@ class ColeccionController extends Controller
 
     public function index()
     {
+        $users = User::all(); // Obtener todos los usuarios
+
         $user = auth()->user();
 
         if ($user->role == 'ADMIN') {
@@ -43,7 +45,7 @@ class ColeccionController extends Controller
                 ->get();
         }
 
-        return view('coleccion.index', compact('colecciones'));
+        return view('coleccion.index', compact('colecciones', 'users'));
     }
 
     public function misgrupos()
@@ -75,7 +77,7 @@ class ColeccionController extends Controller
                 })
                 ->get();
         }
-        
+
         /*
         $user = auth()->user();
         $colecciones = Coleccion::with('creador', 'usuarios')
@@ -171,7 +173,7 @@ class ColeccionController extends Controller
 
     public function show($id)
     {
-        $user = auth()->user();  
+        $user = auth()->user();
 
         if ($user->role == 'ADMIN') {
             $publicaciones = PublicacionColeccion::with('usuario', 'fotos')
@@ -180,7 +182,7 @@ class ColeccionController extends Controller
         } else {
             $publicaciones = PublicacionColeccion::with('usuario', 'fotos')
                 ->where('coleccion_id', $id)
-                ->where('status', 1)  
+                ->where('status', 1)
                 ->get();
         }
 

@@ -8,9 +8,11 @@
         <div class="bg-light p-4 rounded-4 mb-4 shadow-sm text-center my-5 mt-4">
             <h1 class="text-2xl font-bold text-gray-800">Panel de Administración</h1>
             <div class="mt-4">
-                <p class="text-gray-600">Bienvenido al panel de administración. Aquí puedes gestionar los usuarios,
+                <p class="text-gray-600">
+                    Bienvenido al panel de administración. Aquí puedes gestionar los usuarios,
                     eventos,
-                    publicaciones, categorías, niveles educativos y cursos.</p>
+                    publicaciones, categorías, niveles educativos y cursos.
+                </p>
             </div>
         </div>
 
@@ -177,3 +179,50 @@
         </div>
     </div>
 </body>
+
+<!-- Ventana de notificaciones -->
+    <script>
+        function toggleNotificaciones() {
+            const ventanas = document.querySelectorAll("#ventanaNotificaciones");
+
+            let algunaVisible = false;
+            ventanas.forEach(ventana => {
+                if (ventana.classList.contains("show")) {
+                    algunaVisible = true;
+                }
+            });
+
+            ventanas.forEach(ventana => {
+                if (algunaVisible) {
+                    ventana.classList.remove("show");
+                } else {
+                    ventana.classList.add("show");
+                }
+            });
+        }
+
+        document.addEventListener("click", function (event) {
+            const ventanas = document.querySelectorAll("#ventanaNotificaciones");
+            const botones = document.querySelectorAll(".notif-btn");
+
+            let dentroDeVentanaOBoton = false;
+
+            ventanas.forEach(ventana => {
+                if (ventana.contains(event.target)) {
+                    dentroDeVentanaOBoton = true;
+                }
+            });
+
+            botones.forEach(boton => {
+                if (boton.contains(event.target)) {
+                    dentroDeVentanaOBoton = true;
+                }
+            });
+
+            if (!dentroDeVentanaOBoton) {
+                ventanas.forEach(ventana => {
+                    ventana.classList.remove("show");
+                });
+            }
+        });
+    </script>

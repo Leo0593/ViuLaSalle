@@ -14,11 +14,11 @@ class Curso extends Model
     protected $fillable = [
         'id_nivel',
         'nombre',
-        'duracion',
-        'posibilidades_continuidad',
-        'sector_profesional',
-        'salidas_profesionales',
-        'asignaturas_pdf',
+        'titulo',
+        'descripcion',
+        'video',
+        'img',
+        'pdf',
         'status',
     ];
 

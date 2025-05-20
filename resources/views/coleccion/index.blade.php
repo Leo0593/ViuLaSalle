@@ -204,10 +204,14 @@
             const grupoId = $(this).data('id');
 
             $.ajax({
-                url: `/colecciones/${grupoId}`, // Usa la ruta show con el ID
+                url: `/colecciones/${grupoId}`,
                 method: 'GET',
                 success: function (response) {
-                    $('#grupoDetalle').html(response); // Carga la vista completa en el div
+                    $('#grupoDetalle').html(response);
+
+                    // Inicializar funcionalidades dinámicas
+                    inicializarCarruseles();       // Carrusel
+                    inicializarModalImagen();      // Modal de imagen
                 },
                 error: function () {
                     $('#grupoDetalle').html('<p class="text-danger">Error al cargar el grupo.</p>');
@@ -215,5 +219,6 @@
             });
         });
     </script>
+
 
 </body>

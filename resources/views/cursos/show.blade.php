@@ -13,6 +13,35 @@
                 </div>
             </div>
 
+            @foreach ($contenido as $contenido)
+                @if ($contenido->opcion == 0)
+                    <div class="clase-box-opc-0">
+                        <td>{{ $contenido->titulo }}</td>
+                        <td>{{ $contenido->descripcion }}</td>
+                    </div>
+                @elseif ($contenido->opcion == 1)
+                    <div class="clase-box-opc-1">
+                        <div class="clase-box-opc-1-text">
+                            <td>{{ $contenido->titulo }}</td>
+                            <td>{{ $contenido->descripcion }}</td>
+                        </div>
+                        <div class="clase-box-opc-1-img"
+                            style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
+                        </div>
+                    </div>
+                @elseif ($contenido->opcion == 2)
+                    <div class="clase-box-opc-1">
+                        <div class="clase-box-opc-1-img"
+                            style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
+                        </div>
+                        <div class="clase-box-opc-1-text">
+                            <td>{{ $contenido->titulo }}</td>
+                            <td>{{ $contenido->descripcion }}</td>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+
             <div class="clase-descripcion">
                 <div class="clase-descripcion-texto">
                     <h2>Vols estudiar el CFGM en Electromecànica de Vehicles Automòbils?

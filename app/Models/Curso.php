@@ -31,4 +31,9 @@ class Curso extends Model
     {
         return $this->hasMany(FotoCurso::class);
     }
+
+    public function contenido()
+    {
+        return $this->hasMany(Contenido::class, 'id_vista', 'id');
+    }
 }

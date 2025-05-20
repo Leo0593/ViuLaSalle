@@ -46,4 +46,8 @@ class Evento extends Model
     {
         return \Carbon\Carbon::parse($value); // Convierte la fecha a una instancia de Carbon
     }
+    public function contenido()
+    {
+        return $this->hasMany(Contenido::class, 'id_vista', 'id');
+    }
 }

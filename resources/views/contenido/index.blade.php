@@ -61,14 +61,14 @@
                     <td>{{ $contenido->titulo }}</td>
                     <td>{{ $contenido->descripcion }}</td>
                 </div>
-                <div class="contenido-box-opc-1-img">
-                    <img src="{{ asset('storage/' . $contenido->imagen) }}" alt="Imagen actual">
+                <div class="contenido-box-opc-1-img"
+                    style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
                 </div>
             </div>
         @elseif($contenido->opcion == 2)
             <div class="contenido-box-opc-1">
-                <div class="contenido-box-opc-1-img">
-                    <img src="{{ asset('storage/' . $contenido->imagen) }}" alt="Imagen actual">
+                <div class="contenido-box-opc-1-img"
+                    style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
                 </div>
                 <div class="contenido-box-opc-1-text">
                     <td>{{ $contenido->titulo }}</td>

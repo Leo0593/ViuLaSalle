@@ -7,8 +7,7 @@ use App\Models\NivelEducativo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FotoCurso;
-
-
+use App\Models\Contenido;
 
 class CursoController extends Controller
 {
@@ -213,7 +212,12 @@ class CursoController extends Controller
 
     public function show(string $id)
     {
-        $curso = Curso::with('nivelEducativo', 'fotos')->findOrFail($id);
+        $curso = Curso::with(['nivelEducativo', 'fotos', 'contenido' => function($query) use ($id) {
+        $query->where('id_vista', $id)
+              ->where('vista_tipo', 'curso')
+              ->orderBy('created_at', 'desc');
+        }])->findOrFail($id);
+
         return view('cursos.show', compact('curso'));
     }
 

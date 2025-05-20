@@ -27,7 +27,8 @@
         <input type="text" name="nombre" value="{{ $curso->nombre }}" required>
         <br><br>
 
-       <label for="img">Imagen del curso:</label>
+        <!--
+        <label for="img">Imagen del curso:</label>
         <input type="file" name="img" accept="image/*">
         @if($curso->img)
             <img src="{{ asset('storage/' . $curso->img) }}" alt="imagen curso" width="80" style="margin: 5px;">
@@ -64,7 +65,7 @@
                 </label>
             </div>
         @endforeach
-        <br><br>
+        <br><br>-->
 
         <button type="submit">Guardar cambios</button>
     </form>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Curso;
 use App\Models\NivelEducativo;
 use Illuminate\Http\Request;
+use App\Models\Categoria;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FotoCurso;
 use App\Models\Contenido;
@@ -83,10 +84,18 @@ class CursoController extends Controller
         }
 
         // Crear el curso
-        Curso::create($validated);
+        $curso = Curso::create($validated);
+
+        // Crear una categoría con el mismo nombre del curso
+        Categoria::create([
+            'nombre' => $curso->nombre,
+            'status' => 1,
+            'id_user' => auth()->id(),
+        ]);
+
 
         // Redirigir con mensaje de éxito
-        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');  
+        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
     }
 
     public function edit(string $id)
@@ -97,10 +106,10 @@ class CursoController extends Controller
 
         $contenidos = $curso->contenido()
             ->where('vista_tipo', 'curso')
-            ->where('status', 1) 
+            ->where('status', 1)
             ->orderBy('created_at', 'asc')
             ->get();
-            
+
 
         return view('cursos.edit', compact('curso', 'niveles', 'contenidos'));
     }
@@ -156,7 +165,7 @@ class CursoController extends Controller
 
         $contenidos = $curso->contenido()
             ->where('vista_tipo', 'curso')
-            ->where('status', 1) 
+            ->where('status', 1)
             ->orderBy('created_at', 'asc')
             ->get();
 

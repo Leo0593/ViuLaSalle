@@ -92,28 +92,29 @@ class ContenidoController extends Controller
         return redirect()->route('contenido.index')->with('success', 'Contenido actualizado correctamente.');
     }
 
-
     public function show(string $id)
     {
         $contenido = Contenido::findOrFail($id);
         return view('contenido.show', compact('contenido'));
     }
 
-    public function destroy(string $id, string $id_vista)
+    public function destroy(string $id, string $curso_id)
     {
         $contenido = Contenido::findOrFail($id);
         $contenido->update(['status' => 0]);
-        $curso = Curso::findOrFail($id_vista);  // Usar modelo Curso para validar o extraer datos
+        $curso = Curso::findOrFail($curso_id);  // Usar modelo Curso para validar o extraer datos
 
-        return redirect()->route('cursos.edit', ['id' => $curso->id]);
+        return redirect()->route('cursos.index')->with('success', 'Contenido desactivado correctamente.');
+        //return redirect()->route('cursos.edit', ['id' => $curso_id]);
     }
 
-    public function activate(string $id, string $id_vista)
+    public function activate(string $id, string $curso_id)
     {
         $contenido = Contenido::findOrFail($id);
         $contenido->update(['status' => 1]);
-        $curso = Curso::findOrFail($id_vista);  // Usar modelo Curso para validar o extraer datos
+        $curso = Curso::findOrFail($curso_id);  // Usar modelo Curso para validar o extraer datos
 
-        return redirect()->route('cursos.edit', ['id' => $curso->id]);
+        return redirect()->route('cursos.index')->with('success', 'Contenido activado correctamente.');
+        //return redirect()->route('cursos.edit', ['id' => $curso_id]);
     }
 }

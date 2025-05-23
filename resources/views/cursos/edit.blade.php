@@ -143,7 +143,7 @@
                                 
                                         @if($contenedor->status)
                                             {{-- activo: mostrar eliminar --}}
-                                            <form action="{{ route('contenido.destroy', ['id' => $contenedor->id, 'id_vista' => $curso->id]) }}" method="POST" style="display:inline;"
+                                            <form action="{{ route('contenido.destroy', ['id' => $contenedor->id, 'curso_id' => $curso->id]) }}" method="POST" style="display:inline;"
                                                     onsubmit="return confirm('¿Eliminar este contenido?');">
                                                 @csrf
                                                 @method('DELETE')
@@ -151,10 +151,11 @@
                                             </form>
                                         @else
                                             {{-- inactivo: mostrar restaurar --}}
-                                            <form action="{{ route('contenido.activate', ['id' => $contenedor->id, 'id_vista' => $curso->id]) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                <button class="btn btn-success btn-sm">Restaurar</button>
-                                            </form>
+                                            <form action="{{ route('contenido.activate', ['id' => $contenedor->id, 'curso_id' => $curso->id]) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button class="btn btn-success btn-sm">Restaurar</button>
+                                        </form>
+
                                         @endif
                                     </div>
                                 </div>

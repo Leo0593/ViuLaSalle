@@ -42,22 +42,6 @@
             <td>
                 <a href="{{ route('contenido.edit', $contenido->id) }}" style="padding: 5px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px;">Editar</a>
 
-                @if($contenido->status)
-  {{-- activo: mostrar eliminar --}}
-  <form action="{{ route('contenido.destroy', $contenido->id) }}" method="POST" style="display:inline;"
-        onsubmit="return confirm('¿Eliminar este contenido?');">
-    @csrf
-    @method('DELETE')
-    <button class="btn btn-danger btn-sm">Eliminar</button>
-  </form>
-@else
-  {{-- inactivo: mostrar restaurar --}}
-  <form action="{{ route('contenido.activate', $contenido->id) }}" method="POST" style="display:inline;">
-    @csrf
-    <button class="btn btn-success btn-sm">Restaurar</button>
-  </form>
-@endif
-
             </td>
         </tr>
         @endforeach

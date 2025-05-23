@@ -137,7 +137,7 @@
                                     </div>
                                     <div style="display: flex; gap: 5px; flex-direction: column;">
                                         {{-- Botón Editar (puede abrir modal o ir a página de edición) --}}
-                                        <a href="{{ route('contenido.edit', $contenido->id) }}?curso_id={{ $curso->id }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ route('contenido.edit', ['id' => $contenedor->id, 'curso_id' => $curso->id]) }}" class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-pencil"></i> Editar
                                         </a>
                                 

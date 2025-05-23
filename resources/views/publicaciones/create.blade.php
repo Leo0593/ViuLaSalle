@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <div class="container py-4 mt-8" style="margin-top: 150px !important;">
+    <div class="container py-4 margin-top-header">
         <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
             <!-- Header con foto de perfil -->
             <div class="card-header bg-white py-3 border-0">

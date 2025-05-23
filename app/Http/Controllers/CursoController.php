@@ -16,12 +16,23 @@ class CursoController extends Controller
         $user = auth()->user();
         $query = Curso::with('nivelEducativo', 'fotos');
 
-        // Filtramos por estado solo para usuarios no ADMIN
+        // Filtrar por estado si el usuario no es ADMIN
         if ($user && $user->role !== 'ADMIN') {
-            $query->where('status', 1);  // Solo activos para usuarios que no sean admin
+            $query->where('status', 1);  // Solo activos para no admins
         }
 
-        // Si viene el filtro por nivel
+        // Filtro por nombre
+        if ($request->filled('nombre')) {
+            $nombre = strtolower($request->nombre);
+            $query->whereRaw('LOWER(nombre) LIKE ?', ['%' . $nombre . '%']);
+        }
+
+        // Filtro por estado (solo aplica si es admin)
+        if ($user && $user->role === 'ADMIN' && $request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Filtro por nivel educativo
         if ($request->filled('nivel')) {
             $nivel = strtolower($request->nivel);
             $query->whereHas('nivelEducativo', function ($q) use ($nivel) {
@@ -29,10 +40,21 @@ class CursoController extends Controller
             });
         }
 
-        $cursos = $query->get();
+        // Filtro por rango de fechas (basado en fecha de creación)
+        if ($request->filled('fecha_inicio')) {
+            $query->whereDate('created_at', '>=', $request->fecha_inicio);
+        }
+
+        if ($request->filled('fecha_fin')) {
+            $query->whereDate('created_at', '<=', $request->fecha_fin);
+        }
+
+        // Paginación
+        $cursos = $query->paginate(5)->withQueryString(); // para mantener los filtros en los links
 
         return view('cursos.index', compact('cursos', 'user'));
     }
+
 
     public function create()
     {
@@ -46,97 +68,41 @@ class CursoController extends Controller
         $validated = $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
             'nombre' => 'required|string|max:255',
+            'pdf' => 'nullable|file|mimes:pdf|max:10000',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // Guardar PDF si fue subido
+        if ($request->hasFile('pdf')) {
+            $validated['pdf'] = $request->file('pdf')->store('pdfs', 'public');
+        }
+
+        // Guardar imagen si fue subida
+        if ($request->hasFile('img')) {
+            $validated['img'] = $request->file('img')->store('imagenes', 'public');
+        }
 
         // Crear el curso
         Curso::create($validated);
 
         // Redirigir con mensaje de éxito
-        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
-        /*
-        // Validar datos y archivo PDF
-        $validated = $request->validate([
-            'id_nivel' => 'required|exists:nivel_educativo,id',
-            'nombre' => 'required|string|max:255',
-            'titulo' => 'required|string',
-            'descripcion' => 'required|string',
-            'video' => 'nullable|string|max:255',
-            'pdf' => 'nullable|file|mimes:pdf|max:10000',
-            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        // Si llega la imagen, subir y guardar la ruta
-        $imgPath = null;
-        if ($request->hasFile('img')) {
-            $imgPath = $request->file('img')->store('imagenes_cursos', 'public');
-        }
-
-        // Crear el curso
-        $curso = Curso::create([
-            'id_nivel' => $request->id_nivel,
-            'nombre' => $request->nombre,
-            'titulo' => $request->titulo,
-            'descripcion' => $request->descripcion,
-            'video' => $request->video,
-            'img' => $imgPath,
-            
-            'status' => 1,
-        ]);
-
-        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
-        */    
+        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');  
     }
-
-
-
-    /*
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_nivel' => 'required|exists:nivel_educativo,id',
-            'nombre' => 'required|string|max:255',
-            'titulo' => 'required|string',
-            'descripcion' => 'required|string',
-            'img' => 'nullable|string|max:255',
-            'video' => 'nullable|string|max:255',
-            'pdf' => 'nullable|file|mimes:pdf|max:10000',
-        ]); 
-
-     
-        if ($request->hasFile('img')) {
-            $imgPath = $request->file('img')->store('imagenes_cursos', 'public');
-        } else {
-            $imgPath = null;
-        }
-
-        
-        $pdfPath = null;
-        if ($request->hasFile('pdf')) {
-            $pdfPath = $request->file('pdf')->store('pdf_cursos', 'public');
-        }
-
-        // Crear el curso
-        $curso = Curso::create([
-            'id_nivel' => $request->id_nivel,
-            'nombre' => $request->nombre,
-            'titulo' => $request->titulo,
-            'descripcion' => $request->descripcion,
-            'img' => $request->img,
-            'video' => $request->video,
-            'pdf' => $pdfPath,
-            'status' => 1,
-        ]);
-
-        return redirect()->route('cursos.index')->with('success', 'Curso creado correctamente.');
-    }
-    */
 
     public function edit(string $id)
     {
-        $curso = Curso::with('fotos')->findOrFail($id);
         $niveles = NivelEducativo::all();
 
-        return view('cursos.edit', compact('curso', 'niveles'));
+        $curso = Curso::with(['nivelEducativo', 'fotos'])->findOrFail($id);
+
+        $contenidos = $curso->contenido()
+            ->where('vista_tipo', 'curso')
+            ->where('status', 1) 
+            ->orderBy('created_at', 'asc')
+            ->get();
+            
+
+        return view('cursos.edit', compact('curso', 'niveles', 'contenidos'));
     }
 
     public function update(Request $request, string $id)
@@ -145,52 +111,26 @@ class CursoController extends Controller
         $validated = $request->validate([
             'id_nivel' => 'required|exists:nivel_educativo,id',
             'nombre' => 'required|string|max:255',
+            'pdf' => 'nullable|file|mimes:pdf|max:10000',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Buscar y actualizar curso
         $curso = Curso::findOrFail($id);
+
+        // Guardar nuevo PDF si fue subido
+        if ($request->hasFile('pdf')) {
+            $validated['pdf'] = $request->file('pdf')->store('pdfs', 'public');
+        }
+
+        // Guardar nueva imagen si fue subida
+        if ($request->hasFile('img')) {
+            $validated['img'] = $request->file('img')->store('imagenes', 'public');
+        }
+
         $curso->update($validated);
 
         return redirect()->route('cursos.index')->with('success', 'Curso actualizado correctamente.');
-    
-        /*
-        $request->validate([
-            'id_nivel' => 'required|exists:nivel_educativo,id',
-            'nombre' => 'required|string|max:255',
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'required|string',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'pdf' => 'nullable|file|mimes:pdf|max:10000',
-            'video' => 'nullable|string|max:255',
-            'delete_pdf' => 'nullable|boolean',
-        ]); 
-
-        if ($request->hasFile('img')) {
-            if ($curso->img) {
-                Storage::disk('public')->delete($curso->img);
-            }
-            $imgPath = $request->file('img')->store('imagenes_cursos', 'public');
-            $curso->img = $imgPath;
-        }
-
-        if ($request->boolean('delete_pdf') && $curso->pdf) {
-            Storage::disk('public')->delete($curso->pdf);
-            $curso->pdf = null;
-        }
-
-        if ($request->hasFile('pdf')) {
-            if ($curso->pdf) {
-                Storage::disk('public')->delete($curso->pdf);
-            }
-            $pdfPath = $request->file('pdf')->store('pdf_cursos', 'public');
-            $curso->pdf = $pdfPath;
-        }*/
-
-        
-        /*
-        $curso->titulo = $request->titulo;
-        $curso->descripcion = $request->descripcion;
-        $curso->video = $request->video;*/
     }
 
 
@@ -212,14 +152,14 @@ class CursoController extends Controller
 
     public function show(string $id)
     {
-        $curso = Curso::with(['nivelEducativo', 'fotos', 'contenido' => function($query) use ($id) {
-        $query->where('id_vista', $id)
-              ->where('vista_tipo', 'curso')
-              ->orderBy('created_at', 'desc');
-        }])->findOrFail($id);
+        $curso = Curso::with(['nivelEducativo', 'fotos'])->findOrFail($id);
 
-        return view('cursos.show', compact('curso'));
+        $contenidos = $curso->contenido()
+            ->where('vista_tipo', 'curso')
+            ->where('status', 1) 
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return view('cursos.show', compact('curso', 'contenidos'));
     }
-
-
 }

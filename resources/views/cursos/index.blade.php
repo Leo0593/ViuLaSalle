@@ -1,131 +1,286 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla de cursos</title>
-</head>
+@include('layouts.head')
 
 <body>
-    <h1>Tabla de cursos</h1>
+    @include('layouts.navheader')
 
-    @auth
-        @if($user->role == 'ADMIN')
-            <a href="{{ route('cursos.create') }}">
-                <button>Crear curso</button>
-            </a>
-
-            <a href="{{ route('dashboard') }}" class="btn btn-success mb-3">Volver a Dashboard</a>
+    <div class="container pt-3">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-    @endauth
 
-    <br><br>
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="body-container hero-section p-4 mb-4 rounded-4 shadow-sm"
+                style="background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);">
+                <div class="container text-center">
+                    <h1 class="display-5 fw-bold text-dark mb-3">Gestión de Cursos</h1>
+                    <p class="lead text-muted mb-4">Administra todos los cursos de tu sistema</p>
+                </div>
+            </div>
 
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <!--
-                <th>Imagen</th>
-                <th>Video</th>
-                <th>PDF</th>
-                <th>Titulo</th>
-                <th>Descripción</th> -->
-                
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($cursos as $curso)
-                <tr>
-                    <td>{{ $curso->id }}</td>
-                    <td>{{ $curso->nombre }}</td>
-                    <td>{{ $curso->status ? 'Activo' : 'Inactivo' }}</td>
-
-                    <!--
-                    <td>
-                        @if($curso->img)
-                            <img src="{{ asset('storage/' . $curso->img) }}" alt="imagen curso" width="80"
-                                style="margin: 5px;">
-                        @else
-                            <span>Sin imagen</span>
+            <!-- Header with Actions -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 p-3 bg-white rounded-3 shadow-sm">
+                <h2 class="mb-3 mb-md-0 fw-semibold">Listado de Cursos</h2>
+                <div class="d-flex gap-2">
+                    @auth
+                        @if($user->role == 'ADMIN')
+                            <a href="{{ route('cursos.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Crear Curso
+                            </a>
                         @endif
-                        <--
-                        @if($curso->fotos->count())
-                            @foreach($curso->fotos as $foto)
-                                <img src="{{ asset('storage/' . $foto->ruta_imagen) }}" alt="foto curso" width="80"
-                                    style="margin: 5px;">
-                            @endforeach
-                        @else
-                            <span>Sin imágenes</span>
-                        @endif --
-                    </td>
-                    <td>
-                        @if($curso->video)
-                            <video width="80" controls>
-                                <source src="{{ asset('storage/' . $curso->video) }}" type="video/mp4">
-                                Tu navegador no soporta el elemento de video.
-                            </video>
-                        @else
-                            <span>Sin video</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($curso->pdf)
-                            <a href="{{ asset('storage/' . $curso->pdf) }}" target="_blank">Ver PDF</a>
-                        @else
-                            <span>Sin PDF</span>
-                        @endif
-                    </td>
-                    <td>
-                        {{ $curso->titulo }}
-                    </td> 
-                    <td>
-                        {{ $curso->descripcion }}
-                    </td>
-                    -->
-                    <td>
-                        <!-- Botón de ver más -->
-                        <a href="{{ route('cursos.show', $curso->id) }}">
-                            <button>Ver más</button>
-                        </a>
+                    @endauth
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
 
-                        @auth
-                            @if($user->role == 'ADMIN')
-                                <!-- Botón de editar -->
-                                <a href="{{ route('cursos.edit', $curso->id) }}">
-                                    <button>Editar</button>
-                                </a>
-                                @if($curso->status)
-                                    <!-- Botón de desactivar -->
-                                    <form action="{{ route('cursos.destroy', $curso->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            onclick="return confirm('¿Estás seguro de desactivar este curso?')">Desactivar</button>
-                                    </form>
-                                @else
-                                    <!-- Botón de activar -->
-                                    <form action="{{ route('cursos.activate', $curso->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" onclick="return confirm('¿Deseas activar este curso?')">Activar</button>
-                                    </form>
-                                @endif
-                            @endif
-                        @endauth
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6">No hay cursos registrados.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+        <!-- Filtros de búsqueda -->
+        <div class="bg-white p-4 rounded-3 mb-4 shadow-sm border border-light">
+            <form method="GET" action="{{ route('cursos.index') }}" class="row g-3 align-items-end">
+                <!-- Título -->
+                <div class="col-12 mb-2">
+                    <h5 class="text-primary mb-0">
+                        <i class="fas fa-sliders-h me-2"></i>Filtrar Cursos
+                    </h5>
+                    <hr class="mt-2 mb-3">
+                </div>
+
+                <!-- Filtro por nombre -->
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="text" name="nombre" id="nombre" class="form-control shadow-sm"
+                            placeholder="Buscar por nombre..." value="{{ request('nombre') }}">
+                        <label for="nombre">Nombre del Curso</label>
+                    </div>
+                </div>
+
+                <!-- Filtro por estado -->
+                <div class="col-md-2">
+                    <div class="form-floating">
+                        <select name="status" id="status" class="form-select shadow-sm">
+                            <option value="">Todos</option>
+                            <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Activo</option>
+                            <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactivo</option>
+                        </select>
+                        <label for="status">Estado</label>
+                    </div>
+                </div>
+
+                <!-- Rango de fechas -->
+                <div class="col-md-4">
+                    <label class="form-label small text-muted mb-1">Rango de fechas</label>
+                    <div class="input-group">
+                        <input type="date" name="fecha_inicio" class="form-control shadow-sm"
+                            value="{{ request('fecha_inicio') }}" aria-label="Fecha inicio">
+                        <span class="input-group-text bg-light">a</span>
+                        <input type="date" name="fecha_fin" class="form-control shadow-sm"
+                            value="{{ request('fecha_fin') }}" aria-label="Fecha fin">
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="col-md-2 d-flex gap-2 align-self-end">
+                    <a href="{{ route('cursos.index') }}" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-broom me-1"></i> Limpiar
+                    </a>
+                    <button type="submit" class="btn btn-primary shadow w-100">
+                        <i class="fas fa-filter me-1"></i> Aplicar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tarjetas de cursos -->
+        <div class="bg-light p-3 p-md-4 rounded-4 mb-4 shadow-sm">
+            @if($cursos->isEmpty())
+                <div class="text-center py-4 py-md-5">
+                    <i class="fas fa-book fa-2x fa-md-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">No hay cursos registrados</h4>
+                    @auth
+                        @if($user->role == 'ADMIN')
+                            <a href="{{ route('cursos.create') }}" class="btn btn-primary mt-3">
+                                <i class="fas fa-plus me-2"></i>Crear Primer Curso
+                            </a>
+                        @endif
+                    @endauth
+                </div>
+            @else
+                <div class="row">
+                    @foreach ($cursos as $curso)
+                        <div class="col-12 mb-3 mb-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <!-- Layout para pantallas grandes -->
+                                    <div class="d-none d-md-flex">
+                                        <!-- Imagen del curso -->
+                                        <div class="flex-shrink-0 me-3" style="width: 120px;">
+                                            @if($curso->img)
+                                                <img src="{{ asset('storage/' . $curso->img) }}" 
+                                                    class="img-fluid rounded" 
+                                                    alt="Imagen del curso"
+                                                    style="max-height: 100px; object-fit: cover;">
+                                            @else
+                                                <div class="bg-secondary d-flex align-items-center justify-content-center rounded"
+                                                    style="width: 120px; height: 100px;">
+                                                    <i class="fas fa-book fa-2x text-light"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <!-- Contenido principal -->
+                                        <div class="flex-grow-1 pe-3">
+                                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                                <h5 class="card-title mb-0">{{ $curso->nombre }}</h5>
+                                                <span class="badge rounded-pill {{ $curso->status ? 'bg-success' : 'bg-secondary' }}">
+                                                    {{ $curso->status ? 'Activo' : 'Inactivo' }}
+                                                </span>
+                                            </div>
+
+                                            @if($curso->pdf)
+                                                <a href="{{ asset('storage/' . $curso->pdf) }}" target="_blank" class="badge bg-info mb-2">
+                                                    <i class="fas fa-file-pdf me-1"></i> Ver PDF
+                                                </a>
+                                            @endif
+
+                                            <div class="d-flex justify-content-between text-muted small mb-2">
+                                                <div>
+                                                    <i class="fas fa-calendar me-1"></i>
+                                                    {{ $curso->created_at->format('d/m/Y') }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Botones de acción -->
+                                        <div class="d-flex flex-column justify-content-between" style="min-width: 120px;">
+                                            <a href="{{ route('cursos.show', $curso->id) }}" class="btn btn-sm btn-outline-primary mb-2">
+                                                <i class="fas fa-eye me-1"></i> Ver
+                                            </a>
+
+                                            @auth
+                                                @if($user->role == 'ADMIN')
+                                                    <a href="{{ route('cursos.edit', $curso->id) }}"
+                                                        class="btn btn-sm btn-outline-warning mb-2">
+                                                        <i class="fas fa-edit me-1"></i> Editar
+                                                    </a>
+
+                                                    @if ($curso->status)
+                                                        <form method="POST"
+                                                            action="{{ route('cursos.destroy', $curso->id) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-sm btn-outline-danger w-100"
+                                                                onclick="return confirm('¿Desactivar este curso?')">
+                                                                <i class="fas fa-toggle-off me-1"></i> Desactivar
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form method="POST"
+                                                            action="{{ route('cursos.activate', $curso->id) }}">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button class="btn btn-sm btn-outline-success w-100"
+                                                                onclick="return confirm('¿Activar este curso?')">
+                                                                <i class="fas fa-toggle-on me-1"></i> Activar
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                @endif
+                                            @endauth
+                                        </div>
+                                    </div>
+
+                                    <!-- Layout para móviles -->
+                                    <div class="d-flex flex-column d-md-none">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h5 class="card-title mb-0">{{ $curso->nombre }}</h5>
+                                            <span class="badge rounded-pill {{ $curso->status ? 'bg-success' : 'bg-secondary' }}">
+                                                {{ $curso->status ? 'Activo' : 'Inactivo' }}
+                                            </span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mb-2">
+                                            @if($curso->pdf)
+                                                <a href="{{ asset('storage/' . $curso->pdf) }}" target="_blank" class="badge bg-info me-2">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
+                                            @endif
+                                            <small class="text-muted">
+                                                <i class="fas fa-calendar me-1"></i>
+                                                {{ $curso->created_at->format('d/m/Y') }}
+                                            </small>
+                                        </div>
+
+                                        <!-- Imagen en móviles -->
+                                        <div class="mb-3 text-center">
+                                            @if($curso->img)
+                                                <img src="{{ asset('storage/' . $curso->img) }}" 
+                                                    class="img-fluid rounded" 
+                                                    alt="Imagen del curso"
+                                                    style="max-height: 100px; object-fit: cover;">
+                                            @else
+                                                <div class="bg-secondary d-flex align-items-center justify-content-center rounded mx-auto"
+                                                    style="width: 120px; height: 100px;">
+                                                    <i class="fas fa-book fa-2x text-light"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <!-- Botones en horizontal para móviles -->
+                                        <div class="d-flex gap-2 mt-2">
+                                            <a href="{{ route('cursos.show', $curso->id) }}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                                                <i class="fas fa-eye"></i>
+                                                <span class="d-none d-sm-inline"> Ver</span>
+                                            </a>
+
+                                            @auth
+                                                @if($user->role == 'ADMIN')
+                                                    <a href="{{ route('cursos.edit', $curso->id) }}"
+                                                        class="btn btn-sm btn-outline-warning flex-grow-1">
+                                                        <i class="fas fa-edit"></i>
+                                                        <span class="d-none d-sm-inline"> Editar</span>
+                                                    </a>
+
+                                                    @if ($curso->status)
+                                                        <form method="POST"
+                                                            action="{{ route('cursos.destroy', $curso->id) }}"
+                                                            class="flex-grow-1">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-sm btn-outline-danger w-100"
+                                                                onclick="return confirm('¿Desactivar este curso?')">
+                                                                <i class="fas fa-toggle-off"></i>
+                                                                <span class="d-none d-sm-inline"> Desactivar</span>
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form method="POST"
+                                                            action="{{ route('cursos.activate', $curso->id) }}"
+                                                            class="flex-grow-1">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button class="btn btn-sm btn-outline-success w-100"
+                                                                onclick="return confirm('¿Activar este curso?')">
+                                                                <i class="fas fa-toggle-on"></i>
+                                                                <span class="d-none d-sm-inline"> Activar</span>
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                @endif
+                                            @endauth
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="d-flex justify-content-center mt-3 mt-md-4">
+                    {{ $cursos->links() }}
+                </div>
+            @endif
+        </div>
+    </div>
 </body>
-
-</html>

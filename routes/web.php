@@ -143,8 +143,8 @@ Route::prefix('contenido')->name('contenido.')->group(function () {
     Route::post('/', [ContenidoController::class, 'store'])->name('store') ->middleware('role:ADMIN,PROFESOR');
     Route::get('/{id}/edit', [ContenidoController::class, 'edit'])->name('edit') ->middleware('role:ADMIN,PROFESOR');
     Route::put('/{id}', [ContenidoController::class, 'update'])->name('update') ->middleware('role:ADMIN,PROFESOR');
-    Route::delete('/{id}', [ContenidoController::class, 'destroy'])->name('destroy') ->middleware('role:ADMIN,PROFESOR');
-    Route::put('/{id}/activar', [ContenidoController::class, 'activate'])->name('activate') ->middleware('role:ADMIN,PROFESOR');
+    Route::delete('/{id}/{id_vista}', [ContenidoController::class, 'destroy'])->name('destroy');
+    Route::post('/activar/{id}/{id_vista}', [ContenidoController::class, 'activate'])->name('activate');
 });
 
 Route::get('/publicacion/{id}/comentarios', [ComentarioController::class, 'verComentarios'])->name('comentarios.ver');

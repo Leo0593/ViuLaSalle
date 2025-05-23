@@ -14,10 +14,12 @@
     </select>
     <br>
 
-    <!--
-    <label>Tipo:</label>
-    <input type="text" name="tipo" maxlength="50">
-    <br> -->
+    <label for="tipo">Tipo:</label>
+    <select name="tipo" id="tipo" required>
+        <option value="contenedor" selected>Contenedor</option>
+        <option value="columna">Columna</option>
+    </select>
+    <br>
 
     <label>Título:</label>
     <input type="text" name="titulo" maxlength="255">

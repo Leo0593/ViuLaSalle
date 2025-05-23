@@ -33,6 +33,13 @@
             <input type="text" name="tipo" id="tipo" value="{{ old('tipo', $contenido->tipo) }}" class="form-control" maxlength="50">
         </div>
 
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo" required>
+            <option value="contenedor" {{ $contenido->tipo == 'contenedor' ? 'selected' : '' }}>Contenedor</option>
+            <option value="columna" {{ $contenido->tipo == 'columna' ? 'selected' : '' }}>Columna</option>
+        </select>
+        <br>
+
         <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
             <input type="text" name="titulo" id="titulo" value="{{ old('titulo', $contenido->titulo) }}" class="form-control" maxlength="255">

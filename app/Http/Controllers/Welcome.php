@@ -13,15 +13,16 @@ use App\Models\Curso;
 
 class Welcome extends Controller
 {
-    
     public function index()
     {
         $user = auth()->user();
         $eventos = Evento::all();
         $categorias = Categoria::all(); // Obtener todas las categorías
         $categoriasSugeridas = Categoria::inRandomOrder()->limit(5)->get(); // 5 aleatorias
-        $niveles = NivelEducativo::all();
-        $cursos = Curso::with('nivelEducativo', 'fotos')->get();
+        $niveles = NivelEducativo::where('status', 1)->get();
+        $cursos = Curso::with('nivelEducativo', 'fotos')
+            ->where('status', 1)
+            ->get();
 
         $publicaciones = Publicacion::with(['fotos', 'videos', 'categorias', 'comentarios'])
             ->where('status', 1)
@@ -39,7 +40,17 @@ class Welcome extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('welcome', compact('user', 'publicaciones', 'nopublicaciones', 'eventos', 'categorias', 'categoriasSugeridas', 'notificaciones', 'niveles', 'cursos'));
+        return view('welcome', compact(
+            'user', 
+            'publicaciones', 
+            'nopublicaciones', 
+            'eventos', 
+            'categorias', 
+            'categoriasSugeridas', 
+            'notificaciones', 
+            'niveles', 
+            'cursos'
+        ));
     }
     
     /**

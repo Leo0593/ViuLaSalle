@@ -17,5 +17,6 @@ class Contenido extends Model
         'imagen',
         'video',
         'opcion',
+        'status',
     ];
 }

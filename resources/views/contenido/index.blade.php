@@ -1,7 +1,4 @@
-@include('layouts.head')
-
 {{-- Estilos CSS --}}
-
 <div>
     <a href="{{ route('contenido.create') }}" style="padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 20px;">Crear Nuevo Contenido</a>
 </div>
@@ -25,6 +22,7 @@
             <th>Imagen</th>
             <th>Video</th>
             <th>Opción</th>
+            <th>Status</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -36,12 +34,30 @@
             <td>{{ $contenido->vista_tipo }}</td>
             <td>{{ $contenido->tipo }}</td>
             <td>{{ $contenido->titulo }}</td>
-            <td>{{ $contenido->descripcion }}</td>
+            <td>{{ \Illuminate\Support\Str::limit($contenido->descripcion, 10) }}</td>
             <td>{{ $contenido->imagen }}</td>
             <td>{{ $contenido->video }}</td>
             <td>{{ $contenido->opcion }}</td>
+            <td>{{ $contenido->status }}</td>
             <td>
                 <a href="{{ route('contenido.edit', $contenido->id) }}" style="padding: 5px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px;">Editar</a>
+
+                @if($contenido->status)
+  {{-- activo: mostrar eliminar --}}
+  <form action="{{ route('contenido.destroy', $contenido->id) }}" method="POST" style="display:inline;"
+        onsubmit="return confirm('¿Eliminar este contenido?');">
+    @csrf
+    @method('DELETE')
+    <button class="btn btn-danger btn-sm">Eliminar</button>
+  </form>
+@else
+  {{-- inactivo: mostrar restaurar --}}
+  <form action="{{ route('contenido.activate', $contenido->id) }}" method="POST" style="display:inline;">
+    @csrf
+    <button class="btn btn-success btn-sm">Restaurar</button>
+  </form>
+@endif
+
             </td>
         </tr>
         @endforeach
@@ -49,33 +65,115 @@
 </table>
 
 @foreach ($contenidos as $contenido)
-    <div class="contenido-box" style="margin-top: 20px;">
-        @if($contenido->opcion == 0)
-            <div class="contenido-box-opc-0">
-                <td>{{ $contenido->titulo }}</td>
-                <td>{{ $contenido->descripcion }}</td>
-            </div>
-        @elseif($contenido->opcion == 1)
-            <div class="contenido-box-opc-1">
-                <div class="contenido-box-opc-1-text">
+    @if ($contenido->tipo == 'contenedor') 
+        <div class="contenido-box" style="margin-top: 20px;">
+            @if($contenido->opcion == 0)
+                <div class="contenido-box-opc-0">
                     <td>{{ $contenido->titulo }}</td>
                     <td>{{ $contenido->descripcion }}</td>
                 </div>
-                <div class="contenido-box-opc-1-img"
-                    style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
+            @elseif($contenido->opcion == 1)
+                <div class="contenido-box-opc-1">
+                    <div class="contenido-box-opc-1-text">
+                        <td>{{ $contenido->titulo }}</td>
+                        <td>{{ $contenido->descripcion }}</td>
+                    </div>
+                    <div class="contenido-box-opc-1-img"
+                        style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
+                    </div>
                 </div>
-            </div>
-        @elseif($contenido->opcion == 2)
-            <div class="contenido-box-opc-1">
-                <div class="contenido-box-opc-1-img"
-                    style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
+            @elseif($contenido->opcion == 2)
+                <div class="contenido-box-opc-1">
+                    <div class="contenido-box-opc-1-img"
+                        style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
+                    </div>
+                    <div class="contenido-box-opc-1-text">
+                        <td>{{ $contenido->titulo }}</td>
+                        <td>{{ $contenido->descripcion }}</td>
+                    </div>
                 </div>
-                <div class="contenido-box-opc-1-text">
-                    <td>{{ $contenido->titulo }}</td>
-                    <td>{{ $contenido->descripcion }}</td>
-                </div>
-            </div>
-        @endif
-
-    </div>
+            @endif
+        </div>
+    @endif
 @endforeach
+
+{{-- Contenidos tipo "columna" (van en grid) --}}
+@php
+    $columnas = $contenidos->filter(fn($c) => $c->tipo == 'columna');
+@endphp
+
+@if($columnas->count())
+    <div class="clase-infos">
+        @foreach ($contenidos as $contenido)
+            @if ($contenido->tipo == 'columna')
+                @if($contenido->opcion == 0)
+                    <div class="clase-infos-info">
+                        <div class="clase-infos-info-header">
+                            <h2>{{ $contenido->titulo }}</h2>
+                        </div>
+                        <div class="clase-infos-info-body">
+                            <div class="clase-infos-info-content">
+                                <ul>
+                                    @foreach(explode("\n", $contenido->descripcion) as $linea)
+                                        <li>{{ $linea }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @elseif($contenido->opcion == 1)
+                    <div class="clase-infos-info">
+                        <div class="clase-infos-info-header">
+                            <h2>{{ $contenido->titulo }}</h2>
+                        </div>
+                        <div class="clase-infos-info-body">
+                            <div class="clase-infos-info-content">
+                            <table class="moduls-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mòduls professionals</th>
+                                        <th>Durada (h)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(preg_split('/\r\n|\r|\n/', $contenido->descripcion) as $linea) 
+                                        @php
+                                            // Dividimos por tabuladores o por 2+ espacios
+                                            $partes = preg_split('/\t+|\s{2,}/', trim($linea));
+                                        @endphp
+                                        @if(count($partes) === 2)
+                                            <tr>
+                                                <td>{{ $partes[0] }}</td>
+                                                <td>{{ $partes[1] }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endif
+        @endforeach
+    </div>
+@endif
+
+    <script>
+        document.querySelectorAll('.clase-infos-info-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const parent = header.parentElement;
+                parent.classList.toggle('active');
+
+                // Opcional: Ajustar altura dinámicamente si el contenido es variable
+                const body = parent.querySelector('.clase-infos-info-body');
+                if (parent.classList.contains('active')) {
+                    body.style.maxHeight = body.scrollHeight + "px";
+                } else {
+                    body.style.maxHeight = "0";
+                    // Resetear después de la animación
+                    setTimeout(() => { body.style.maxHeight = null; }, 400);
+                }
+            });
+        }); 
+    </script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contenido;
+use App\Models\Curso; // Asegúrate de importar el modelo Curso
 
 class ContenidoController extends Controller
 {
@@ -98,8 +99,21 @@ class ContenidoController extends Controller
         return view('contenido.show', compact('contenido'));
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id, string $id_vista)
     {
-        //
+        $contenido = Contenido::findOrFail($id);
+        $contenido->update(['status' => 0]);
+        $curso = Curso::findOrFail($id_vista);  // Usar modelo Curso para validar o extraer datos
+
+        return redirect()->route('cursos.edit', ['id' => $curso->id]);
+    }
+
+    public function activate(string $id, string $id_vista)
+    {
+        $contenido = Contenido::findOrFail($id);
+        $contenido->update(['status' => 1]);
+        $curso = Curso::findOrFail($id_vista);  // Usar modelo Curso para validar o extraer datos
+
+        return redirect()->route('cursos.edit', ['id' => $curso->id]);
     }
 }

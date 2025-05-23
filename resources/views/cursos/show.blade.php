@@ -6,205 +6,189 @@
     <div class="eventos-main">
         <div style="display: flex; flex-direction: column; width: 100%; align-items: center; gap: 40px;">
 
-            <div class="clase-banner">
-                {{ $curso->nombre }}
+            @if ($curso->img != null)
+                <div class="clase-banner" style="background-image: linear-gradient(to top, rgba(2, 77, 223, 1), rgba(0, 0, 0, 0) 50%), url('{{ asset('storage/' . $curso->img) }}');"></div>
+            @endif
+
+            <div class="evento-nombre">
+                <h1>{{ $curso->nombre }}</h1>
                 <div>
                     <img src="{{ asset('img/separador.png') }}" alt="Separador">
                 </div>
             </div>
 
-            @foreach ($contenido as $contenido)
-                @if ($contenido->opcion == 0)
-                    <div class="clase-box-opc-0">
-                        <td>{{ $contenido->titulo }}</td>
-                        <td>{{ $contenido->descripcion }}</td>
-                    </div>
-                @elseif ($contenido->opcion == 1)
-                    <div class="clase-box-opc-1">
-                        <div class="clase-box-opc-1-text">
-                            <td>{{ $contenido->titulo }}</td>
-                            <td>{{ $contenido->descripcion }}</td>
-                        </div>
-                        <div class="clase-box-opc-1-img"
-                            style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
-                        </div>
-                    </div>
-                @elseif ($contenido->opcion == 2)
-                    <div class="clase-box-opc-1">
-                        <div class="clase-box-opc-1-img"
-                            style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}'); background-size: cover; background-position: center; width: 100%; height: 200px;">
-                        </div>
-                        <div class="clase-box-opc-1-text">
-                            <td>{{ $contenido->titulo }}</td>
-                            <td>{{ $contenido->descripcion }}</td>
-                        </div>
+            @foreach ($contenidos as $contenido)
+                @if ($contenido->tipo == 'contenedor')
+                    <div class="eventos-main-contenidos">
+                        @if ($contenido->opcion == 0)
+                            <div class="contenido-box-opc-0">
+                                <div class="contenido-box-opc-1-text">
+                                    <h1>{{ $contenido->titulo }}</h1>
+                                    <p>{{ $contenido->descripcion }}</h1>
+                                </div>
+                                @if ($contenido->imagen != null) 
+                                        <div class="contenido-box-opc-1-img"
+                                            style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}');">
+                                        </div>
+                                @elseif ($contenido->video != null)
+                                    @php
+                                        $videoId = null;
+                                        if (preg_match('/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]+)/', $contenido->video, $matches)) {
+                                            $videoId = $matches[1];
+                                        }
+                                    @endphp
+
+                                    @if ($videoId)
+                                        <div class="contenido-box-opc-1-video">
+                                            <iframe 
+                                                src="https://www.youtube.com/embed/{{ $videoId }}"                                         frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen>
+                                            </iframe> 
+                                        </div>
+                                    @endif
+                                @endif  
+                            </div>
+                        @elseif ($contenido->opcion == 1)
+                            <div class="contenido-box-opc-1">
+                                <div class="contenido-box-opc-1-text">
+                                    <h1>{{ $contenido->titulo }}</h1>
+                                    <p>{{ $contenido->descripcion }}</h1>
+                                </div>
+
+                                @if ($contenido->imagen != null) 
+                                    <div class="contenido-box-opc-1-img"
+                                        style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}');">
+                                    </div>
+                                @elseif ($contenido->video != null)
+                                    @php
+                                        $videoId = null;
+                                        if (preg_match('/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]+)/', $contenido->video, $matches)) {
+                                            $videoId = $matches[1];
+                                        }
+                                    @endphp
+
+                                    @if ($videoId)
+                                        <div class="contenido-box-opc-1-video">
+                                            <iframe 
+                                                src="https://www.youtube.com/embed/{{ $videoId }}"                                         frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen>
+                                            </iframe> 
+                                        </div>
+                                    @endif
+                                @endif  
+                            </div>
+                        @elseif ($contenido->opcion == 2)
+                            <div class="contenido-box-opc-1">
+                                <div class="contenido-box-opc-1-img"
+                                    style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}');">
+                                </div>
+                                <div class="contenido-box-opc-1-text">
+                                    <h1>{{ $contenido->titulo }}</h1>
+                                    <p>{{ $contenido->descripcion }}</h1>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 @endif
             @endforeach
 
-            <div class="clase-descripcion">
-                <div class="clase-descripcion-texto">
-                    <h2>Vols estudiar el CFGM en Electromecànica de Vehicles Automòbils?
-                    </h2>
-                    <p>
-                    Si t’agrada el món de l’automòbil i vols saber com funciona un motor de combustió, manipular un sistema de suspensió, desmuntar els engranatges i, en definitiva, aprendre tots els secrets de la mecànica, el CFGM en Electromecànica de Vehicles Automòbils és per a tu. Prepara’t per ser un mecànic de nivell capaç de reparar tot tipus d’avaries electromecàniques i treballar en qualsevol taller o concessionari oficial.
-                    </p>
-                    <p>
-                    Cicle LOE
-                    </p>
-                    <p>
-                    Durada: 2000 hores. (2 cursos acadèmics). Horari de tarda.
-                    </p>
-                    <p>
-                    Família professional: Transport i manteniment de vehicles
-                    </p>
-                </div>
-                <div class="clase-descripcion-video">
-                    <iframe 
-                        src="https://www.youtube.com/embed/jep61AQL2mY?modestbranding=1&rel=0" 
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe> 
-                </div>
-            </div>
+            {{-- Contenidos tipo "columna" (van en grid) --}}
+            @php
+                $columnas = $contenidos->filter(fn($c) => $c->tipo == 'columna')->values();
+                $count = $columnas->count();            
+            @endphp
 
-            <div class="clase-infos">
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa-solid fa-book"></i>
-                        <h2>Què aprendràs?</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <div class="clase-infos-info-content">
-                            <ul>
-                                <li>Crearàs vídeojocs utilitzant dissenys 2D i 3D.</li>
-                                <li>Crearàs pàgines web amb html, php, css.</li>
-                                <li>Desenvoluparàs aplicacions mòbils.</li>
-                                <li>Sistemas informàtics segons el seu hardware, software i la xarxa de connexió.</li>
-                                <li>Desenvoluparàs aplicacions d'escriptori i d'ERP.</li>
-                            </ul>
-                        </div>
+            @if($columnas->count())
+                <div class="clase-infos">
+                    @foreach ($contenidos as $contenido)
+                        @if ($contenido->tipo == 'columna')
+                            @if($contenido->opcion == 0)
+                                <div class="clase-infos-info">
+                                    <div class="clase-infos-info-header">
+                                        <h2>{{ $contenido->titulo }}</h2>
+                                    </div>
+                                    <div class="clase-infos-info-body">
+                                        <div class="clase-infos-info-content">
+                                            <ul>
+                                                @foreach(explode("\n", $contenido->descripcion) as $linea)
+                                                    <li>{{ $linea }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif($contenido->opcion == 1)
+                                <div class="clase-infos-info">
+                                    <div class="clase-infos-info-header">
+                                        <h2>{{ $contenido->titulo }}</h2>
+                                    </div>
+                                    <div class="clase-infos-info-body">
+                                        <div class="clase-infos-info-content">
+                                        <table class="moduls-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mòduls professionals</th>
+                                                    <th>Durada (h)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach(preg_split('/\r\n|\r|\n/', $contenido->descripcion) as $linea) 
+                                                    @php
+                                                        // Dividimos por tabuladores o por 2+ espacios
+                                                        $partes = preg_split('/\t+|\s{2,}/', trim($linea));
+                                                    @endphp
+                                                    @if(count($partes) === 2)
+                                                        <tr>
+                                                            <td>{{ $partes[0] }}</td>
+                                                            <td>{{ $partes[1] }}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
+                    @endforeach
+                </div>
+            @endif
+
+            {{-- PDF --}}
+            @if ($curso->pdf != null)
+                <div style="display: flex; flex-direction: column; width: 100%; align-items: center;">
+                    <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                        <a class="pdf-download" href="{{ asset('storage/' . $curso->pdf) }}" target="_blank" class="pdf-mobile">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <p>Descargar PDF</p>
+                        </a>
+                    </div>
+                    <div class="eventos-main-contenidos">
+                        <div id="pdf-viewer-container">
+                            <div id="pdf-controls">
+                                <div>
+                                    <button id="prev-page" class="pdf-button"><i class="fa-solid fa-angle-left"></i></button>
+                                    <button id="next-page" class="pdf-button"><i class="fa-solid fa-angle-right"></i></button>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center;">
+                                    <span id="page-count">Página <span id="current-page">1</span> de <span id="total-pages">0</span></span>
+                                    <div style="display: flex; gap: 5px;">
+                                        <input type="number" id="page-num" min="1" value="1" style="width: 50px;"> 
+                                        <button id="go-to-page" class="pdf-button"><i class="fa-solid fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="pdf-viewer" class="curso-pdf"></div>
+                        </div>           
                     </div>
                 </div>
+            @endif
 
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa fa-th-list" aria-hidden="true"></i>
-                        <h2>Plà d'estudis</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <div class="clase-infos-info-content">
-                            <table class="moduls-table">
-                                <thead>
-                                    <tr>
-                                        <th>Mòduls professionals</th>
-                                        <th>Durada (h)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>Desenvolupament d’aplicacions multiplataforma</td><td>121h</td></tr>
-                                    <tr><td>Desenvolupament d’aplicacions web</td><td>110h</td></tr>
-                                    <tr><td>Desenvolupament d’aplicacions mòbils</td><td>187h</td></tr>
-                                    <tr><td>Desenvolupament d’interfícies</td><td>77h</td></tr>
-                                    <tr><td>Entorns de desenvolupament</td><td>55h</td></tr>
-                                    <tr><td>Accés a dades</td><td>88h</td></tr>
-                                    <tr><td>Desenvolupament d’interfícies</td><td>88h</td></tr>
-                                    <tr><td>Programació multimèdia i dispositius mòbils</td><td>77h</td></tr>
-                                    <tr><td>Programació de serveis i processos</td><td>55h</td></tr>
-                                    <tr><td>Sistemes de gestió empresarial</td><td>55h</td></tr>
-                                    <tr><td>Formació i orientació laboral</td><td>66h</td></tr>
-                                    <tr><td>Empresa i iniciativa emprenedora</td><td>66h</td></tr>
-                                    <tr><td>Projecte de desenvolupament d’aplicacions multiplataforma, perfil videojocs i oci digital</td><td>297h</td></tr>
-                                    <tr><td>Formació en centres de treball</td><td>383h</td></tr>
-                                    <tr><td>Game design</td><td>33h</td></tr>
-                                    <tr><td>Disseny 2D i 3D</td><td>88h</td></tr>
-                                    <tr><td>Programació de videojocs 2D i 3D</td><td>154h</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa-solid fa-book"></i>
-                        <h2>Què aprendràs?</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <div class="clase-infos-info-content">
-                            <ul>
-                                <li>Crearàs vídeojocs utilitzant dissenys 2D i 3D.</li>
-                                <li>Crearàs pàgines web amb html, php, css.</li>
-                                <li>Desenvoluparàs aplicacions mòbils.</li>
-                                <li>Sistemas informàtics segons el seu hardware, software i la xarxa de connexió.</li>
-                                <li>Desenvoluparàs aplicacions d'escriptori i d'ERP.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa-solid fa-book"></i>
-                        <h2>Què aprendràs?</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <div class="clase-infos-info-content">
-                            <ul>
-                                <li>Crearàs vídeojocs utilitzant dissenys 2D i 3D.</li>
-                                <li>Crearàs pàgines web amb html, php, css.</li>
-                                <li>Desenvoluparàs aplicacions mòbils.</li>
-                                <li>Sistemas informàtics segons el seu hardware, software i la xarxa de connexió.</li>
-                                <li>Desenvoluparàs aplicacions d'escriptori i d'ERP.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa-solid fa-book"></i>
-                        <h2>Què aprendràs?</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <div class="clase-infos-info-content">
-                            <ul>
-                                <li>Crearàs vídeojocs utilitzant dissenys 2D i 3D.</li>
-                                <li>Crearàs pàgines web amb html, php, css.</li>
-                                <li>Desenvoluparàs aplicacions mòbils.</li>
-                                <li>Sistemas informàtics segons el seu hardware, software i la xarxa de connexió.</li>
-                                <li>Desenvoluparàs aplicacions d'escriptori i d'ERP.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="clase-infos-info">
-                    <div class="clase-infos-info-header">
-                        <i class="fa-solid fa-book"></i>
-                        <h2>Què aprendràs?</h2>
-                    </div> 
-                    
-                    <div class="clase-infos-info-body">
-                        <div class="clase-infos-info-content">
-                            <ul>
-                                <li>Crearàs vídeojocs utilitzant dissenys 2D i 3D.</li>
-                                <li>Crearàs pàgines web amb html, php, css.</li>
-                                <li>Desenvoluparàs aplicacions mòbils.</li>
-                                <li>Sistemas informàtics segons el seu hardware, software i la xarxa de connexió.</li>
-                                <li>Desenvoluparàs aplicacions d'escriptori i d'ERP.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            {{-- Publicaciones --}}
             <div style="display: flex; flex-direction: column; width: 100%; align-items: center;">
                 <div class="clase-posts-separador">
                     <i class="fa fa-th" aria-hidden="true"></i>
@@ -225,23 +209,156 @@
         </div>
     </div>
     
-    <script>    
+    <script>
+        function ajustarAlturasAcordeon() {
+            document.querySelectorAll('.clase-infos-info.active').forEach(parent => {
+                const body = parent.querySelector('.clase-infos-info-body');
+                body.style.maxHeight = body.scrollHeight + "px";
+            });
+        }
+
+        // Acordeón: Toggle activo y altura
         document.querySelectorAll('.clase-infos-info-header').forEach(header => {
             header.addEventListener('click', () => {
                 const parent = header.parentElement;
-                parent.classList.toggle('active');
-                
-                // Opcional: Ajustar altura dinámicamente si el contenido es variable
                 const body = parent.querySelector('.clase-infos-info-body');
+                parent.classList.toggle('active');
+
                 if (parent.classList.contains('active')) {
-                body.style.maxHeight = body.scrollHeight + "px";
+                    body.style.maxHeight = body.scrollHeight + "px";
                 } else {
-                body.style.maxHeight = "0";
-                // Resetear después de la animación
-                setTimeout(() => { body.style.maxHeight = null; }, 400);
+                    body.style.maxHeight = "0";
+                    setTimeout(() => {
+                        body.style.maxHeight = null;
+                    }, 400);
                 }
             });
-        }); 
+        });
+
+        // Escuchar resize y ajustar alturas si es necesario
+        window.addEventListener('resize', () => {
+            ajustarAlturasAcordeon();
+        });
+
+        // Llamar también al cargar por si inicia en mobile
+        window.addEventListener('DOMContentLoaded', () => {
+            ajustarAlturasAcordeon();
+        });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script>
+        // Configuración de PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+
+        let pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = calculateScale();
+
+        function calculateScale() {
+            return window.innerWidth < 768 ? Math.min(1.2, window.innerWidth / 600) : 1.5;
+        }
+
+        // Función para renderizar la página
+        function renderPage(num) {
+            pageRendering = true;
+
+            pdfDoc.getPage(num).then(function (page) {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const viewer = document.getElementById('pdf-viewer');
+
+                viewer.innerHTML = '';
+                viewer.appendChild(canvas);
+
+                const containerWidth = viewer.clientWidth - 20;
+                const pageWidth = page.getViewport({ scale: 1.0 }).width;
+                const dynamicScale = Math.min(containerWidth / pageWidth, calculateScale());
+
+                const viewport = page.getViewport({ scale: dynamicScale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+
+                const renderTask = page.render(renderContext);
+                renderTask.promise.then(function () {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            document.getElementById('current-page').textContent = num;
+            document.getElementById('page-num').value = num;
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        // Cargar PDF
+        pdfjsLib.getDocument("{{ asset('storage/' . $curso->pdf) }}").promise.then(function (pdf) {
+            pdfDoc = pdf;
+            document.getElementById('total-pages').textContent = pdf.numPages;
+            renderPage(pageNum);
+
+            // Observar tamaño del contenedor
+            const resizeObserver = new ResizeObserver(() => {
+                if (!pageRendering) {
+                    scale = calculateScale();
+                    renderPage(pageNum);
+                }
+            });
+            resizeObserver.observe(document.getElementById('pdf-viewer-container'));
+
+            // Observar cambio de tamaño de ventana (por ejemplo, móvil <-> escritorio)
+            window.addEventListener('resize', () => {
+                if (!pageRendering) {
+                    scale = calculateScale();
+                    renderPage(pageNum);
+                }
+            });
+        });
+
+        // Controles de navegación
+        document.getElementById('prev-page').addEventListener('click', function () {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        });
+
+        document.getElementById('next-page').addEventListener('click', function () {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        });
+
+        document.getElementById('go-to-page').addEventListener('click', function () {
+            let num = parseInt(document.getElementById('page-num').value);
+            if (isNaN(num)) return;
+            if (num < 1) num = 1;
+            if (num > pdfDoc.numPages) num = pdfDoc.numPages;
+            pageNum = num;
+            queueRenderPage(pageNum);
+        });
+
+        document.getElementById('page-num').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                document.getElementById('go-to-page').click();
+            }
+        });
     </script>
     
     @include('layouts.footer')

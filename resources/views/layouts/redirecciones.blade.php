@@ -8,14 +8,6 @@
     </a>
 </li>
 
-    {{-- Perfil --}}
-<li class="opciones-bar-item">
-    <a class="opciones-bar-link" href="{{ route('profile.edit') }}">
-        <i class="fa-solid fa-user"></i>
-        <span>Perfil</span>
-    </a>
-</li>
-
     {{-- Eventos --}}
 <li class="opciones-bar-item">
     <a class="opciones-bar-link" href="{{ route('eventos.todos') }}">
@@ -36,12 +28,14 @@
     @endif
 @endauth
 
+<!--
 <li class="opciones-bar-item">
     <a class="opciones-bar-link" href="{{ route('niveles.show') }}">
         <i class="fa-solid fa-calendar-plus"></i>
         <span>Show</span>
     </a>
 </li>
+-->
 
 <div class="opciones-bar-separator">Niveles Educaticos</div>
 

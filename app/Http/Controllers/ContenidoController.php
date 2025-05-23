@@ -55,7 +55,8 @@ class ContenidoController extends Controller
     public function edit(string $id)
     {
         $contenido = Contenido::findOrFail($id);
-        return view('contenido.edit', compact('contenido'));
+        $curso_id = $request->query('curso_id');
+        return view('contenido.edit', compact('contenido', 'curso_id'));
     }
 
     public function update(Request $request, string $id)
@@ -89,8 +90,9 @@ class ContenidoController extends Controller
 
         $contenido->save();
 
-        return redirect()->route('contenido.index')->with('success', 'Contenido actualizado correctamente.');
-    }
+        return redirect()->route('cursos.edit', ['id' => $request->id_vista])
+                     ->with('success', 'Contenido actualizado correctamente.');
+}
 
     public function show(string $id)
     {

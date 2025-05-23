@@ -15,10 +15,7 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label for="id_vista" class="form-label">ID Vista</label>
-            <input type="number" name="id_vista" id="id_vista" value="{{ old('id_vista', $contenido->id_vista) }}" class="form-control" required>
-        </div>
+        <input type="hidden" name="id_vista" value="{{ $curso_id }}">
 
         <div class="mb-3">
             <label for="vista_tipo" class="form-label">Tipo Vista</label>

@@ -137,7 +137,7 @@
                                     </div>
                                     <div style="display: flex; gap: 5px; flex-direction: column;">
                                         {{-- Botón Editar (puede abrir modal o ir a página de edición) --}}
-                                        <a href="{{ route('contenido.edit', $contenedor->id) }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ route('contenido.edit', $contenido->id) }}?curso_id={{ $curso->id }}" class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-pencil"></i> Editar
                                         </a>
                                 
@@ -152,9 +152,9 @@
                                         @else
                                             {{-- inactivo: mostrar restaurar --}}
                                             <form action="{{ route('contenido.activate', ['id' => $contenedor->id, 'curso_id' => $curso->id]) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button class="btn btn-success btn-sm">Restaurar</button>
-                                        </form>
+                                                @csrf
+                                                <button class="btn btn-success btn-sm">Restaurar</button>
+                                            </form>
 
                                         @endif
                                     </div>

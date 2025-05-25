@@ -107,11 +107,51 @@
                         <input type="text" name="video" id="video" value="{{ old('video', $contenido->video) }}" class="form-control shadow-sm" maxlength="255">
                     </div>
 
-                    <div class="mb-4">
+                    {{-- Opción por número solo si no se usan radios (respaldo) --}}
+                    
+                    <input type="hidden" name="opcion" id="opcion" value="{{ old('opcion', $contenido->opcion) }}" class="form-control shadow-sm" required>
+                    <!-- <div class="mb-4">
                         <label for="opcion" class="form-label fw-semibold">
                             <i class="bi bi-list-check me-2"></i>Opción
                         </label>
-                        <input type="number" name="opcion" id="opcion" value="{{ old('opcion', $contenido->opcion) }}" class="form-control shadow-sm" required>
+                    </div> -->
+
+                    {{-- Opciones tipo contenedor --}}
+                    <div id="opciones-contenedor" style="display:none; margin-top: 1rem;">
+                        <label class="form-label fw-bold">Opciones Contenedor:</label><br>
+                        <div class="btn-group" style="width: 100%" role="group">
+                            @for ($i = 0; $i <= 2; $i++)
+                                <input type="radio" class="btn-check opcion-btn" name="opcion" id="cont-{{ $i+1 }}" value="{{ $i }}" autocomplete="off"
+                                    {{ old('opcion', $contenido->opcion) == $i && old('tipo', $contenido->tipo) == 'contenedor' ? 'checked' : '' }}>
+                                <label class="btn btn-outline-secondary" for="cont-{{ $i+1 }}">
+                                    @if ($i == 0)
+                                        <i class="fa fa-align-justify" aria-hidden="true"></i> 1
+                                    @elseif ($i == 1)
+                                        <div><i class="fa fa-align-left"></i><i class="fa fa-image"></i> 2</div>
+                                    @else
+                                        <div><i class="fa fa-image"></i><i class="fa fa-align-right"></i> 3</div>
+                                    @endif
+                                </label>
+                            @endfor
+                        </div>
+                    </div>
+
+                    {{-- Opciones tipo columna --}}
+                    <div id="opciones-columna" style="display:none; margin-top: 1rem;">
+                        <label class="form-label fw-bold">Opciones Columna:</label><br>
+                        <div class="btn-group" style="width: 100%" role="group">
+                            @for ($i = 0; $i <= 1; $i++)
+                                <input type="radio" class="btn-check opcion-btn" name="opcion" id="col-{{ $i+1 }}" value="{{ $i }}" autocomplete="off"
+                                    {{ old('opcion', $contenido->opcion) == $i && old('tipo', $contenido->tipo) == 'columna' ? 'checked' : '' }}>
+                                <label class="btn btn-outline-secondary" for="col-{{ $i+1 }}">
+                                    @if ($i == 0)
+                                        <i class="fa fa-list" aria-hidden="true"></i> 1
+                                    @else
+                                        <i class="fa fa-table" aria-hidden="true"></i> 2
+                                    @endif
+                                </label>
+                            @endfor
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2 mt-3">
@@ -125,3 +165,27 @@
         </div>
     </div>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tipoSelect = document.getElementById('tipo');
+        const contenedor = document.getElementById('opciones-contenedor');
+        const columna = document.getElementById('opciones-columna');
+
+        function toggleOpciones() {
+            if (tipoSelect.value === 'contenedor') {
+                contenedor.style.display = 'block';
+                columna.style.display = 'none';
+            } else if (tipoSelect.value === 'columna') {
+                columna.style.display = 'block';
+                contenedor.style.display = 'none';
+            } else {
+                contenedor.style.display = 'none';
+                columna.style.display = 'none';
+            }
+        }
+
+        tipoSelect.addEventListener('change', toggleOpciones);
+        toggleOpciones(); // inicializar al cargar
+    });
+</script>

@@ -14,7 +14,7 @@
 
         <div class="logo-container">
             <a  href="/">
-                <img src="../../img/ViuSalle.png" alt="Viu LaSalle">
+                <img src="{{ asset('img/ViuSalle.png') }}" alt="Viu LaSalle">
             </a>
         </div>  
         

@@ -39,7 +39,7 @@
         </div>
 
         <!-- Botón Editar Perfil -->
-        <a class="botones-new-1 perfil-botones" href="{{ route('profile.edit') }}"
+        <a class="botones-new-1 perfil-botones" href="{{ route('profile.show') }}"
                 style="background-color: #0d6efd;">
             <i class="fa fa-user-edit" style="margin-right: 5px;"></i> Editar Perfil
         </a>

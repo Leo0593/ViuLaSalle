@@ -13,9 +13,21 @@ use App\Models\Publicacion;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+    public function show(Request $request): View
+    {
+        $user = $request->user();
+        $publicaciones = $user
+        ->publicaciones()
+        ->where('status', 1)
+        ->latest()
+        ->get();
+
+        return view('profile.show', [
+            'user' => $user,
+            'publicaciones' => $publicaciones,
+        ]);
+    }
+
     public function edit(Request $request): View
     {
         $user = $request->user();

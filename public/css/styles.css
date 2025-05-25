@@ -2976,6 +2976,25 @@ textarea#publicacion-texto {
     width: 100%;
     padding: 40px;
 }
+.contenido-box-opc-0-img {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 60%;
+    padding: 20px;
+
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contenido-box-opc-0-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
 .contenido-box-opc-1-img {
     background-image: url("../../img/Fondo.png");
     background-size: cover;
@@ -3026,6 +3045,7 @@ textarea#publicacion-texto {
         order: 1;
         padding: 0px;
     }
+    .contenido-box-opc-0-img,
     .contenido-box-opc-1-img {
         order: 2;
         border-bottom-left-radius: 10px;

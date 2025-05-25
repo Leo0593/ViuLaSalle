@@ -5,11 +5,13 @@
                             <div class="contenido-box-opc-0">
                                 <div class="contenido-box-opc-1-text">
                                     <h1>{{ $contenido->titulo }}</h1>
-                                    <p>{{ $contenido->descripcion }}</h1>
+                                    @foreach(explode("\n", $contenido->descripcion) as $linea)
+                                        <p>{{ $linea }}</h1>
+                                    @endforeach
                                 </div>
                                 @if ($contenido->imagen != null) 
-                                        <div class="contenido-box-opc-1-img"
-                                            style="background-image: url('{{ asset('storage/' . $contenido->imagen) }}');">
+                                        <div class="contenido-box-opc-0-img">
+                                            <img src="{{ asset('storage/' . $contenido->imagen) }}" alt="{{ $contenido->titulo }}">
                                         </div>
                                 @elseif ($contenido->video != null)
                                     @php

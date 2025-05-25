@@ -1,84 +1,127 @@
-<div class="container">
-    <h2>Editar Contenido</h2>
+@include('layouts.head')
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                   <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+<body>
+    @include('layouts.navheader')
+
+    <div class="container py-4 margin-top-header">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            
+            <div class="card-header bg-white py-3 border-bottom">
+                <h5 class="mb-0 text-dark fw-bold">
+                    <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                    Editando Contenido: 
+                    <span class="badge bg-secondary">{{ $contenido->titulo }}</span>
+                    <span class="badge bg-secondary">{{ $contenido->tipo }}</span>
+                    <span class="badge bg-secondary">{{ $contenido->vista_tipo }}</span>
+                    <span class="badge bg-secondary">Vista ID: {{ $contenido->id_vista }}</span>
+                    <span class="badge bg-secondary">Opción: {{ $contenido->opcion }}</span>
+                    <span class="badge bg-secondary">ID: {{ $contenido->id }}</span>
+                </h5>
+            </div>
+
+            <div class="card-body p-4">
+                @php
+                    $rutaUpdate = route('contenido.update', [
+                        'tipo' => $contenido->vista_tipo, 
+                        'vista' => $contenido->id_vista, 
+                        'contenido' => $contenido->id
+                    ]);
+                @endphp
+
+                <form action="{{ $rutaUpdate }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="hidden" name="id_vista" value="{{ $contenido->id_vista }}">
+                    <input type="hidden" name="vista_tipo" value="{{ $contenido->vista_tipo }}">
+
+                    <div class="mb-4">
+                        <label for="tipo" class="form-label fw-semibold">
+                            <i class="bi bi-list-ul me-2"></i>Tipo
+                        </label>
+                        <select name="tipo" id="tipo" class="form-select" required>
+                            <option value="contenedor" {{ old('tipo', $contenido->tipo) == 'contenedor' ? 'selected' : '' }}>Contenedor</option>
+                            <option value="columna" {{ old('tipo', $contenido->tipo) == 'columna' ? 'selected' : '' }}>Columna</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="titulo" class="form-label fw-semibold">
+                            <i class="bi bi-pencil-square me-2"></i>Título
+                        </label>
+                        <input type="text" name="titulo" id="titulo" value="{{ old('titulo', $contenido->titulo) }}" class="form-control shadow-sm" maxlength="255">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="descripcion" class="form-label fw-semibold">
+                            <i class="bi bi-card-text me-2"></i>Descripción
+                        </label>
+                        <textarea name="descripcion" id="descripcion" class="form-control shadow-sm" rows="3">{{ old('descripcion', $contenido->descripcion) }}</textarea>
+                    </div>
+
+                    {{-- Imagen actual --}}
+                    @if ($contenido->imagen)
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Imagen actual:</label>
+                            <div class="d-flex align-items-center gap-2 p-2 border rounded bg-light">
+                                <img src="{{ asset('storage/' . $contenido->imagen) }}" alt="Imagen actual" class="img-thumbnail rounded" style="max-width: 200px;">
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Nueva imagen --}}
+                    <div class="mb-4">
+                        <label for="imagen" class="form-label fw-semibold">
+                            <i class="bi bi-image me-2"></i>Nueva imagen (opcional)
+                        </label>
+                        <input type="file" name="imagen" id="imagen" class="form-control shadow-sm" accept="image/*">
+                    </div>
+
+                    {{-- Video actual --}}
+                    @if ($contenido->video)
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Video actual:</label>
+                            <div class="p-2 border rounded bg-light" style="max-width: 320px;">
+                                @php
+                                    $videoUrl = $contenido->video;
+                                @endphp
+
+                                @if(Str::endsWith($videoUrl, ['.mp4', '.webm', '.ogg']))
+                                    <video controls class="w-100" style="max-height: 180px;">
+                                        <source src="{{ $videoUrl }}" type="video/mp4">
+                                        Tu navegador no soporta la reproducción de videos.
+                                    </video>
+                                @else
+                                    {{-- Si es URL tipo embed (YouTube, Vimeo, etc) --}}
+                                    <iframe width="100%" height="180" src="{{ $videoUrl }}" frameborder="0" allowfullscreen></iframe>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Nueva URL video --}}
+                    <div class="mb-4">
+                        <label for="video" class="form-label fw-semibold">
+                            <i class="bi bi-camera-video me-2"></i>URL Video (opcional)
+                        </label>
+                        <input type="text" name="video" id="video" value="{{ old('video', $contenido->video) }}" class="form-control shadow-sm" maxlength="255">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="opcion" class="form-label fw-semibold">
+                            <i class="bi bi-list-check me-2"></i>Opción
+                        </label>
+                        <input type="number" name="opcion" id="opcion" value="{{ old('opcion', $contenido->opcion) }}" class="form-control shadow-sm" required>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-3">
+                        <a href="{{ route('contenido.index') }}" class="btn btn-outline-secondary shadow-sm">Cancelar</a>
+                        <button type="submit" class="btn btn-primary shadow-sm">
+                            <i class="bi bi-save me-1"></i> Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    @endif
-
-    @php
-        $rutaUpdate = route('contenido.update', [
-            'tipo' => $contenido->vista_tipo, 
-            'vista' => $contenido->id_vista, 
-            'contenido' => $contenido->id
-        ]);
-    @endphp
-
-    <form action="{{ $rutaUpdate }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-
-        <div class="mb-3">
-            <label for="id_vista" class="form-label">ID Vista</label>
-            <input type="number" name="id_vista" id="id_vista" value="{{ old('id_vista', $contenido->id_vista) }}" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="vista_tipo" class="form-label">Tipo Vista</label>
-            <select name="vista_tipo" id="vista_tipo" class="form-select" required>
-                <option value="curso" {{ old('vista_tipo', $contenido->vista_tipo) == 'curso' ? 'selected' : '' }}>Curso</option>
-                <option value="evento" {{ old('vista_tipo', $contenido->vista_tipo) == 'evento' ? 'selected' : '' }}>Evento</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label for="tipo" class="form-label">Tipo</label>
-            <input type="text" name="tipo" id="tipo" value="{{ old('tipo', $contenido->tipo) }}" class="form-control" maxlength="50">
-        </div>
-
-        <label for="tipo">Tipo:</label>
-        <select name="tipo" id="tipo" required>
-            <option value="contenedor" {{ $contenido->tipo == 'contenedor' ? 'selected' : '' }}>Contenedor</option>
-            <option value="columna" {{ $contenido->tipo == 'columna' ? 'selected' : '' }}>Columna</option>
-        </select>
-        <br>
-
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Título</label>
-            <input type="text" name="titulo" id="titulo" value="{{ old('titulo', $contenido->titulo) }}" class="form-control" maxlength="255">
-        </div>
-
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <textarea name="descripcion" id="descripcion" class="form-control">{{ old('descripcion', $contenido->descripcion) }}</textarea>
-        </div>
-
-        <div class="mb-3">
-            <label for="imagen" class="form-label">Imagen</label>
-            <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
-            @if($contenido->imagen)
-                <img src="{{ asset('storage/' . $contenido->imagen) }}" alt="Imagen actual" style="max-width: 150px; margin-top:10px;">
-            @endif
-        </div>
-
-
-        <div class="mb-3">
-            <label for="video" class="form-label">Video URL</label>
-            <input type="text" name="video" id="video" value="{{ old('video', $contenido->video) }}" class="form-control" maxlength="255">
-        </div>
-
-        <div class="mb-3">
-            <label for="opcion" class="form-label">Opción</label>
-            <input type="number" name="opcion" id="opcion" value="{{ old('opcion', $contenido->opcion) }}" class="form-control" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{{ route('contenido.index') }}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
-
+    </div>
+</body>

@@ -14,7 +14,6 @@
             </div>
 
             <div class="card-body p-4">
-
                 {{-- Mostrar errores de validación --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -203,6 +202,9 @@
                     <form action="{{ route('contenido.store', ['tipo' => 'evento', 'vista' => $evento->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
+                        <input type="hidden" name="id_vista" value="{{ $evento->id }}">
+                        <input type="hidden" name="vista_tipo" value="curso">
+                        <!--
                         <div class="mb-3">
                             <label for="id_vista" class="form-label fw-bold">ID Vista</label>
                             <input type="number" class="form-control" id="id_vista" name="id_vista" required value="{{ $evento->id }}">
@@ -214,7 +216,7 @@
                                 <option value="curso">Curso</option>
                                 <option value="evento" selected>Evento</option>
                             </select>
-                        </div>
+                        </div> -->
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Tipo</label><br>

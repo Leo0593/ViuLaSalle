@@ -152,13 +152,14 @@
                                         @endif
 
                                         {{-- Botón Editar (puede abrir modal o ir a página de edición) --}}
-                                        <a class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ route('contenido.edit', ['tipo' => 'evento', 'vista' => $evento->id, 'contenido' => $contenedor->id]) }}"
+                                            class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-pencil"></i> Editar
                                         </a>
                                 
                                         @if($contenedor->status)
                                             {{-- activo: mostrar eliminar --}}
-                                            <form action="{{ route('contenido.destroy', ['tipo' => 'evento', 'vista' => $evento->id, 'contenido' => $contenido->id]) }}" 
+                                            <form action="{{ route('contenido.destroy', ['tipo' => 'evento', 'vista' => $evento->id, 'contenido' => $contenedor->id]) }}" 
                                                     method="POST" style="display:inline;"
                                                     onsubmit="return confirm('¿Eliminar este contenido?');">
                                                 @csrf

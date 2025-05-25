@@ -143,13 +143,15 @@
                                     </div>
                                     <div style="display: flex; gap: 5px; flex-direction: column;">
                                         {{-- Botón Editar (puede abrir modal o ir a página de edición) --}}
-                                        <a href="{{ route('contenido.edit', ['curso' => $curso->id, 'contenido' => $contenedor->id]) }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ route('contenido.edit', ['tipo' => 'curso', 'vista' => $curso->id, 'contenido' => $contenedor->id]) }}"
+                                                class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-pencil"></i> Editar
                                         </a>
                                 
                                         @if($contenedor->status)
                                             {{-- activo: mostrar eliminar --}}
-                                            <form action="{{ route('contenido.destroy', ['id' => $contenedor->id, 'curso_id' => $curso->id]) }}" method="POST" style="display:inline;"
+                                            <form action="{{ route('contenido.destroy', ['tipo' => 'curso', 'vista' => $curso->id, 'contenido' => $contenedor->id]) }}" 
+                                                    method="POST" style="display:inline;"
                                                     onsubmit="return confirm('¿Eliminar este contenido?');">
                                                 @csrf
                                                 @method('DELETE')
@@ -157,11 +159,11 @@
                                             </form>
                                         @else
                                             {{-- inactivo: mostrar restaurar --}}
-                                            <form action="{{ route('contenido.activate', ['id' => $contenedor->id, 'curso_id' => $curso->id]) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route('contenido.activate', ['tipo' => 'curso', 'vista' => $curso->id, 'contenido' => $contenedor->id]) }}" 
+                                                method="POST" style="display:inline;">
                                                 @csrf
                                                 <button class="btn btn-success btn-sm">Restaurar</button>
                                             </form>
-
                                         @endif
                                     </div>
                                 </div>

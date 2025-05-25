@@ -11,7 +11,15 @@
         </div>
     @endif
 
-    <form action="{{ route('contenido.update', ['curso' => $curso->id, 'contenido' => $contenido->id]) }}" method="POST" enctype="multipart/form-data">
+    @php
+        $rutaUpdate = route('contenido.update', [
+            'tipo' => $contenido->vista_tipo, 
+            'vista' => $contenido->id_vista, 
+            'contenido' => $contenido->id
+        ]);
+    @endphp
+
+    <form action="{{ $rutaUpdate }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 

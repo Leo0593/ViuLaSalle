@@ -81,7 +81,7 @@ class ContenidoController extends Controller
 
     public function update(Request $request, string $tipo, string $vista_id, string $contenido_id)
     {
-        $contenido = Contenido::findOrFail($id);
+        $contenido = Contenido::findOrFail($contenido_id);
 
         $request->validate([
             'id_vista' => 'required|integer',

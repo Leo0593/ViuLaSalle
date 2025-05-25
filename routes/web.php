@@ -138,13 +138,16 @@ Route::prefix('publicaciones')->name('publicaciones.')->group(function () {
 });
 
 Route::prefix('contenido')->name('contenido.')->group(function () {
-    Route::get('/', [ContenidoController::class, 'index'])->name('index') ->middleware('role:ADMIN,PROFESOR');
-    Route::get('/create', [ContenidoController::class, 'create'])->name('create') ->middleware('role:ADMIN,PROFESOR');
-    Route::post('/', [ContenidoController::class, 'store'])->name('store') ->middleware('role:ADMIN,PROFESOR');
-    Route::get('/{id}/edit', [ContenidoController::class, 'edit'])->name('edit') ->middleware('role:ADMIN,PROFESOR');
-    Route::put('/{id}', [ContenidoController::class, 'update'])->name('update') ->middleware('role:ADMIN,PROFESOR');
-    Route::delete('/{id}/{curso_id}', [ContenidoController::class, 'destroy'])->name('destroy');
-    Route::post('activar/{id}/{curso_id}', [ContenidoController::class, 'activate'])->name('activate');
+    Route::get('/', [ContenidoController::class, 'index'])->name('index')->middleware('role:ADMIN,PROFESOR');
+    
+    Route::get('/{tipo}/{vista}/create', [ContenidoController::class, 'create'])->name('create');
+    Route::post('/{tipo}/{vista}', [ContenidoController::class, 'store'])->name('store');
+    
+    Route::get('/{tipo}/{vista}/{contenido}/edit', [ContenidoController::class, 'edit'])->name('edit');
+    Route::put('/{tipo}/{vista}/{contenido}', [ContenidoController::class, 'update'])->name('update');
+
+    Route::delete('/{tipo}/{vista}/{contenido}', [ContenidoController::class, 'destroy'])->name('destroy');
+    Route::post('/{tipo}/{vista}/{contenido}/activar', [ContenidoController::class, 'activate'])->name('activate');
 });
 
 Route::get('/publicacion/{id}/comentarios', [ComentarioController::class, 'verComentarios'])->name('comentarios.ver');
@@ -155,5 +158,23 @@ Route::get('/verificacion', [VerificacionController::class, 'index'])->name('ver
 Route::post('/verificacion', [VerificacionController::class, 'validar'])->name('verificacion.validar');
 
 Route::get('/info', [InfoController::class, 'index'])->name('info.index');
+
+
+Route::get('/publicaciones/{id}', function ($id) {
+    $publicacion = App\Models\Publicacion::with(['fotos', 'videos', 'categorias', 'comentarios'])->findOrFail($id);
+
+    // Opcional: transformar las fotos y videos para que tengan URL completas
+    $publicacion->fotos->transform(function ($foto) {
+        $foto->url = asset('storage/publicaciones/' . $foto->ruta_foto);
+        return $foto;
+    });
+
+    $publicacion->videos->transform(function ($video) {
+        $video->url = asset('storage/publicaciones/videos/' . $video->ruta_video);
+        return $video;
+    });
+
+    return response()->json($publicacion);
+});
 
 require __DIR__ . '/auth.php';

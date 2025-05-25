@@ -1,5 +1,7 @@
 @include('layouts.head')
 
+<!-- <body style="background-color: #4071e7;">  
+    <div style="background-color: white;"> -->
 <body>
     {{-- Vista Movil --}}
     @include('layouts.navheader', ['niveles' => $niveles, 'notificaciones' => $notificaciones])
@@ -52,7 +54,12 @@
                         @include('layouts.publicacion', ['publicacion' => $publicacion])
                     @endforeach
                 @else
-                    <p>No hay publicaciones disponibles.</p>
+                    <div class="no-publicaciones">
+                        <!--
+                        <i class="fa-solid fa-circle-exclamation"></i>-->
+                        <img src="{{ asset('img/jammo-dead-ic.png') }}" alt="No hay publicaciones">
+                        <p>No hay publicaciones disponibles.</p>
+                    </div>
                 @endif
             </div>
 
@@ -211,11 +218,9 @@
                     </form>
                 </div>
 
-
             </div>
         </div>
     </div>
-
 
     <!-- Modal para imagen ampliada -->
     <div id="modalImagen" class="modal-imagen" style="display:none;">
@@ -566,6 +571,7 @@
     <!-- Opciones/Reportar -->
     <script src="{{ asset('/js/reportes.js') }}"></script>
     <script src="{{ asset('/js/mostrar-comentarios.js') }}"></script>
+    <!-- Like/Dislike -->
     <script>
         $(document).ready(function () {
             $('.like-btn').click(function () {
@@ -595,7 +601,29 @@
         });
     </script>
 
+    <script>
+        function toggleDescripcion(element) {
+            const container = element.closest('.box-publicacion-buttons'); // contenedor padre
+            const isExpanded = element.classList.toggle('expanded'); // togglear clase expanded al texto
+            
+            // Cambiar clase al contenedor para ajustar alineación
+            if (isExpanded) {
+                container.classList.add('expanded');  // para que los botones se alineen arriba
+            } else {
+                container.classList.remove('expanded'); // para que vuelvan a centrarse
+            }
+
+            // Cambiar texto de "Ver más" / "Ver menos"
+            const verMas = element.nextElementSibling;
+            if (verMas) {
+                verMas.textContent = isExpanded ? '... Ver menos' : '... Ver más';
+            }
+        }
+    </script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    @include('layouts.footer')
 </body>
-@include('layouts.footer')

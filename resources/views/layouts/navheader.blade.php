@@ -2,7 +2,6 @@
     use Illuminate\Support\Collection;
 
     $niveles = $niveles ?? [];
-    $notificaciones = collect($notificaciones ?? []);
 @endphp
 
 <header>

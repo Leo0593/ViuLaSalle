@@ -118,6 +118,12 @@
                                             </div>
                                         @endif
 
+                                        @if ($contenedor->status)
+                                            <span class="badge bg-success">Activo</span>
+                                        @else
+                                            <span class="badge bg-secondary">Inactivo</span>
+                                        @endif
+
                                         @if ($contenedor->titulo != null) 
                                             <strong>{{ $contenedor->titulo }}</strong>
                                         @endif
@@ -137,7 +143,7 @@
                                     </div>
                                     <div style="display: flex; gap: 5px; flex-direction: column;">
                                         {{-- Botón Editar (puede abrir modal o ir a página de edición) --}}
-                                        <a href="{{ route('contenido.edit', ['id' => $contenedor->id, 'curso_id' => $curso->id]) }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ route('contenido.edit', ['curso' => $curso->id, 'contenido' => $contenedor->id]) }}" class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-pencil"></i> Editar
                                         </a>
                                 
@@ -183,7 +189,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('contenido.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('contenido.store', ['tipo' => 'curso', 'vista' => $curso->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">
@@ -269,12 +275,12 @@
                             <label class="form-label fw-bold">
                                 <i class="bi bi-pencil-square me-2"></i> Título:
                             </label>
-                            <input type="text" name="titulo" maxlength="255" class="form-control mb-2" required>
+                            <input type="text" name="titulo" maxlength="255" class="form-control mb-2">
 
                             <label class="form-label fw-bold">
                                 <i class="bi bi-card-text me-2"></i> Descripción:
                             </label>
-                            <textarea name="descripcion" class="form-control mb-2" required></textarea>
+                            <textarea name="descripcion" class="form-control mb-2"></textarea>
 
                             <label class="form-label fw-bold">
                                 <i class="bi bi-image me-2"></i> Imagen: (Opcional)

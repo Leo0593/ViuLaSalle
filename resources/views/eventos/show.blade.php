@@ -17,11 +17,15 @@
             </nav>
         </div>
 
+        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; gap: 40px; margin: 30px 0;">
+            @include('layouts.contenido')
+        </div>
+
+        <!--
         <div
             style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; margin-bottom: 30px;">
             <div class="main-evento">
-                <div id="info" data-aos="zoom-in" data-aos-duration="1000" class="box-evento"
-                    style="scroll-margin-top: 110px;">
+                <div id="info" data-aos="zoom-in" data-aos-duration="1000" class="box-evento">
 
                     <div class="eventos-title-container">
                         <h2 class="eventos-title">INFO</h2>
@@ -58,30 +62,41 @@
                 </div>
             </div>
         </div>
+        -->
 
         @php
             $hayPublicaciones = false;
         @endphp
-        <div id="posts" class="evento-posts">
-            @if(isset($publicaciones) && $publicaciones->isNotEmpty())
-                @foreach ($publicaciones as $publicacion)
-                    @if($publicacion->id_evento == $evento->id)
-                        @php
-                            $hayPublicaciones = true;
-                        @endphp
-                        <div class="post">
-                            @include('layouts.publicacion', ['publicacion' => $publicacion])
-                        </div>
-                    @endif
-                @endforeach
-            @endif
+        <div id="posts"  style="display: flex; flex-direction: column; width: 100%; align-items: center;">
+            <div class="clase-posts-separador">
+                 <i class="fa fa-th" aria-hidden="true"></i>
+            </div>
 
-            @if (!$hayPublicaciones)
-                <div class="center-text">
-                    <p>No hay publicaciones disponibles.</p>
-                </div>
-            @endif
+            <div class="evento-posts">
+                @if(isset($publicaciones) && $publicaciones->isNotEmpty())
+                    @foreach ($publicaciones as $publicacion)
+                        @if($publicacion->id_evento == $evento->id)
+                            @php
+                                $hayPublicaciones = true;
+                            @endphp
+                            <div class="post">
+                                @include('layouts.publicacion', ['publicacion' => $publicacion])
+                            </div>
+                        @endif
+                    @endforeach
+                @endif
+
+                @if (!$hayPublicaciones)
+                    <div class="no-publicaciones">
+                            <!--
+                            <i class="fa-solid fa-circle-exclamation"></i>-->
+                        <img src="{{ asset('img/jammo-dead-ic.png') }}" alt="No hay publicaciones">
+                        <p>No hay publicaciones disponibles para este evento.</p>
+                    </div>
+                @endif
+            </div>
         </div>
+        
     </div>
 
     <!-- Modal para imagen ampliada -->
@@ -115,6 +130,7 @@
     <!-- Script para mostrar/ocultar comentarios -->
     <script src="{{ asset('/js/mostrar-comentarios.js') }}"></script>
 
+    <!-- Like/Dislike -->
     <script>
         $(document).ready(function () {
             $('.like-btn').click(function () {
@@ -144,6 +160,24 @@
         });
     </script>
 
+    <script>
+        function toggleDescripcion(element) {
+            const container = element.closest('.box-publicacion-buttons'); // contenedor padre
+            const isExpanded = element.classList.toggle('expanded'); // togglear clase expanded al texto
+            
+            // Cambiar clase al contenedor para ajustar alineación
+            if (isExpanded) {
+                container.classList.add('expanded');  // para que los botones se alineen arriba
+            } else {
+                container.classList.remove('expanded'); // para que vuelvan a centrarse
+            }
 
+            // Cambiar texto de "Ver más" / "Ver menos"
+            const verMas = element.nextElementSibling;
+            if (verMas) {
+                verMas.textContent = isExpanded ? '... Ver menos' : '... Ver más';
+            }
+        }
+    </script>
 
 </body>

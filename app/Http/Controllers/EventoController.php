@@ -10,6 +10,7 @@ use App\Models\FotoPublicacion;
 use App\Models\VideoPublicacion;
 use App\Models\Categoria;
 use App\Models\Publicacion;
+use App\Models\Contenido;
 
 class EventoController extends Controller
 {
@@ -85,7 +86,13 @@ class EventoController extends Controller
     public function edit($id)
     {
         $evento = Evento::findOrFail($id); // Busca el evento por ID
-        return view('eventos.edit', compact('evento')); // Devuelve la vista para editar el evento
+        $contenidos = $evento->contenido()
+            ->where('vista_tipo', 'evento')
+            /*->where('status', 1)*/
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return view('eventos.edit', compact('evento', 'contenidos')); // Retorna la vista de edición con el evento y sus contenidos
     }
 
     public function update(Request $request, $id)
@@ -154,6 +161,12 @@ class EventoController extends Controller
             ->orderBy('fecha_publicacion', 'desc') // Ordenar por fecha de publicación (más recientes primero)
             ->get();
 
-        return view('eventos.show', compact('evento', 'publicaciones', 'user')); // Retornar vista con datos
+        $contenidos = $evento->contenido()
+            ->where('vista_tipo', 'evento')
+            ->where('status', 1)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return view('eventos.show', compact('evento', 'publicaciones', 'user', 'contenidos')); // Retornar vista con datos
     }
 }

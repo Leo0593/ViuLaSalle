@@ -85,7 +85,7 @@ class PublicacionController extends Controller
             'id_evento' => 'nullable|integer', // Ahora es opcional
             'descripcion' => 'required|string|max:255',    // Descripción es obligatoria y tiene un límite de caracteres
             'fotos' => 'nullable|array',                    // Aceptar un array de fotos
-            'fotos.*' => 'mimes:jpeg,png,jpg,gif,svg|max:2048', // Validación para las fotos
+            'fotos.*' => 'mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // Validación para las fotos
             'activar_comentarios' => 'nullable|boolean',
             'categorias' => 'nullable|array', // Permitir múltiples categorías
             'categorias.*' => 'exists:categorias,id', // Verificar que las categorías existen

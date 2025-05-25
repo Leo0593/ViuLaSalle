@@ -16,9 +16,10 @@ class Welcome extends Controller
     public function index()
     {
         $user = auth()->user();
-        $eventos = Evento::all();
-        $categorias = Categoria::all(); // Obtener todas las categorías
-        $categoriasSugeridas = Categoria::inRandomOrder()->limit(5)->get(); // 5 aleatorias
+        $eventos = Evento::where('status', 1)->get();
+        $categorias = Categoria::where('status', 1)->get(); // Solo categorías con status = 1
+        $categoriasSugeridas = Categoria::where('status', 1)->inRandomOrder()->limit(5)->get(); // 5 aleatorias con status = 1
+
         $niveles = NivelEducativo::where('status', 1)->get();
         $cursos = Curso::with('nivelEducativo', 'fotos')
             ->where('status', 1)
@@ -38,7 +39,7 @@ class Welcome extends Controller
             ->where('es_global', 1)
             ->where('status', 1)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(5);
 
         return view('welcome', compact(
             'user', 

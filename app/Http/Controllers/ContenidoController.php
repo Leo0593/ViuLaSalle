@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contenido;
 use App\Models\Curso; // Asegúrate de importar el modelo Curso
+use App\Models\Evento;
 
 class ContenidoController extends Controller
 {
@@ -15,12 +16,20 @@ class ContenidoController extends Controller
         return view('contenido.index', compact('contenidos'));
     }
 
-    public function create()
+    public function create(string $tipo, string $vista)
     {
-        return view('contenido.create');
+        if ($tipo === 'curso') {
+            $modelo = Curso::findOrFail($vista);
+        } elseif ($vista_tipo === 'evento') {
+            $modelo = Evento::findOrFail($vista);
+        } else {
+            abort(404, 'Vista tipo no válida');
+        }
+
+        return view('contenido.create', compact('modelo', 'tipo'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, string $tipo, string $vista)
     {
         $request->validate([
             'id_vista' => 'required|integer',
@@ -49,16 +58,28 @@ class ContenidoController extends Controller
 
         $contenido->save();
 
-        return redirect()->route('contenido.index')->with('success', 'Contenido creado correctamente.');
+        return redirect()->route(
+            $tipo === 'evento' ? 'eventos.edit' : 'cursos.edit',
+            ['id' => $vista]
+        )->with('success', 'Contenido creado correctamente.');
     }
 
-    public function edit(string $id)
+    public function edit(string $tipo, string $vista_id, string $contenido_id)
     {
-        $contenido = Contenido::findOrFail($id);
-        return view('contenido.edit', compact('contenido'));
+        $contenido = Contenido::findOrFail($contenido_id);
+
+        if ($tipo === 'curso') {
+            $modelo = Curso::findOrFail($vista_id);
+        } elseif ($tipo === 'evento') {
+            $modelo = Evento::findOrFail($vista_id);
+        } else {
+            abort(404, 'Tipo de vista no válido');
+        }
+
+        return view('contenido.edit', compact('contenido', 'modelo', 'tipo'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $tipo, string $vista_id, string $contenido_id)
     {
         $contenido = Contenido::findOrFail($id);
 
@@ -89,7 +110,10 @@ class ContenidoController extends Controller
 
         $contenido->save();
 
-        return redirect()->route('cursos.index')->with('success', 'Contenido actualizado correctamente.');
+        return redirect()->route(
+            $tipo === 'evento' ? 'eventos.edit' : 'cursos.edit',
+            ['id' => $vista_id]
+        )->with('success', 'Contenido actualizado correctamente.');
     }
 
     public function show(string $id)
@@ -98,23 +122,25 @@ class ContenidoController extends Controller
         return view('contenido.show', compact('contenido'));
     }
 
-    public function destroy(string $id, string $curso_id)
+    public function destroy(string $tipo, string $vista_id, string $contenido_id)
     {
-        $contenido = Contenido::findOrFail($id);
+        $contenido = Contenido::findOrFail($contenido_id);
         $contenido->update(['status' => 0]);
-        $curso = Curso::findOrFail($curso_id);  // Usar modelo Curso para validar o extraer datos
 
-        return redirect()->route('cursos.index')->with('success', 'Contenido desactivado correctamente.');
-        //return redirect()->route('cursos.edit', ['id' => $curso_id]);
+        return redirect()->route(
+            $tipo === 'evento' ? 'eventos.edit' : 'cursos.edit',
+            ['id' => $vista_id]
+        )->with('success', 'Contenido eliminado correctamente.');
     }
 
-    public function activate(string $id, string $curso_id)
+    public function activate(string $tipo, string $vista_id, string $contenido_id)
     {
-        $contenido = Contenido::findOrFail($id);
+        $contenido = Contenido::findOrFail($contenido_id);
         $contenido->update(['status' => 1]);
-        $curso = Curso::findOrFail($curso_id);  // Usar modelo Curso para validar o extraer datos
 
-        return redirect()->route('cursos.index')->with('success', 'Contenido activado correctamente.');
-        //return redirect()->route('cursos.edit', ['id' => $curso_id]);
+        return redirect()->route(
+            $tipo === 'evento' ? 'eventos.edit' : 'cursos.edit',
+            ['id' => $vista_id]
+        )->with('success', 'Contenido activado correctamente.');
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Categoria;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FotoCurso;
 use App\Models\Contenido;
+use App\Models\Publicacion;
 
 class CursoController extends Controller
 {
@@ -55,7 +56,6 @@ class CursoController extends Controller
 
         return view('cursos.index', compact('cursos', 'user'));
     }
-
 
     public function create()
     {
@@ -106,7 +106,7 @@ class CursoController extends Controller
 
         $contenidos = $curso->contenido()
             ->where('vista_tipo', 'curso')
-            ->where('status', 1)
+            /*->where('status', 1)*/
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -169,6 +169,20 @@ class CursoController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
-        return view('cursos.show', compact('curso', 'contenidos'));
+        // Buscar la categoría que coincida con el nombre del curso
+        $categoria = Categoria::where('nombre', $curso->nombre)
+            ->where('status', 1)
+            ->first();
+
+        $publicaciones = collect(); // vacía por defecto
+
+        if ($categoria) {
+            // Traer las publicaciones asociadas a esa categoría con status=1
+            $publicaciones = $categoria->publicaciones()
+                ->where('status', 1)
+                ->get();
+        }
+        
+        return view('cursos.show', compact('curso', 'contenidos', 'publicaciones'));
     }
 }

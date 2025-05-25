@@ -125,9 +125,21 @@
                 </button>
             @endif
 
+            @php
+                $maxLength = 100;
+                $descripcion = $publicacion->descripcion;
+            @endphp
             <div class="descripcion">
-                <strong>{{ $publicacion->usuario->name }}: </strong>
-                {{ Str::words($publicacion->descripcion, 100, '...') }}
+                <span class="descripcion-publicacion-texto" onclick="toggleDescripcion(this)">
+                    <strong>{{ $publicacion->usuario->name }}: </strong>
+                    <span class="texto">{{ $publicacion->descripcion }}</span>
+                </span>
+                
+                @if(strlen($descripcion) > $maxLength)
+                    <span class="ver-mas" onclick="toggleDescripcion(this.previousElementSibling)">
+                        ... Ver más
+                    </span>
+                @endif
             </div>
         </div>
 
@@ -147,7 +159,9 @@
                     </div>
                 @endforeach
             @else
-                <p>No hay comentarios aún.</p>
+                <div class="no-comentarios">
+                    Todavía no hay comentarios aún.
+                </div>
             @endif
 
             @if(Auth::check())

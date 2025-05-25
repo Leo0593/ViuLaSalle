@@ -10,15 +10,16 @@ return new class extends Migration
     {
         Schema::create('contenido', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('curso_id');
-            $table->string('tipo', 50);
+            $table->unsignedBigInteger('id_vista');
+            $table->enum('vista_tipo', ['curso', 'evento']); // enum curso/evento
             $table->string('titulo', 255)->nullable();
             $table->text('descripcion')->nullable();
-            $table->integer('orden')->default(0);
-            $table->json('datos_json')->nullable();
-
-            $table->foreign('curso_id')->references('id')->on('curso')->onDelete('cascade');
+            $table->string('imagen', 255)->nullable();
+            $table->string('video', 255)->nullable();
+            $table->integer('opcion', false, true)->default(0); // int(15), no signed, default 0
             $table->timestamps();
+            $table->boolean('status')->default(1);             
+            $table->enum('tipo', ['contenedor', 'columna'])->default('contenedor'); // enum
         });
     }
 

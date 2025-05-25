@@ -9,16 +9,7 @@
 
             <div class="notif-window" id="ventanaNotificaciones">
                 <ul>
-                    @if (empty($notificaciones))
-                        <li>
-                            <i class="fa fa-exclamation" aria-hidden="true"></i>
-                                <div class="notif-content">
-                                    <p class="notif-title">Sin notificaciones</p>
-                                    <p class="notif-message">No tienes notificaciones nuevas.</p>
-                                </div>
-                        </li>
-                    @endif
-                    @foreach ($notificaciones as $notificacion)
+                    @forelse ($notificaciones as $notificacion)
                         <li>
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                             <div class="notif-content">
@@ -28,9 +19,23 @@
                                 {{ $notificacion->created_at->diffForHumans() }}</p>
                             </div>
                         </li>
-                    @endforeach
+                    @empty
+                        <li>
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            <div class="notif-content">
+                                <p class="notif-title">Sin notificaciones</p>
+                                <p class="notif-message">No tienes notificaciones nuevas.</p>
+                            </div>
+                        </li>
+                    @endforelse
                 </ul>
-            </div>
+                <!-- Paginación -->    
+                @if ($notificaciones->hasPages())
+                    <div class="d-flex justify-content-center mt-3 mt-md-4">
+                        {{ $notificaciones->links() }}
+                    </div>
+                @endif
+            </div> 
         </div>
 
         <!-- Botón Editar Perfil -->
@@ -85,16 +90,34 @@
 
     <div class="perfil-info">
         <div class="center-text" style="margin-bottom: 10px;">
-            <h3>{{ Auth::check() ? Auth::user()->name : 'Invitado' }}</h3>
+            <h3> 
+                {{ Auth::check() ? Auth::user()->name : 'Invitado' }}
+                @if (Auth::check() && Auth::user()->status == '1')
+                    <i class="fa fa-check-circle" style="color: green;" aria-hidden="true"></i>
+                @elseif (Auth::check() && Auth::user()->status == '0')
+                    <i class="fa fa-times-circle" style="color: red;" aria-hidden="true"></i>
+                @else
+                @endif
+            </h3>
         </div>
+        <p><strong>Rol: </strong>
+            @if(Auth::check() && Auth()->user()->role == 'USER')
+                Alumno <i class="fa fa-user-graduate" aria-hidden="true"></i>
+            @elseif(Auth::check() && Auth()->user()->role == 'ADMIN')
+                Administrador <i class="fa fa-user-shield" aria-hidden="true"></i>
+            @elseif(Auth::check() && Auth()->user()->role == 'PROFESOR')
+                Profesor <i class="fa fa-chalkboard-teacher" aria-hidden="true"></i>
+            @endif
+        </p>
         <p><strong>Correo: </strong>
             {{ Auth::check() ? Auth::user()->email : 'No disponible' }}</p>
-        <p><strong>Teléfono: </strong> {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
-        <p><strong>Fecha de nacimiento: </strong>
-            {{ Auth::check() ? Auth::user()->birthdate : 'No disponible' }}</p>
+        @if (Auth::check() && !empty(Auth::user()->phone))
+        <p><strong>Teléfono: </strong> 
+            {{ Auth::check() ? Auth::user()->phone : 'No disponible' }}</p>
+        @endif
+        @if (Auth::check() && !empty(Auth::user()->descripcion)) 
         <p><strong>Descripción: </strong>
             {{ Auth::check() ? Auth::user()->description : 'No disponible' }}</p>
-        <p><strong>Ubicación: </strong> {{ Auth::check() ? Auth::user()->location : 'No disponible' }}
-        </p>
+        @endif
     </div>
 </div>

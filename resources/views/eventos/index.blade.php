@@ -112,10 +112,11 @@
                                 @if ($user->role == 'ADMIN' || $user->id == $evento->user_id)
                                     <div class="card-footer bg-transparent border-0 position-relative">
                                         <div class="position-absolute bottom-0 end-0 mb-2 me-2">
-                                            <button type="button" class="btn btn-sm btn-primary me-1 btn-abrir-editar-modal"
+                                            <a href="{{ route('eventos.edit', $evento->id) }}"
+                                                type="button" class="btn btn-sm btn-primary me-1 btn-abrir-editar-modal"
                                                 data-id="{{ $evento->id }}" data-url="{{ route('eventos.edit', $evento->id) }}">
                                                 <i class="fas fa-edit"></i>
-                                            </button>
+                                            </a>
 
 
                                             @if ($evento->status == 1)
@@ -232,7 +233,7 @@
         </div>
     </div>
 
-    <!-- Modal para Editar Evento -->
+    <!-- Modal para Editar Evento 
     <div class="modal fade" id="editarEventoModal" tabindex="-1" aria-labelledby="editarEventoModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -242,7 +243,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body" id="editarEventoModalBody">
-                    <!-- Aquí se cargará la vista de edición vía AJAX -->
                     <div class="text-center py-5">
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Cargando...</span>
@@ -253,6 +253,7 @@
         </div>
     </div>
 
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const botones = document.querySelectorAll('.btn-abrir-editar-modal');
@@ -289,11 +290,7 @@
             });
         });
     </script>
-
-
-
-
-
+-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>

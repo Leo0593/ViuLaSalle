@@ -159,7 +159,7 @@
                     </div>
                 </div>
 
-                <!-- Tarjeta Contenido -->
+                <!-- Tarjeta Contenido
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm h-100 border-0" style="border-radius: 20px !important; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;">
                         <div class="card-img-top d-flex align-items-center justify-content-center p-4"
@@ -174,7 +174,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Tarjeta Retornar -->
                 <div class="col-md-4 mb-4">

@@ -27,4 +27,27 @@
         </div>
     </div>
 </x-app-layout>
--->
+-->\\
+
+
+ <!--
+        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; margin-top: 60px; margin-bottom: 60px;">
+            <div class="clase-posts-separador">
+                <i class="fa fa-th" aria-hidden="true"></i>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                <div class="clase-posts">
+                    @if(isset($publicaciones) && $publicaciones->isNotEmpty())
+                        @foreach ($publicaciones as $publicacion)
+                            @include('layouts.publicacion', ['publicacion' => $publicacion])
+                        @endforeach
+                    @else
+                        <div class="no-publicaciones">
+                            <img src="{{ asset('img/jammo-dead-ic.png') }}" alt="No hay publicaciones">
+                            <p>No hay publicaciones disponibles.</p>
+                        </div>
+                    @endif
+                    
+                </div>
+            </div>
+        </div> -->

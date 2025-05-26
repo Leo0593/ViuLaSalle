@@ -1135,7 +1135,7 @@ a.sidebar-link:hover {
 
 @media screen and (max-width: 1000px) {
     .evento-posts {
-        grid-template-columns: repeat(1, 1fr) !important;
+        display: block;
         padding: 20px;
         padding-bottom: 40px;
         gap: 20px;
@@ -1148,7 +1148,6 @@ a.sidebar-link:hover {
 
 /* 1 solo post */
 .evento-posts:has(> .post:only-child) {
-  grid-template-columns: 1fr;
   justify-content: center;
 }
 /* Solo 2 posts */
@@ -1620,7 +1619,7 @@ textarea#publicacion-texto {
     border-radius: 8px;
 }
 
-.btn-reportar {
+.btn-notif-window {
     background-color: transparent;
     color: black;
     font-size: 20px;
@@ -1630,12 +1629,23 @@ textarea#publicacion-texto {
 
     transition: all 0.3s ease-in-out;
 }
-
-.btn-reportar:hover,
-.btn-reportar:focus {
+.btn-notif-window:hover,
+.btn-notif-window:focus {
     scale: 1.02;
     opacity: 0.8;
-    background-color: red;
+    color: white;
+}
+
+.reportar:hover, .reportar:focus {
+    background-color: rgba(2, 77, 223, 0.8);
+    color: white;
+}
+.editar:hover, .editar:focus {
+    background-color: var(--amarillo);
+    color: white;
+}
+.eliminar:hover, .eliminar:focus {
+    background-color: rgba(255, 0, 0, 0.8);
     color: white;
 }
 
@@ -2003,7 +2013,7 @@ textarea#publicacion-texto {
 }
 
 .notif-window {
-    z-index: 100;
+    z-index: 900;
 
     position: absolute;
     top: 100%;

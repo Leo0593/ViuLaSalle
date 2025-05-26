@@ -80,32 +80,49 @@
                         </div>
                     @endif
                 </div>
-                <a href="{{ route('profile.edit') }}" class="btn btn-primary btn-editar-perfil">
+                <a href="{{ route('profile.edit') }}" class="btn btn-primary btn-editar-perfil mb-3">
                     <i class="fa fa-edit" aria-hidden="true"></i>
                     Editar Perfil
                 </a>
             </div>
         </div>
 
-        @php
-            $hayPublicaciones = false;
-        @endphp
-        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; margin-top: 60px; margin-bottom: 60px;">
+
+       
+        <div style="display: flex; flex-direction: column; width: 100%; align-items: center;">
             <div class="clase-posts-separador">
-                <i class="fa fa-th" aria-hidden="true"></i>
+                 <i class="fa fa-th" aria-hidden="true"></i>
             </div>
-            <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                <div class="clase-posts">
-                    @if (!empty($publicaciones) && $publicaciones->isNotEmpty() && $publicaciones->filter(fn($p) => $p->id_user == Auth::id())->isNotEmpty())
-                        @include('layouts.publicacion-grid', ['publicaciones' => $publicaciones])
-                    @else
-                        <div style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center;">
-                            <p class="text-muted ms-2 mt-3 text-center">No has publicado nada aún.</p>
+
+            <div class="evento-posts">
+                @php
+                    $hayPublicaciones = false;
+                @endphp
+
+                @if(isset($publicaciones) && $publicaciones->isNotEmpty())
+                    @foreach ($publicaciones as $publicacion)
+                        <div class="post">
+                            @include('layouts.publicacion', ['publicacion' => $publicacion])
                         </div>
-                    @endif
-                </div>
+                        @php 
+                            $hayPublicaciones = true;
+                        @endphp
+                    @endforeach
+                @endif
+
+                @if (!$hayPublicaciones)
+                    <div style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; padding: 20px 0px;">
+                        <div class="no-publicaciones">
+                                <!--
+                                <i class="fa-solid fa-circle-exclamation"></i>-->
+                            <img src="{{ asset('img/jammo-dead-ic.png') }}" alt="No hay publicaciones">
+                            <p>No hay publicaciones disponibles para este evento.</p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
+
     </div>
 
     @include('layouts.footer')
@@ -133,4 +150,66 @@
     </div>
 
     <script src="{{ asset('/js/publicacion-modal.js') }}"></script>
+    <!-- Opciones/Reportar -->
+    <script src="{{ asset('/js/reportes.js') }}"></script>
+    <script src="{{ asset('/js/mostrar-comentarios.js') }}"></script>
+    <!-- Like/Dislike -->
+    <script>
+        $(document).ready(function () {
+            $('.like-btn').click(function () {
+                let button = $(this);
+                let icon = button.find('i');
+                let publicacionId = button.data('id');
+
+                $.ajax({
+                    url: '/publicaciones/' + publicacionId + '/like',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        // Actualizar contador
+                        button.siblings('.like-count').text(response.likes);
+
+                        // Cambiar clase del ícono
+                        if (response.liked) {
+                            icon.removeClass('fa-regular').addClass('fa-solid').css('color', 'red');
+                        } else {
+                            icon.removeClass('fa-solid').addClass('fa-regular').css('color', 'black');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function toggleDescripcion(element) {
+            const container = element.closest('.box-publicacion-buttons'); // contenedor padre
+            const isExpanded = element.classList.toggle('expanded'); // togglear clase expanded al texto
+            
+            // Cambiar clase al contenedor para ajustar alineación
+            if (isExpanded) {
+                container.classList.add('expanded');  // para que los botones se alineen arriba
+            } else {
+                container.classList.remove('expanded'); // para que vuelvan a centrarse
+            }
+
+            // Cambiar texto de "Ver más" / "Ver menos"
+            const verMas = element.nextElementSibling;
+            if (verMas) {
+                verMas.textContent = isExpanded ? '... Ver menos' : '... Ver más';
+            }
+        }
+    </script>
 </body>
+
+<!--
+                    @if (!empty($publicaciones) && $publicaciones->isNotEmpty() && $publicaciones->filter(fn($p) => $p->id_user == Auth::id())->isNotEmpty())
+                        @include('layouts.publicacion', ['publicaciones' => 'publicacion'])
+                                                 @include('layouts.publicacion-grid', ['publicaciones' => $publicaciones]) 
+                    @else
+                        <div style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center;">
+                            <p class="text-muted ms-2 mt-3 text-center">No has publicado nada aún.</p>
+                        </div>
+                    @endif -->

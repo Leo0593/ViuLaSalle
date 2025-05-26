@@ -17,7 +17,7 @@
             </nav>
         </div>
 
-        <div style="display: flex; flex-direction: column; width: 100%; align-items: center; gap: 40px; margin: 30px 0;">
+        <div id="info" style="display: flex; flex-direction: column; width: 100%; align-items: center; gap: 40px; margin: 30px 0;">
             @include('layouts.contenido')
         </div>
 

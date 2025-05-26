@@ -28,7 +28,7 @@
                             style="display:inline;"
                             onsubmit="return confirm('¿Estás seguro de que deseas reportar esta publicación?');">
                             @csrf
-                            <button type="submit" class="btn-reportar">
+                            <button type="submit" class="btn-notif-window reportar">
                                 <!-- style="background: none; border: none; padding: 0; color: red; cursor: pointer;" -->
                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportar
                             </button>
@@ -37,6 +37,24 @@
                 @else
                     <li style="color: gray; cursor: not-allowed;">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reportado
+                    </li>
+                @endif
+
+                @if(Auth::user()->id == $publicacion->id_user)
+                    <li>
+                        <a class="btn-notif-window editar" href="{{ route('publicaciones.edit', $publicacion->id) }}">
+                            <i class="fa fa-edit" aria-hidden="true"></i> Editar
+                        </a>
+                    </li>
+                    <li>
+                        <form action="{{ route('publicaciones.destroy', $publicacion->id) }}" method="POST"
+                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta publicación?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-notif-window eliminar">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
+                            </button>
+                        </form>
                     </li>
                 @endif
             </ul>

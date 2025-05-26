@@ -17,10 +17,10 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $publicaciones = $user
-        ->publicaciones()
-        ->where('status', 1)
-        ->latest()
-        ->get();
+            ->publicaciones()
+            ->where('status', 1)
+            ->latest()
+            ->get();
 
         return view('profile.show', [
             'user' => $user,
